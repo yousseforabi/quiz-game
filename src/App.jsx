@@ -4,7 +4,7 @@ import { UserProvider } from "./contexts/UserContext";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Game from "./components/Game/Game";
-import About from "./components/About";
+import About from "./components/Auth/About";
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
         <nav>
           <Link to="/">Home</Link> | <Link to="/login">Login</Link> |{" "}
           <Link to="/register">Register</Link> | <Link to="/game">Game</Link>
+          <Link to="/about">About</Link> |
         </nav>
         <Routes>
           <Route path="/" element={<h1>Welcome to the Game!</h1>} />
