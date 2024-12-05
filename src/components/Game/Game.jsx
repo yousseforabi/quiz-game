@@ -12,7 +12,7 @@ function Game() {
           <button onClick={logout}>Logout</button>
         </>
       ) : (
-        <h1>Please log in to play the game.</h1>
+        <h1>TESTING PUSH</h1>
       )}
     </div>
   );
