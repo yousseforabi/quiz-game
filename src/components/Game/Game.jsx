@@ -13,7 +13,7 @@ function Game() {
     roundIsOver:false,
     correctAnswers:0,
     playerLives:10,
-    timer:20
+    timer:10
   })
   
   
@@ -23,12 +23,12 @@ function Game() {
   },[])
   
   useEffect(() => {
-    console.log(quizData)
-  },[quizData])
+    console.log(gameState.questionIndex)
+  },[gameState.questionIndex])
   
   useEffect(() => {
       
-    if(gameState.timer === 0 || !gameState.gameIsActive) return;
+    if(!gameState.gameIsActive) return;
 
     const timerTimeout = setTimeout(() => {
       if(gameState.roundIsOver){
@@ -40,20 +40,36 @@ function Game() {
           timer:prevState.timer - 1
         }))
       }
-        
     },1000)
+
+    if(gameState.timer === 0 && !gameState.roundIsOver){
+      clearTimeout(timerTimeout)
+      setGameState((prevState) => ({
+        ...prevState,
+        roundIsOver: true,
+        playerLives: prevState.playerLives - 1,
+      }))
+      return;
+    }
+
     return () => clearTimeout(timerTimeout)
   },[gameState.timer,gameState.gameIsActive,gameState.roundIsOver])
 
   const updateQuestionIndex = () => {
     setGameState((prevState) => {
+      const nextIndex = prevState.questionIndex + 1;
       if(prevState.questionIndex === quizData.length -2){
         fetchApiData(apiToken,setQuizData); 
+      }
+      if(nextIndex % 10 === 0){
+          console.log("two digit round")
       }
       return {
         ...prevState,
         timer:10,
-        questionIndex:prevState.questionIndex + 1
+        questionIndex:prevState.questionIndex + 1,
+        // Test checkpoint might change later.
+        playerLives:prevState.playerLives + (nextIndex % 10 === 0 ? 1 : 0)
       };
     });
     
@@ -70,13 +86,8 @@ function Game() {
           correctAnswers: prevState.correctAnswers + 1,
           roundIsOver:true
         }))
-        
-        
-        
     }else{
       console.log("Wrong answer")
-      
-      
       setGameState((prevState) => {
         const newLivesRemaning = prevState.playerLives - 1;
         return {
@@ -126,11 +137,11 @@ function Game() {
     <div>
     {user? (
       <>
+      <h2>Round {gameState.questionIndex + 1}</h2>
       <h2>{gameState.timer}</h2>
         {gameState.isGameOver && <h1>GAME IS OVER</h1>}
         <h2>CORRECT ANSWERS:{gameState.correctAnswers}</h2>
         <h2>PLAYER LIVES :{gameState.playerLives}</h2>
-        {gameState.gameIsActive && gameState.roundIsOver ? <h2>{quizData[gameState.questionIndex].correctAnswer}</h2> : null}
         {!gameState.gameIsActive &&  <button onClick={() => {setGameState((prevState) => ({...prevState,gameIsActive:true})),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>}
         {gameState.isGameOver && <button onClick={resetGame}>Play again</button>}
         {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}

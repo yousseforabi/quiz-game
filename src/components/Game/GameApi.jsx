@@ -37,7 +37,6 @@ import { data } from 'react-router-dom';
  export const fetchApiToken = (setApiToken) => {
     axios.get("https://opentdb.com/api_token.php?command=request").then((res) => {
         setApiToken(res.data.token)
-        console.log(res.data.token)
     })
   }
 
