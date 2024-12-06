@@ -6,6 +6,16 @@ import { fetchApiData,fetchApiToken } from "./GameApi";
 function Game() {
   const { user, logout, quizData,setQuizData,apiToken,setApiToken } = useContext(UserContext);
   
+  const [gameState,setGameState] = useState({
+    questionIndex:0,
+    gameIsActive:false,
+    isGameOver:false,
+    roundIsOver:false,
+    correctAnswers:0,
+    playerLives:10,
+    timer:20
+  })
+  
   const [questionIndex,setQuestionIndex] = useState(0);
   
   const [gameIsActive,setGameIsActive] = useState(false);
@@ -28,19 +38,22 @@ function Game() {
   
   useEffect(() => {
       
-    if(timer === 0 || !gameIsActive) return;
+    if(gameState.timer === 0 || !gameIsActive) return;
 
     const timerTimeout = setTimeout(() => {
-      if(roundIsOver){
+      if(gameState.roundIsOver){
        clearTimeout(timerTimeout)
       }
       else{
-        setTimer((prevState) => prevState - 1)
+        setGameState((prevState) => ({
+          ...prevState,
+          timer:prevState.timer - 1
+        }))
       }
         
     },1000)
     return () => clearTimeout(timerTimeout)
-  },[timer,gameIsActive,roundIsOver])
+  },[gameState.timer,gameIsActive,roundIsOver])
 
   const updateQuestionIndex = () => {
     setTimer(10);
@@ -87,7 +100,7 @@ function Game() {
       <div key={questionIndex}>
         <h2>{currentQuestion.question}</h2>
         {currentQuestion.answers.map((answer, id) => (
-          <button key={id} onClick={(e) => checkAnswer(e, questionIndex)} value={answer}>
+          <button key={id} disabled={roundIsOver} onClick={(e) => checkAnswer(e, questionIndex)} value={answer}>
             {answer}
           </button>
         ))}
@@ -95,7 +108,17 @@ function Game() {
     );      
   }
   
- 
+ const resetGame = () => {
+  setPlayLives(10);
+  setCorrectAnswers(0);
+  setTimer(10);
+  setGameIsActive(false);
+  setIsGameOver(false);
+  setRoundIsOver(false);
+  setQuestionIndex(0)
+  setQuizData([])
+
+ }
   
   return (
     <div>
@@ -106,7 +129,8 @@ function Game() {
         <h2>CORRECT ANSWERS:{correctAnswers}</h2>
         <h2>PLAYER LIVES :{playerLives}</h2>
         {gameIsActive && roundIsOver ? <h2>{quizData[questionIndex].correctAnswer}</h2> : null}
-        {!gameIsActive && <button onClick={() => {setGameIsActive(true),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>}
+        {!gameIsActive &&  <button onClick={() => {setGameIsActive(true),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>}
+        {isGameOver && <button onClick={resetGame}>Play again</button>}
         {gameIsActive ? renderQuizElements(): null}
         {roundIsOver && !isGameOver ? <button onClick={() => {updateQuestionIndex(),setRoundIsOver(false)}}>Next question</button>:null}
         </>
