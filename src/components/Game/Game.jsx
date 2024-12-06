@@ -16,17 +16,7 @@ function Game() {
     timer:20
   })
   
-  const [questionIndex,setQuestionIndex] = useState(0);
   
-  const [gameIsActive,setGameIsActive] = useState(false);
-  
-  const [isGameOver,setIsGameOver] = useState(false);
-  const [roundIsOver,setRoundIsOver] = useState(false)
-  
-  const [correctAnswers,setCorrectAnswers] = useState(0);
-  const [playerLives,setPlayLives] = useState(10);
-
-  const [timer,setTimer] = useState(20);
   
   useEffect(() => {
     fetchApiToken(setApiToken)
@@ -38,7 +28,7 @@ function Game() {
   
   useEffect(() => {
       
-    if(gameState.timer === 0 || !gameIsActive) return;
+    if(gameState.timer === 0 || !gameState.gameIsActive) return;
 
     const timerTimeout = setTimeout(() => {
       if(gameState.roundIsOver){
@@ -53,17 +43,20 @@ function Game() {
         
     },1000)
     return () => clearTimeout(timerTimeout)
-  },[gameState.timer,gameIsActive,roundIsOver])
+  },[gameState.timer,gameState.gameIsActive,gameState.roundIsOver])
 
   const updateQuestionIndex = () => {
-    setTimer(10);
-    setQuestionIndex((prevIndex) => {
-      
-      if (prevIndex === quizData.length - 2) {
+    setGameState((prevState) => {
+      if(prevState.questionIndex === quizData.length -2){
         fetchApiData(apiToken,setQuizData); 
       }
-      return prevIndex + 1;
+      return {
+        ...prevState,
+        timer:10,
+        questionIndex:prevState.questionIndex + 1
+      };
     });
+    
     
   }
 
@@ -72,35 +65,38 @@ function Game() {
 
     if(value === quizData[index].correctAnswer){
         console.log("correct answer")
-        setCorrectAnswers((prevState) => prevState + 1);
-        setRoundIsOver(true)
+        setGameState((prevState) => ({
+          ...prevState,
+          correctAnswers: prevState.correctAnswers + 1,
+          roundIsOver:true
+        }))
+        
         
         
     }else{
       console.log("Wrong answer")
-      setRoundIsOver(true)
       
-      setPlayLives((prevState) => {
-        if(prevState -1 === 0){
-          setIsGameOver(true)
-          return prevState - 1
-        }else{
-          return prevState - 1
-          
-        }
+      
+      setGameState((prevState) => {
+        const newLivesRemaning = prevState.playerLives - 1;
+        return {
+          ...prevState,
+          roundIsOver:true,
+          playerLives:newLivesRemaning,
+          isGameOver: newLivesRemaning === 0 ? true : prevState.isGameOver
+        };
       })
-      
     }
     
   }
   const renderQuizElements = () => {
-    const currentQuestion = quizData[questionIndex];  
+    const currentQuestion = quizData[gameState.questionIndex];  
     if (!currentQuestion) return null; 
     return (
-      <div key={questionIndex}>
+      <div key={gameState.questionIndex}>
         <h2>{currentQuestion.question}</h2>
-        {currentQuestion.answers.map((answer, id) => (
-          <button key={id} disabled={roundIsOver} onClick={(e) => checkAnswer(e, questionIndex)} value={answer}>
+        {currentQuestion.answers.map((answer, index) => (
+          <button key={index} disabled={gameState.roundIsOver} onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={answer}>
             {answer}
           </button>
         ))}
@@ -109,13 +105,19 @@ function Game() {
   }
   
  const resetGame = () => {
-  setPlayLives(10);
-  setCorrectAnswers(0);
-  setTimer(10);
-  setGameIsActive(false);
-  setIsGameOver(false);
-  setRoundIsOver(false);
-  setQuestionIndex(0)
+  
+  setGameState((prevState) => {
+    return {
+      ...prevState,
+      playerLives:10,
+      correctAnswers:0,
+      timer:10,
+      gameIsActive:false,
+      isGameOver:false,
+      roundIsOver:false,
+      questionIndex:0,
+    }
+  })
   setQuizData([])
 
  }
@@ -124,15 +126,15 @@ function Game() {
     <div>
     {user? (
       <>
-      <h2>{timer}</h2>
-        {isGameOver && <h1>GAME IS OVER</h1>}
-        <h2>CORRECT ANSWERS:{correctAnswers}</h2>
-        <h2>PLAYER LIVES :{playerLives}</h2>
-        {gameIsActive && roundIsOver ? <h2>{quizData[questionIndex].correctAnswer}</h2> : null}
-        {!gameIsActive &&  <button onClick={() => {setGameIsActive(true),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>}
-        {isGameOver && <button onClick={resetGame}>Play again</button>}
-        {gameIsActive ? renderQuizElements(): null}
-        {roundIsOver && !isGameOver ? <button onClick={() => {updateQuestionIndex(),setRoundIsOver(false)}}>Next question</button>:null}
+      <h2>{gameState.timer}</h2>
+        {gameState.isGameOver && <h1>GAME IS OVER</h1>}
+        <h2>CORRECT ANSWERS:{gameState.correctAnswers}</h2>
+        <h2>PLAYER LIVES :{gameState.playerLives}</h2>
+        {gameState.gameIsActive && gameState.roundIsOver ? <h2>{quizData[gameState.questionIndex].correctAnswer}</h2> : null}
+        {!gameState.gameIsActive &&  <button onClick={() => {setGameState((prevState) => ({...prevState,gameIsActive:true})),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>}
+        {gameState.isGameOver && <button onClick={resetGame}>Play again</button>}
+        {gameState.gameIsActive ? renderQuizElements(): null}
+        {gameState.roundIsOver && !gameState.isGameOver ? <button onClick={() => {updateQuestionIndex(),setGameState((prevState) => ({...prevState,roundIsOver:false}))}}>Next question</button>:null}
         </>
       )
        : (
