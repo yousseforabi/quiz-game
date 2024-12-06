@@ -105,8 +105,9 @@ function Game() {
         {isGameOver && <h1>GAME IS OVER</h1>}
         <h2>CORRECT ANSWERS:{correctAnswers}</h2>
         <h2>PLAYER LIVES :{playerLives}</h2>
+        {gameIsActive && roundIsOver ? <h2>{quizData[questionIndex].correctAnswer}</h2> : null}
         {!gameIsActive && <button onClick={() => {setGameIsActive(true),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>}
-        {gameIsActive && !isGameOver ? renderQuizElements(): null}
+        {gameIsActive ? renderQuizElements(): null}
         {roundIsOver && !isGameOver ? <button onClick={() => {updateQuestionIndex(),setRoundIsOver(false)}}>Next question</button>:null}
         </>
       )
