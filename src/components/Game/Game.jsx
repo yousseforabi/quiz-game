@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
-import { fetchApiData, shuffleArray,fetchApiToken } from "./GameApi";
+import { fetchApiData,fetchApiToken } from "./GameApi";
 
 
 function Game() {
@@ -14,9 +14,9 @@ function Game() {
   const [roundIsOver,setRoundIsOver] = useState(false)
   
   const [correctAnswers,setCorrectAnswers] = useState(0);
-  const [playerLives,setPlayLives] = useState(300);
+  const [playerLives,setPlayLives] = useState(10);
 
-  const [timer,setTimer] = useState(10);
+  const [timer,setTimer] = useState(20);
   
   useEffect(() => {
     fetchApiToken(setApiToken)
@@ -99,13 +99,22 @@ function Game() {
   
   return (
     <div>
+    {user? (
+      <>
       <h2>{timer}</h2>
         {isGameOver && <h1>GAME IS OVER</h1>}
         <h2>CORRECT ANSWERS:{correctAnswers}</h2>
         <h2>PLAYER LIVES :{playerLives}</h2>
-        <button onClick={() => {setGameIsActive(true),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>
+        {!gameIsActive && <button onClick={() => {setGameIsActive(true),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>}
         {gameIsActive && !isGameOver ? renderQuizElements(): null}
         {roundIsOver && !isGameOver ? <button onClick={() => {updateQuestionIndex(),setRoundIsOver(false)}}>Next question</button>:null}
+        </>
+      )
+       : (
+        <h1>Please log in to play the game.</h1> 
+       )
+        
+      }
     </div>
   );
 }
