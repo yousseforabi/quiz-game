@@ -8,8 +8,11 @@ export const UserProvider = ({ children }) => {
   const login = (username) => setUser({ username });
   const logout = () => setUser(null);
 
+  const [quizData, setQuizData] = useState([]);
+  const [apiToken,setApiToken] = useState(null)
+
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, login, logout, quizData, setQuizData, apiToken, setApiToken }}>
       {children}
     </UserContext.Provider>
   );
