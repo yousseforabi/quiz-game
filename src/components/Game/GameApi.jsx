@@ -1,22 +1,24 @@
 // src/components/Game/GameAPI.js
 import axios from 'axios';
 import he from "he"
+import { data } from 'react-router-dom';
 
 
 
   
  export const fetchApiData = (apiToken,setQuizData) => {
-    axios.get(`https://opentdb.com/api.php?amount=2&token=${apiToken}&type=multiple`).then((res) => {
+  
+  
+    
+    axios.get(`https://opentdb.com/api.php?amount=10&token=${apiToken}&type=multiple`).then((res) => {
       
-     if(!apiToken){
-      console.log("no token")
-      return;
-     }
+     
       console.log(res.data)
       const dataResponse = res.data.results;
 
-      setQuizData(dataResponse.map((item) => {
-       
+      setQuizData((prevState) => [
+        ...prevState,
+       ...dataResponse.map((item) => {
         const deCodedCorrectAnswer = he.decode(item.correct_answer);
         const decodedIncorrectAnswers = item.incorrect_answers.map((answer) => he.decode(answer))
         const shuffledAnswers = shuffleArray([deCodedCorrectAnswer,...decodedIncorrectAnswers])
@@ -26,9 +28,10 @@ import he from "he"
           answers:shuffledAnswers,
           question:he.decode(item.question)
         }
-
-      }))
-    })
+       })
+      ])
+   
+     })
   }
 
  export const fetchApiToken = (setApiToken) => {

@@ -14,7 +14,7 @@ function Game() {
   const [roundIsOver,setRoundIsOver] = useState(false)
   
   const [correctAnswers,setCorrectAnswers] = useState(0);
-  const [playerLives,setPlayLives] = useState(3);
+  const [playerLives,setPlayLives] = useState(300);
 
   const [timer,setTimer] = useState(10);
   
@@ -23,10 +23,8 @@ function Game() {
   },[])
   
   useEffect(() => {
-    if(apiToken){
-      fetchApiData(apiToken,setQuizData)
-    }
-  },[apiToken])
+    console.log(quizData)
+  },[quizData])
   
   useEffect(() => {
       
@@ -47,11 +45,11 @@ function Game() {
   const updateQuestionIndex = () => {
     setTimer(10);
     setQuestionIndex((prevIndex) => {
-      const nextIndex = prevIndex === quizData.length - 1 ? 0 : prevIndex + 1;
-      if (nextIndex === 0) {
+      
+      if (prevIndex === quizData.length - 2) {
         fetchApiData(apiToken,setQuizData); 
       }
-      return nextIndex;
+      return prevIndex + 1;
     });
     
   }
@@ -64,9 +62,11 @@ function Game() {
         setCorrectAnswers((prevState) => prevState + 1);
         setRoundIsOver(true)
         
+        
     }else{
       console.log("Wrong answer")
       setRoundIsOver(true)
+      
       setPlayLives((prevState) => {
         if(prevState -1 === 0){
           setIsGameOver(true)
@@ -95,6 +95,7 @@ function Game() {
     );      
   }
   
+ 
   
   return (
     <div>
@@ -102,7 +103,7 @@ function Game() {
         {isGameOver && <h1>GAME IS OVER</h1>}
         <h2>CORRECT ANSWERS:{correctAnswers}</h2>
         <h2>PLAYER LIVES :{playerLives}</h2>
-        <button onClick={() => {setGameIsActive(true)}}>Start Quiz</button>
+        <button onClick={() => {setGameIsActive(true),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>
         {gameIsActive && !isGameOver ? renderQuizElements(): null}
         {roundIsOver && !isGameOver ? <button onClick={() => {updateQuestionIndex(),setRoundIsOver(false)}}>Next question</button>:null}
     </div>
