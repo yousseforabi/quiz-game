@@ -96,7 +96,7 @@ function Game() {
       <div key={gameState.questionIndex}>
         <h2>{currentQuestion.question}</h2>
         {currentQuestion.answers.map((answer, index) => (
-          <button key={index} disabled={gameState.roundIsOver} onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={answer}>
+          <button style={{color:gameState.roundIsOver ? answer === currentQuestion.correctAnswer ? "green" : "red" : "black"}} key={index} disabled={gameState.roundIsOver} onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={answer}>
             {answer}
           </button>
         ))}
@@ -133,7 +133,7 @@ function Game() {
         {gameState.gameIsActive && gameState.roundIsOver ? <h2>{quizData[gameState.questionIndex].correctAnswer}</h2> : null}
         {!gameState.gameIsActive &&  <button onClick={() => {setGameState((prevState) => ({...prevState,gameIsActive:true})),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>}
         {gameState.isGameOver && <button onClick={resetGame}>Play again</button>}
-        {gameState.gameIsActive ? renderQuizElements(): null}
+        {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
         {gameState.roundIsOver && !gameState.isGameOver ? <button onClick={() => {updateQuestionIndex(),setGameState((prevState) => ({...prevState,roundIsOver:false}))}}>Next question</button>:null}
         </>
       )
