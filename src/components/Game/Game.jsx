@@ -48,6 +48,7 @@ function Game() {
         ...prevState,
         roundIsOver: true,
         playerLives: prevState.playerLives - 1,
+        isGameOver: prevState.playerLives -1 === 0 ? true:prevState.isGameOver
       }))
       return;
     }
@@ -62,7 +63,7 @@ function Game() {
         fetchApiData(apiToken,setQuizData); 
       }
       if(nextIndex % 10 === 0){
-          console.log("two digit round")
+          console.log("checkpoint reached")
       }
       return {
         ...prevState,
