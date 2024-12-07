@@ -17,8 +17,11 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem("currentUser");
   };
 
+  const [quizData, setQuizData] = useState([]);
+  const [apiToken,setApiToken] = useState(null)
+
   return (
-    <UserContext.Provider value={{ user, setUser: login, logout }}>
+    <UserContext.Provider value={{ user, setUser: login, logout,quizData,setQuizData,apiToken,setApiToken }}>
       {children}
     </UserContext.Provider>
   );
