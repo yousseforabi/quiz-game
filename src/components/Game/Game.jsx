@@ -137,7 +137,10 @@ function Game() {
   return (
     <div>
     {user? (
-      <>
+      gameState.questionIndex >= 10 && gameState.questionIndex % 10 === 0 && gameState.gameIsActive ?(
+        <h1>test</h1>
+      ):(
+        <> 
       <h2>Round {gameState.questionIndex + 1}</h2>
       <h2>{gameState.timer}</h2>
         {gameState.isGameOver && <h1>GAME IS OVER</h1>}
@@ -148,6 +151,8 @@ function Game() {
         {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
         {gameState.roundIsOver && !gameState.isGameOver ? <button onClick={() => {updateQuestionIndex(),setGameState((prevState) => ({...prevState,roundIsOver:false}))}}>Next question</button>:null}
         </>
+      )
+      
       )
        : (
         <h1>Please log in to play the game.</h1> 
