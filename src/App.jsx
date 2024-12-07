@@ -16,7 +16,7 @@ function App() {
           <Link to="/about">About</Link> |
         </nav>
         <Routes>
-          <Route path="/" element={<h1>Welcome to the Game!</h1>} />
+          <Route path="/" element={<h1 className="start">Welcome to the Game!</h1>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/game" element={<Game />} />

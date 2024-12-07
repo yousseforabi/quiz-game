@@ -8,11 +8,11 @@ function Game() {
     <div>
       {user ? (
         <>
-          <h1>Welcome, {user.username}!</h1>
+          <h1 >Welcome, {user.username}!</h1>
           <button onClick={logout}>Logout</button>
         </>
       ) : (
-        <h1>Please log in to play the game.</h1>
+        <h1 className="welcome">Please log in to play the game.</h1>
       )}
     </div>
   );
