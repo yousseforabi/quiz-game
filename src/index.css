@@ -5,14 +5,22 @@ body {
 }
 
 nav {
-  background-color: #282c34;
-  padding: 10px;
+  background-color: #487add;
+  padding: 20px 10px;  
+  display: flex;       
+  justify-content: center; 
+  align-items: center; 
 }
 
 nav a {
   color: white;
   margin-right: 10px;
   text-decoration: none;
+}
+
+
+nav a:last-child {
+  margin-right: 0;
 }
 
 form {
@@ -27,3 +35,107 @@ button {
   padding: 10px;
   cursor: pointer;
 }
+.welcome{
+  color: #487add;
+  text-align: center;
+  font-size: 80px;
+}
+.start{
+  color: #487add;
+  text-align: center;
+  font-size: 80px;
+}
+/* About Page Styling */
+
+.about-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  text-align: center;
+  padding: 20px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.about-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  animation: slideInFromTop 1s ease-in-out;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.team-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInScale 0.8s ease-in-out;
+}
+
+.team-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.team-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.team-role {
+  font-size: 1.2rem;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.team-description {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
