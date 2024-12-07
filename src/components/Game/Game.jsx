@@ -13,7 +13,8 @@ function Game() {
     roundIsOver:false,
     correctAnswers:0,
     playerLives:10,
-    timer:10
+    timer:10,
+    atCheckpoint:false
   })
   
   
@@ -28,7 +29,7 @@ function Game() {
   
   useEffect(() => {
       
-    if(!gameState.gameIsActive) return;
+    if(!gameState.gameIsActive || gameState.atCheckpoint) return;
 
     const timerTimeout = setTimeout(() => {
       if(gameState.roundIsOver){
@@ -53,8 +54,10 @@ function Game() {
       return;
     }
 
+    
+
     return () => clearTimeout(timerTimeout)
-  },[gameState.timer,gameState.gameIsActive,gameState.roundIsOver])
+  },[gameState.timer,gameState.gameIsActive,gameState.roundIsOver,gameState.atCheckpoint])
 
   const updateQuestionIndex = () => {
     setGameState((prevState) => {
@@ -64,6 +67,12 @@ function Game() {
       }
       if(nextIndex % 10 === 0){
           console.log("checkpoint reached")
+          setGameState((prevState) => {
+            return {
+              ...prevState,
+              atCheckpoint:true
+            }
+          })
       }
       return {
         ...prevState,
@@ -137,8 +146,12 @@ function Game() {
   return (
     <div>
     {user? (
-      gameState.questionIndex >= 10 && gameState.questionIndex % 10 === 0 && gameState.gameIsActive ?(
-        <h1>test</h1>
+      gameState.questionIndex >= 10 && (gameState.questionIndex + 1)% 10 === 1 && gameState.atCheckpoint?(
+        <>
+          <h1>Checkpoint reached</h1>
+          <button onClick={() => setGameState((prevState) => ({...prevState,atCheckpoint:false}) )}>Thank you</button>
+        </>
+        
       ):(
         <> 
       <h2>Round {gameState.questionIndex + 1}</h2>
