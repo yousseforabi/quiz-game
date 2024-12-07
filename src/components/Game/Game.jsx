@@ -6,13 +6,14 @@ function Game() {
 
   return (
     <div>
-      {user ? (
+      {user && user.loggedIn ? (
         <>
           <h1>Welcome, {user.username}!</h1>
+          <p>Enjoy the game!</p>
           <button onClick={logout}>Logout</button>
         </>
       ) : (
-        <h1>Please log in to play the game.</h1>
+        <h1>Please log in to access the game.</h1>
       )}
     </div>
   );
