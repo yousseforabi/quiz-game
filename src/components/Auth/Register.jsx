@@ -6,12 +6,22 @@ function Register() {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    localStorage.setItem(username, JSON.stringify({ password }));
-    alert("User registered successfully!");
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const userExists = users.some((user) => user.username === username);
+
+    if (userExists) {
+      alert("Username already taken. Please choose another.");
+    } else {
+      const newUser = { username, password };
+      users.push(newUser);
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("User registered successfully!");
+    }
   };
 
   return (
     <form onSubmit={handleRegister}>
+      <h2>Register</h2>
       <input
         type="text"
         placeholder="Enter a username"
