@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -9,7 +10,6 @@ const Login = () => {
   const handleLogin = () => {
     const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    //matching user in localStorage
     const user = users.find(
       (user) => user.username === username && user.password === password
     );
@@ -23,7 +23,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="login">
       <h2>Login</h2>
       <input
         type="text"
@@ -43,6 +43,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-

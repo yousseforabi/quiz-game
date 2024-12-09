@@ -8,13 +8,21 @@ import About from "./components/Auth/About";
 
 function HomePage() {
   const { user } = useContext(UserContext);
+  const backgroundStyle = {
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    minHeight: '100vh', 
+    width: '100%'
+  };
 
   return (
-    <div>
-      <h1 className="start">
-        Welcome {user ? user.username : "to the Game!"}
-      </h1>
-    </div>
+    <div className="home-background">
+    <h1 className="start">
+      Welcome {user ? user.username : "to the Game!"}
+    </h1>
+  </div>
   );
 }
 
@@ -23,9 +31,9 @@ function App() {
     <UserProvider>
       <Router>
         <nav>
-          <Link to="/">Home</Link> | <Link to="/login">Login</Link> |{" "}
-          <Link to="/register">Register</Link> | <Link to="/game">Game</Link> |{" "}
-          <Link to="/about">About</Link> |
+          <Link to="/">Home</Link> {" "} <Link to="/login">Login</Link> |{" "}
+          <Link to="/register">Register</Link> {" "}  <Link to="/game">Game</Link>  {" "}
+          <Link to="/about">About</Link> 
         </nav>
         <Routes>
           <Route path="/" element={<HomePage />} />
