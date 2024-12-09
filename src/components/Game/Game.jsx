@@ -14,10 +14,11 @@ function Game() {
     correctAnswers:0,
     playerLives:10,
     timer:10,
-    atCheckpoint:false
+    atCheckpoint:false,
+    fiftyFiftyActive:false
   })
   
-  
+  const [correctFirst,setCorrectFirst] = useState()
   
   useEffect(() => {
     fetchApiToken(setApiToken)
@@ -26,6 +27,12 @@ function Game() {
   useEffect(() => {
     console.log(gameState.questionIndex)
   },[gameState.questionIndex])
+  
+  useEffect(() => {
+    setCorrectFirst(Math.random() < 0.5);
+    console.log(correctFirst)
+  },[gameState.questionIndex])
+  
   
   useEffect(() => {
       
@@ -112,33 +119,72 @@ function Game() {
   const renderQuizElements = () => {
     const currentQuestion = quizData[gameState.questionIndex];  
     if (!currentQuestion) return null; 
-    return (
-      <div key={gameState.questionIndex}>
-        <h2>{currentQuestion.question}</h2>
-        {currentQuestion.answers.map((answer, index) => (
-          <button style={{color:gameState.roundIsOver ? answer === currentQuestion.correctAnswer ? "green" : "red" : "black"}} key={index} disabled={gameState.roundIsOver} onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={answer}>
-            {answer}
-          </button>
-        ))}
-      </div>
-    );      
+    
+    if(gameState.fiftyFiftyActive){
+      return fiftyFiftyRender()
+    }else{
+      return (
+        <div key={gameState.questionIndex}>
+          <h2>{currentQuestion.question}</h2>
+          {currentQuestion.answers.map((answer, index) => (
+            <button style={{color:gameState.roundIsOver ? answer === currentQuestion.correctAnswer ? "green" : "red" : "black"}} key={index} disabled={gameState.roundIsOver} onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={answer}>
+              {answer}
+            </button>
+          ))}
+        </div>
+      );      
+    }
   }
   
   const fiftyFiftyRender = () => {
     const currentQuestion = quizData[gameState.questionIndex];
     if (!currentQuestion) return null; 
+    
+    
+    
+    
+
     return (
       <div >
         <h2>{currentQuestion.question}</h2>
-          <button disabled={gameState.roundIsOver} onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={currentQuestion.incorrectAnswers[0]}>
-            {currentQuestion.incorrectAnswers[0]}
-          </button>
-          <button disabled={gameState.roundIsOver} onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={currentQuestion.correctAnswer}>
-            {currentQuestion.correctAnswer}
-          </button>
+        
+        {correctFirst ? (
+                <>
+                    <button
+                        disabled={gameState.roundIsOver}
+                        onClick={(e) => checkAnswer(e, gameState.questionIndex)}
+                        value={currentQuestion.correctAnswer}
+                    >
+                        {currentQuestion.correctAnswer}
+                    </button>
+                    <button
+                        disabled={gameState.roundIsOver}
+                        onClick={(e) => checkAnswer(e, gameState.questionIndex)}
+                        value={currentQuestion.incorrectAnswers[0]}
+                    >
+                        {currentQuestion.incorrectAnswers[0]}
+                    </button>
+                </>
+            ) : (
+                <>
+                    <button
+                        disabled={gameState.roundIsOver}
+                        onClick={(e) => checkAnswer(e, gameState.questionIndex)}
+                        value={currentQuestion.incorrectAnswers[0]}
+                    >
+                        {currentQuestion.incorrectAnswers[0]}
+                    </button>
+                    <button
+                        disabled={gameState.roundIsOver}
+                        onClick={(e) => checkAnswer(e, gameState.questionIndex)}
+                        value={currentQuestion.correctAnswer}
+                    >
+                        {currentQuestion.correctAnswer}
+                    </button>
+                </>
+            )}
       </div>
     );      
-    
   }
 
 
@@ -171,7 +217,6 @@ function Game() {
       ):(
         <> 
           <h2>Round {gameState.questionIndex + 1}</h2>
-          {fiftyFiftyRender()}
           <h2>{gameState.timer}</h2>
           {gameState.isGameOver && <h1>GAME IS OVER</h1>}
           <h2>CORRECT ANSWERS:{gameState.correctAnswers}</h2>
@@ -180,6 +225,7 @@ function Game() {
           {gameState.isGameOver && <button onClick={resetGame}>Play again</button>}
           {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
           {gameState.roundIsOver && !gameState.isGameOver ? <button onClick={() => {updateQuestionIndex(),setGameState((prevState) => ({...prevState,roundIsOver:false}))}}>Next question</button>:null}
+          <button onClick={() => setGameState((prevState) => ({ ...prevState, fiftyFiftyActive: true }))}>Activate fiftyFifty</button>
           <button onClick={logout}>Logout</button>
         </>
       )
