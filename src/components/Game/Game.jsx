@@ -3,6 +3,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { fetchApiData,fetchApiToken } from "./GameApi";
 
 
+
 function Game() {
   const { user, logout, quizData,setQuizData,apiToken,setApiToken } = useContext(UserContext);
   
@@ -15,7 +16,9 @@ function Game() {
     playerLives:10,
     timer:10,
     atCheckpoint:false,
-    fiftyFiftyActive:false
+    fiftyFiftyActive:false,
+    googleTimeoutActive:false,
+    googleTimer:15
   })
   
   const [correctFirst,setCorrectFirst] = useState()
@@ -25,21 +28,38 @@ function Game() {
   },[])
   
   useEffect(() => {
-    console.log(gameState.questionIndex)
-  },[gameState.questionIndex])
-  
-  useEffect(() => {
     setCorrectFirst(Math.random() < 0.5);
-    console.log(correctFirst)
   },[gameState.questionIndex])
   
+
+  useEffect(() => {
+    if(!gameState.googleTimeoutActive)return
+
+    if(gameState.googleTimer === 0){
+      setGameState((prevState) => ({
+        ...prevState,
+        googleTimeoutActive:false
+      }))
+    }
+
+    const googleTimerTimeout = setTimeout(() => {
+        setGameState((prevState) => ({
+          ...prevState,
+          googleTimer:prevState.googleTimer - 1
+        }))
+      
+    },1000)
+
+
+    return () => clearTimeout(googleTimerTimeout)
+  },[gameState.googleTimeoutActive,gameState.googleTimer])
   
   useEffect(() => {
       
     if(!gameState.gameIsActive || gameState.atCheckpoint) return;
 
     const timerTimeout = setTimeout(() => {
-      if(gameState.roundIsOver){
+      if(gameState.roundIsOver || gameState.googleTimeoutActive){
        clearTimeout(timerTimeout)
       }
       else{
@@ -61,10 +81,8 @@ function Game() {
       return;
     }
 
-    
-
     return () => clearTimeout(timerTimeout)
-  },[gameState.timer,gameState.gameIsActive,gameState.roundIsOver,gameState.atCheckpoint])
+  },[gameState.timer,gameState.gameIsActive,gameState.roundIsOver,gameState.atCheckpoint,gameState.googleTimeoutActive])
 
   const updateQuestionIndex = () => {
     setGameState((prevState) => {
@@ -218,6 +236,7 @@ function Game() {
         <> 
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}</h2>
+          <h2>Google timer:{gameState.googleTimer}</h2>
           {gameState.isGameOver && <h1>GAME IS OVER</h1>}
           <h2>CORRECT ANSWERS:{gameState.correctAnswers}</h2>
           <h2>PLAYER LIVES :{gameState.playerLives}</h2>
@@ -226,6 +245,7 @@ function Game() {
           {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
           {gameState.roundIsOver && !gameState.isGameOver ? <button onClick={() => {updateQuestionIndex(),setGameState((prevState) => ({...prevState,roundIsOver:false}))}}>Next question</button>:null}
           <button onClick={() => setGameState((prevState) => ({ ...prevState, fiftyFiftyActive: true }))}>Activate fiftyFifty</button>
+          <button onClick={() => setGameState((prevState) => ({...prevState,googleTimeoutActive:true}))}>Activate google timeout</button>
           <button onClick={logout}>Logout</button>
         </>
       )
