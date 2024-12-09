@@ -139,3 +139,53 @@ button {
   }
 }
 
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.quiz-question h2 {
+  text-align: center;
+}
+
+.quiz-answer {
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: lightgray;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.quiz-answer:hover {
+  background-color: #ddd;
+}
+
+.quiz-answer.correct {
+  background-color: green;
+}
+
+.quiz-answer.incorrect {
+  background-color: red;
+}
+
+.next-round, .start-quiz, .play-again, .next-question, .logout {
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #487add;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.next-round:hover, .start-quiz:hover, .play-again:hover, .next-question:hover, .logout:hover {
+  transform: scale(1.05);
+}
+
+.checkpoint, .welcome {
+  text-align: center;
+}

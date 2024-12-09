@@ -4,19 +4,19 @@ import "../../index.css";
 function About() {
   const teamMembers = [
     {
-      name: "Youssef",
+      name: "Youssef Orabi",
       role: "Frontend Developer",
       description:
         "Youssef is a passionate developer with expertise in React and frontend technologies.",
     },
     {
-      name: "Joab",
+      name: "Jacob Reevcrona",
       role: "Designer",
       description:
         "Joab is a creative designer who brings our ideas to life with stunning visuals.",
     },
     {
-      name: "Merv",
+      name: "Merve Erez",
       role: "Backend Developer",
       description:
         "Merv is responsible for building and maintaining scalable backend systems.",
