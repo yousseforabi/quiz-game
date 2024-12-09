@@ -8,14 +8,6 @@ import About from "./components/Auth/About";
 
 function HomePage() {
   const { user } = useContext(UserContext);
-  const backgroundStyle = {
-    backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    minHeight: '100vh', 
-    width: '100%'
-  };
 
   return (
     <div className="home-background">
@@ -31,7 +23,7 @@ function App() {
     <UserProvider>
       <Router>
         <nav>
-          <Link to="/">Home</Link> {" "} <Link to="/login">Login</Link> |{" "}
+          <Link to="/">Home</Link> {" "} <Link to="/login">Login</Link> {" "}
           <Link to="/register">Register</Link> {" "}  <Link to="/game">Game</Link>  {" "}
           <Link to="/about">About</Link> 
         </nav>
