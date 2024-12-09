@@ -18,7 +18,9 @@ function Game() {
     atCheckpoint:false,
     fiftyFiftyActive:false,
     googleTimeoutActive:false,
-    googleTimer:15
+    googleTimer:15,
+    pointsMultiplier:1,
+    hotStreak:0
   })
   
   const [correctFirst,setCorrectFirst] = useState()
@@ -76,7 +78,8 @@ function Game() {
         ...prevState,
         roundIsOver: true,
         playerLives: prevState.playerLives - 1,
-        isGameOver: prevState.playerLives -1 === 0 ? true:prevState.isGameOver
+        isGameOver: prevState.playerLives -1 === 0 ? true:prevState.isGameOver,
+        hotStreak:0
       }))
       return;
     }
@@ -104,6 +107,7 @@ function Game() {
         timer:10,
         fiftyFiftyActive:false,
         questionIndex:prevState.questionIndex + 1,
+        pointsMultiplier: prevState.hotStreak >= 3 ? 2 : 1,
         // Test checkpoint might change later.
         playerLives:prevState.playerLives + (nextIndex % 10 === 0 ? 1 : 0)
       };
@@ -119,8 +123,9 @@ function Game() {
         console.log("correct answer")
         setGameState((prevState) => ({
           ...prevState,
-          correctAnswers: prevState.correctAnswers + 1,
-          roundIsOver:true
+          correctAnswers: prevState.correctAnswers + 1 * gameState.pointsMultiplier ,
+          roundIsOver:true,
+          hotStreak: prevState.hotStreak + 1
         }))
     }else{
       console.log("Wrong answer")
@@ -130,7 +135,8 @@ function Game() {
           ...prevState,
           roundIsOver:true,
           playerLives:newLivesRemaning,
-          isGameOver: newLivesRemaning === 0 ? true : prevState.isGameOver
+          isGameOver: newLivesRemaning === 0 ? true : prevState.isGameOver,
+          hotStreak: 0
         };
       })
     }
@@ -138,7 +144,7 @@ function Game() {
   const renderQuizElements = () => {
     const currentQuestion = quizData[gameState.questionIndex];  
     if (!currentQuestion) return null; 
-    
+    console.log(currentQuestion.correctAnswer)
     if(gameState.fiftyFiftyActive){
       return fiftyFiftyRender()
     }else{
@@ -237,6 +243,7 @@ function Game() {
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}</h2>
           <h2>Google timer:{gameState.googleTimer}</h2>
+          <h2>{gameState.hotStreak >= 3 ? "Hotstreak active": "Hotstreak not active"}</h2>
           {gameState.isGameOver && <h1>GAME IS OVER</h1>}
           <h2>CORRECT ANSWERS:{gameState.correctAnswers}</h2>
           <h2>PLAYER LIVES :{gameState.playerLives}</h2>
