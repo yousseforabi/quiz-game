@@ -84,6 +84,7 @@ function Game() {
       return {
         ...prevState,
         timer:10,
+        fiftyFiftyActive:false,
         questionIndex:prevState.questionIndex + 1,
         // Test checkpoint might change later.
         playerLives:prevState.playerLives + (nextIndex % 10 === 0 ? 1 : 0)
@@ -139,11 +140,6 @@ function Game() {
   const fiftyFiftyRender = () => {
     const currentQuestion = quizData[gameState.questionIndex];
     if (!currentQuestion) return null; 
-    
-    
-    
-    
-
     return (
       <div >
         <h2>{currentQuestion.question}</h2>
@@ -152,6 +148,7 @@ function Game() {
                 <>
                     <button
                         disabled={gameState.roundIsOver}
+                        style={{color:gameState.roundIsOver ?  "green" : "black"}}
                         onClick={(e) => checkAnswer(e, gameState.questionIndex)}
                         value={currentQuestion.correctAnswer}
                     >
@@ -159,6 +156,7 @@ function Game() {
                     </button>
                     <button
                         disabled={gameState.roundIsOver}
+                        style={{color:gameState.roundIsOver ?  "red" : "black"}}
                         onClick={(e) => checkAnswer(e, gameState.questionIndex)}
                         value={currentQuestion.incorrectAnswers[0]}
                     >
@@ -169,6 +167,7 @@ function Game() {
                 <>
                     <button
                         disabled={gameState.roundIsOver}
+                        style={{color:gameState.roundIsOver ?  "red" : "black"}}
                         onClick={(e) => checkAnswer(e, gameState.questionIndex)}
                         value={currentQuestion.incorrectAnswers[0]}
                     >
@@ -176,6 +175,7 @@ function Game() {
                     </button>
                     <button
                         disabled={gameState.roundIsOver}
+                        style={{color:gameState.roundIsOver ?  "green" : "black"}}
                         onClick={(e) => checkAnswer(e, gameState.questionIndex)}
                         value={currentQuestion.correctAnswer}
                     >
