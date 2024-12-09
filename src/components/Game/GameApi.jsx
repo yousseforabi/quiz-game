@@ -26,6 +26,7 @@ import { data } from 'react-router-dom';
         return {
           correctAnswer:deCodedCorrectAnswer,
           answers:shuffledAnswers,
+          incorrectAnswers:decodedIncorrectAnswers,
           question:he.decode(item.question)
         }
        })

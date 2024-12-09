@@ -108,7 +108,6 @@ function Game() {
         };
       })
     }
-    
   }
   const renderQuizElements = () => {
     const currentQuestion = quizData[gameState.questionIndex];  
@@ -125,6 +124,24 @@ function Game() {
     );      
   }
   
+  const fiftyFiftyRender = () => {
+    const currentQuestion = quizData[gameState.questionIndex];
+    if (!currentQuestion) return null; 
+    return (
+      <div >
+        <h2>{currentQuestion.question}</h2>
+          <button disabled={gameState.roundIsOver} onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={currentQuestion.incorrectAnswers[0]}>
+            {currentQuestion.incorrectAnswers[0]}
+          </button>
+          <button disabled={gameState.roundIsOver} onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={currentQuestion.correctAnswer}>
+            {currentQuestion.correctAnswer}
+          </button>
+      </div>
+    );      
+    
+  }
+
+
  const resetGame = () => {
   
   setGameState((prevState) => {
@@ -147,27 +164,28 @@ function Game() {
     <div>
    { (user && user.loggedIn) ? (
       gameState.questionIndex >= 10 && (gameState.questionIndex + 1)% 10 === 1 && gameState.atCheckpoint?(
-<>
-<h1>Checkpoint reached</h1>
-<button onClick={() => setGameState((prevState) => ({...prevState,atCheckpoint:false}) )}>Thank you</button>
-</>
+        <>
+        <h1>Checkpoint reached</h1>
+        <button onClick={() => setGameState((prevState) => ({...prevState,atCheckpoint:false}) )}>Thank you</button>
+        </>
       ):(
-<> 
-<h2>Round {gameState.questionIndex + 1}</h2>
-<h2>{gameState.timer}</h2>
-        {gameState.isGameOver && <h1>GAME IS OVER</h1>}
-<h2>CORRECT ANSWERS:{gameState.correctAnswers}</h2>
-<h2>PLAYER LIVES :{gameState.playerLives}</h2>
-        {!gameState.gameIsActive &&  <button onClick={() => {setGameState((prevState) => ({...prevState,gameIsActive:true})),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>}
-        {gameState.isGameOver && <button onClick={resetGame}>Play again</button>}
-        {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
-        {gameState.roundIsOver && !gameState.isGameOver ? <button onClick={() => {updateQuestionIndex(),setGameState((prevState) => ({...prevState,roundIsOver:false}))}}>Next question</button>:null}
-<button onClick={logout}>Logout</button>
-</>
+        <> 
+          <h2>Round {gameState.questionIndex + 1}</h2>
+          {fiftyFiftyRender()}
+          <h2>{gameState.timer}</h2>
+          {gameState.isGameOver && <h1>GAME IS OVER</h1>}
+          <h2>CORRECT ANSWERS:{gameState.correctAnswers}</h2>
+          <h2>PLAYER LIVES :{gameState.playerLives}</h2>
+          {!gameState.gameIsActive &&  <button onClick={() => {setGameState((prevState) => ({...prevState,gameIsActive:true})),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>}
+          {gameState.isGameOver && <button onClick={resetGame}>Play again</button>}
+          {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
+          {gameState.roundIsOver && !gameState.isGameOver ? <button onClick={() => {updateQuestionIndex(),setGameState((prevState) => ({...prevState,roundIsOver:false}))}}>Next question</button>:null}
+          <button onClick={logout}>Logout</button>
+        </>
       )
       )
        : (
-<h1 className="welcome">Please log in to play the game.</h1> 
+        <h1 className="welcome">Please log in to play the game.</h1> 
        )
       }
     </div>
