@@ -14,16 +14,22 @@ function TimeoutLightbox(props){
             setTimeout(() => setCopied(false),1500);
         })
     }
-    
+    const resumeGame = () => {
+        props.setGameState((prevState) => ({
+            ...prevState,
+            googleTimeoutActive:false,
+            googleTimer:45
+        }))
+    }
     return(
         <div className="light-box">
-            <h1 className="light-box-timer">{props.timer}</h1>
+            <h1 className="light-box-timer">{props.timer}s</h1>
             <h2 style={{color:"white"}}>{props.question}</h2>
             <div className="clipboard-container">
                 <button title="Copy to clipboard" className="clipboard-button" onClick={handleCopy}> <FontAwesomeIcon className="copy-icon" icon={faCopy}/> </button>
                 <h2 className={`copy-feedback ${copied ? "show" : ""}`}>Copied</h2>
             </div>
-            
+            <button onClick={resumeGame}>Ready to answer</button>
         </div>
     )
 }

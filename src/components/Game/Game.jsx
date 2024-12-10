@@ -18,7 +18,7 @@ function Game() {
     atCheckpoint:false,
     fiftyFiftyActive:false,
     googleTimeoutActive:false,
-    googleTimer:1500,
+    googleTimer:45,
     pointsMultiplier:1,
     hotStreak:0,
     randomIndex:[],
@@ -68,6 +68,7 @@ function Game() {
     if(gameState.googleTimer === 0){
       setGameState((prevState) => ({
         ...prevState,
+        googleTimer:45,
         googleTimeoutActive:false
       }))
     }
@@ -272,10 +273,9 @@ function Game() {
         </div>
       ):(
         <> 
-          {gameState.googleTimeoutActive ? <TimeoutLightbox timer = {gameState.googleTimer} question ={quizData[gameState.questionIndex].question}/> : null}
+          {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer} question ={quizData[gameState.questionIndex].question}/> : null}
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}</h2>
-          <h2>Google timer:{gameState.googleTimer}</h2>
           <h2>{gameState.questionIndex === gameState.randomIndex ? "DOUBLE POINTS ROUND" : null}</h2>
           <h2>{gameState.hotStreak >= 3 ? "Hotstreak active": "Hotstreak not active"}</h2>
           {gameState.isGameOver && <h1>GAME IS OVER</h1>}
