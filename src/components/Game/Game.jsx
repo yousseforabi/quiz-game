@@ -18,7 +18,7 @@ function Game() {
     atCheckpoint:false,
     fiftyFiftyActive:false,
     googleTimeoutActive:false,
-    googleTimer:15,
+    googleTimer:1500,
     pointsMultiplier:1,
     hotStreak:0,
     randomIndex:[],
@@ -272,7 +272,7 @@ function Game() {
         </div>
       ):(
         <> 
-          <TimeoutLightbox/>
+          {gameState.googleTimeoutActive ? <TimeoutLightbox timer = {gameState.googleTimer} question ={quizData[gameState.questionIndex].question}/> : null}
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}</h2>
           <h2>Google timer:{gameState.googleTimer}</h2>

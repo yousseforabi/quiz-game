@@ -8,9 +8,51 @@
     display:flex;
     justify-content:center;
     align-items:center;
+    flex-direction: column;
     z-index:1000;
 }
-
+.light-box-timer{
+    color: white;
+}
 .active-lightbox{
     transform: scale(1);
+}
+.clipboard-container{
+    position: relative;
+}
+.clipboard-button{
+    width: 70px;
+    height: 70px;
+    border-radius: 15px;
+    border: none;
+}
+.copy-icon{
+    font-size: 2.5rem;
+}
+.copy-feedback{
+    position: absolute;
+    top: 40px;
+    left: -40px;
+    background-color: white;
+    width: 100px;
+    height: 30px;
+    padding: 15px;
+    text-align: center;
+    opacity: 0;
+    border-radius: 15px;
+}
+.show{
+    animation: showFeedback 0.6s ease-in-out forwards;
+}
+@keyframes showFeedback{
+    0%{
+        top:-20px;
+        left:-30px;
+        opacity: 0;
+    }
+    100%{
+        top:55px;
+        left:-30px;
+        opacity: 1;
+    }
 }
