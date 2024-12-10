@@ -180,7 +180,7 @@ function Game() {
         <div key={gameState.questionIndex}>
           <h2>{currentQuestion.question}</h2>
           {currentQuestion.answers.map((answer, index) => (
-            <button style={{color:gameState.roundIsOver ? answer === currentQuestion.correctAnswer ? "green" : "red" : "black"}} key={index} disabled={gameState.roundIsOver} onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={answer}>
+            <button className={`quiz-answer ${gameState.roundIsOver ? (answer === currentQuestion.correctAnswer ? "correct" : "incorrect") : ""}`} key={index} disabled={gameState.roundIsOver} onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={answer}>
               {answer}
             </button>
           ))}
