@@ -6,10 +6,12 @@ body {
 
 nav {
   background-color: #487add;
-  padding: 20px 10px;  
+  padding: 35px ;  
   display: flex;       
   justify-content: center; 
   align-items: center; 
+  font: 1.5em sans-serif;
+  
 }
 
 nav a {
@@ -137,5 +139,105 @@ button {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.quiz-question h2 {
+  text-align: center;
+}
+
+.quiz-answer {
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: lightgray;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.quiz-answer:hover {
+  background-color: #ddd;
+}
+
+.quiz-answer.correct {
+  background-color: green;
+}
+
+.quiz-answer.incorrect {
+  background-color: red;
+}
+
+.next-round, .start-quiz, .play-again, .next-question, .logout {
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #487add;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.next-round:hover, .start-quiz:hover, .play-again:hover, .next-question:hover, .logout:hover {
+  transform: scale(1.05);
+}
+
+.checkpoint, .welcome {
+  text-align: center;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 300px;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.login h2 {
+  margin-bottom: 20px;
+}
+
+.login input {
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 90%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.login button {
+  padding: 10px 15px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+}
+
+.login button:hover {
+  background-color: #0056b3;
+}
+.home-background {
+  background-image: url('./assets/images/quizgame.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100%;
+  padding: 0;
 }
 
