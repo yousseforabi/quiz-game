@@ -132,7 +132,7 @@ function Game() {
         pointsMultiplier: 
         prevState.doublePointsIndex === nextIndex && prevState.hotStreak >= 3
           ? 4
-          : nextIndex === prevState.randomIndex
+          : prevState.doublePointsIndex === nextIndex
           ? 2
           : prevState.hotStreak >= 3
           ? 2
@@ -173,7 +173,6 @@ function Game() {
   const renderQuizElements = () => {
     const currentQuestion = quizData[gameState.questionIndex];  
     if (!currentQuestion) return null; 
-    
     if(gameState.fiftyFiftyActive){
       return fiftyFiftyRender()
     }else if (gameState.questionIndex === 2){
@@ -206,7 +205,6 @@ function Game() {
          onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={currentQuestion.correctAnswer}>
          {currentQuestion.correctAnswer}
        </button>
-       console.log(correctButton)
        correctButtonsArray.push(correctButton)
     }
     return (
