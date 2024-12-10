@@ -21,7 +21,7 @@ function Game() {
     googleTimer:45,
     pointsMultiplier:1,
     hotStreak:0,
-    randomIndex:[],
+    doublePointsIndex:[],
     timesDataFetched:null
   })
   
@@ -33,20 +33,19 @@ function Game() {
   
   useEffect(() => {
     setCorrectFirst(Math.random() < 0.5);
-    console.log(gameState.randomIndex)
+    console.log(gameState.doublePointsIndex)
   },[gameState.questionIndex])
   
   useEffect(() => {
     if(quizData.length <= 0)return;
     
     let fetchedQuestions = quizData.slice(gameState.questionIndex);
-    console.log(fetchedQuestions.length)
-    console.log(quizData.length)
+    
     let randomIndex = Math.floor(Math.random() * (fetchedQuestions.length) + gameState.questionIndex )
     console.log(randomIndex)
     setGameState((prevState) => ({
       ...prevState,
-      randomIndex:randomIndex,
+      doublePointsIndex:randomIndex,
       timesDataFetched: prevState.timesDataFetched === null ? 0 : prevState.timesDataFetched + 1
     }))
   },[quizData])
@@ -176,6 +175,8 @@ function Game() {
     
     if(gameState.fiftyFiftyActive){
       return fiftyFiftyRender()
+    }else if (gameState.questionIndex === 2){
+      return correctOnlyRender()
     }else{
       return (
         <div className="quiz-content-container" key={gameState.questionIndex}>
@@ -192,6 +193,35 @@ function Game() {
     }
   }
   
+  const correctOnlyRender = () => {
+   
+    const currentQuestion = quizData[gameState.questionIndex];  
+    if (!currentQuestion) return null; 
+    const correctButtonsArray = [];
+    for(let i = 0;  i < 4; i++){
+     const correctButton = <button 
+         className={`quiz-answer ${gameState.roundIsOver ? "correct": "" }`}
+         key={i} disabled={gameState.roundIsOver} 
+         onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={currentQuestion.correctAnswer}>
+         {currentQuestion.correctAnswer}
+       </button>
+       console.log(correctButton)
+       correctButtonsArray.push(correctButton)
+    }
+    return (
+      <div className="quiz-content-container" key={gameState.questionIndex}>
+          <h2>{currentQuestion.question}</h2>
+          <div className="answers-container">
+            {correctButtonsArray}
+          </div>
+        </div>
+    )
+    
+  }
+
+
+  
+
   const fiftyFiftyRender = () => {
     const currentQuestion = quizData[gameState.questionIndex];
     if (!currentQuestion) return null; 
@@ -276,7 +306,7 @@ function Game() {
           {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer} question ={quizData[gameState.questionIndex].question}/> : null}
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}</h2>
-          <h2>{gameState.questionIndex === gameState.randomIndex ? "DOUBLE POINTS ROUND" : null}</h2>
+          <h2>{gameState.questionIndex === gameState.doublePointsIndex ? "DOUBLE POINTS ROUND" : null}</h2>
           <h2>{gameState.hotStreak >= 3 ? "Hotstreak active": "Hotstreak not active"}</h2>
           {gameState.isGameOver && <h1>GAME IS OVER</h1>}
           <h2>Points:{gameState.correctAnswers}</h2>
