@@ -42,7 +42,6 @@ function Game() {
     let fetchedQuestions = quizData.slice(gameState.questionIndex);
     
     let randomIndex = Math.floor(Math.random() * (fetchedQuestions.length) + gameState.questionIndex )
-    console.log(randomIndex)
     setGameState((prevState) => ({
       ...prevState,
       doublePointsIndex:randomIndex,
@@ -51,13 +50,7 @@ function Game() {
   },[quizData])
  
   useEffect(() => {
-
-    setGameState((prevState) => ({
-      ...prevState,
-      pointsMultiplier: prevState.questionIndex === prevState.randomIndex
-        ? prevState.pointsMultiplier * 2
-        : prevState.pointsMultiplier,
-    }));
+    console.log(gameState.pointsMultiplier)
   },[gameState.questionIndex])
 
 
@@ -130,12 +123,20 @@ function Game() {
             }
           })
       }
+     
       return {
         ...prevState,
         timer:10,
         fiftyFiftyActive:false,
         questionIndex:prevState.questionIndex + 1,
-        pointsMultiplier: prevState.hotStreak >= 3 ? 2 : 1,
+        pointsMultiplier: 
+        prevState.doublePointsIndex === nextIndex && prevState.hotStreak >= 3
+          ? 4
+          : nextIndex === prevState.randomIndex
+          ? 2
+          : prevState.hotStreak >= 3
+          ? 2
+          : 1,
         // Test checkpoint might change later.
         playerLives:prevState.playerLives + (nextIndex % 10 === 0 ? 1 : 0)
       };
@@ -200,7 +201,7 @@ function Game() {
     const correctButtonsArray = [];
     for(let i = 0;  i < 4; i++){
      const correctButton = <button 
-         className={`quiz-answer ${gameState.roundIsOver ? "correct": "" }`}
+        className={`quiz-answer ${gameState.roundIsOver ? "correct": "" }`}
          key={i} disabled={gameState.roundIsOver} 
          onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={currentQuestion.correctAnswer}>
          {currentQuestion.correctAnswer}
