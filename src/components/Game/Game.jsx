@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { fetchApiData,fetchApiToken } from "./GameApi";
-
+import TimeoutLightbox from "./TimeoutLightbox";
 
 
 function Game() {
@@ -272,6 +272,7 @@ function Game() {
         </div>
       ):(
         <> 
+          <TimeoutLightbox/>
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}</h2>
           <h2>Google timer:{gameState.googleTimer}</h2>
