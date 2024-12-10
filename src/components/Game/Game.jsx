@@ -13,14 +13,16 @@ function Game() {
     isGameOver:false,
     roundIsOver:false,
     correctAnswers:0,
-    playerLives:10,
+    playerLives:100,
     timer:10,
     atCheckpoint:false,
     fiftyFiftyActive:false,
     googleTimeoutActive:false,
     googleTimer:15,
     pointsMultiplier:1,
-    hotStreak:0
+    hotStreak:0,
+    randomIndex:[],
+    timesDataFetched:null
   })
   
   const [correctFirst,setCorrectFirst] = useState()
@@ -31,8 +33,34 @@ function Game() {
   
   useEffect(() => {
     setCorrectFirst(Math.random() < 0.5);
+    console.log(gameState.randomIndex)
   },[gameState.questionIndex])
   
+  useEffect(() => {
+    if(quizData.length <= 0)return;
+    
+    let fetchedQuestions = quizData.slice(gameState.questionIndex);
+    console.log(fetchedQuestions.length)
+    console.log(quizData.length)
+    let randomIndex = Math.floor(Math.random() * (fetchedQuestions.length) + gameState.questionIndex )
+    console.log(randomIndex)
+    setGameState((prevState) => ({
+      ...prevState,
+      randomIndex:randomIndex,
+      timesDataFetched: prevState.timesDataFetched === null ? 0 : prevState.timesDataFetched + 1
+    }))
+  },[quizData])
+ 
+  useEffect(() => {
+
+    setGameState((prevState) => ({
+      ...prevState,
+      pointsMultiplier: prevState.questionIndex === prevState.randomIndex
+        ? prevState.pointsMultiplier * 2
+        : prevState.pointsMultiplier,
+    }));
+  },[gameState.questionIndex])
+
 
   useEffect(() => {
     if(!gameState.googleTimeoutActive)return
@@ -90,7 +118,7 @@ function Game() {
   const updateQuestionIndex = () => {
     setGameState((prevState) => {
       const nextIndex = prevState.questionIndex + 1;
-      if(prevState.questionIndex === quizData.length -2){
+      if(prevState.questionIndex === quizData.length -1){
         fetchApiData(apiToken,setQuizData); 
       }
       if(nextIndex % 10 === 0){
@@ -144,7 +172,7 @@ function Game() {
   const renderQuizElements = () => {
     const currentQuestion = quizData[gameState.questionIndex];  
     if (!currentQuestion) return null; 
-    console.log(currentQuestion.correctAnswer)
+    
     if(gameState.fiftyFiftyActive){
       return fiftyFiftyRender()
     }else{
@@ -243,9 +271,10 @@ function Game() {
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}</h2>
           <h2>Google timer:{gameState.googleTimer}</h2>
+          <h2>{gameState.questionIndex === gameState.randomIndex ? "DOUBLE POINTS ROUND" : null}</h2>
           <h2>{gameState.hotStreak >= 3 ? "Hotstreak active": "Hotstreak not active"}</h2>
           {gameState.isGameOver && <h1>GAME IS OVER</h1>}
-          <h2>CORRECT ANSWERS:{gameState.correctAnswers}</h2>
+          <h2>Points:{gameState.correctAnswers}</h2>
           <h2>PLAYER LIVES :{gameState.playerLives}</h2>
           {!gameState.gameIsActive &&  <button onClick={() => {setGameState((prevState) => ({...prevState,gameIsActive:true})),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>}
           {gameState.isGameOver && <button onClick={resetGame}>Play again</button>}
