@@ -177,13 +177,15 @@ function Game() {
       return fiftyFiftyRender()
     }else{
       return (
-        <div key={gameState.questionIndex}>
+        <div className="quiz-content-container" key={gameState.questionIndex}>
           <h2>{currentQuestion.question}</h2>
+          <div className="answers-container">
           {currentQuestion.answers.map((answer, index) => (
             <button className={`quiz-answer ${gameState.roundIsOver ? (answer === currentQuestion.correctAnswer ? "correct" : "incorrect") : ""}`} key={index} disabled={gameState.roundIsOver} onClick={(e) => checkAnswer(e, gameState.questionIndex)} value={answer}>
               {answer}
             </button>
           ))}
+          </div>
         </div>
       );      
     }
@@ -192,52 +194,54 @@ function Game() {
   const fiftyFiftyRender = () => {
     const currentQuestion = quizData[gameState.questionIndex];
     if (!currentQuestion) return null; 
+
     return (
-      <div >
+      <div className="quiz-content-container">
         <h2>{currentQuestion.question}</h2>
         
         {correctFirst ? (
-                <>
-                    <button
-                        disabled={gameState.roundIsOver}
-                        style={{color:gameState.roundIsOver ?  "green" : "black"}}
-                        onClick={(e) => checkAnswer(e, gameState.questionIndex)}
-                        value={currentQuestion.correctAnswer}
-                    >
-                        {currentQuestion.correctAnswer}
-                    </button>
-                    <button
-                        disabled={gameState.roundIsOver}
-                        style={{color:gameState.roundIsOver ?  "red" : "black"}}
-                        onClick={(e) => checkAnswer(e, gameState.questionIndex)}
-                        value={currentQuestion.incorrectAnswers[0]}
-                    >
-                        {currentQuestion.incorrectAnswers[0]}
-                    </button>
-                </>
-            ) : (
-                <>
-                    <button
-                        disabled={gameState.roundIsOver}
-                        style={{color:gameState.roundIsOver ?  "red" : "black"}}
-                        onClick={(e) => checkAnswer(e, gameState.questionIndex)}
-                        value={currentQuestion.incorrectAnswers[0]}
-                    >
-                        {currentQuestion.incorrectAnswers[0]}
-                    </button>
-                    <button
-                        disabled={gameState.roundIsOver}
-                        style={{color:gameState.roundIsOver ?  "green" : "black"}}
-                        onClick={(e) => checkAnswer(e, gameState.questionIndex)}
-                        value={currentQuestion.correctAnswer}
-                    >
-                        {currentQuestion.correctAnswer}
-                    </button>
-                </>
-            )}
+          <div className="answers-container">
+            <button
+              disabled={gameState.roundIsOver}
+              className={`quiz-answer ${gameState.roundIsOver ? "correct" : ""}`}
+              onClick={(e) => checkAnswer(e, gameState.questionIndex)}
+              value={currentQuestion.correctAnswer}
+            >
+              {currentQuestion.correctAnswer}
+            </button>
+            <button
+              disabled={gameState.roundIsOver}
+              className={`quiz-answer ${gameState.roundIsOver ? "incorrect" : ""}`}
+              onClick={(e) => checkAnswer(e, gameState.questionIndex)}
+              value={currentQuestion.incorrectAnswers[0]}
+            >
+              {currentQuestion.incorrectAnswers[0]}
+            </button>
+          </div>
+        ) : (
+          <div className="answers-container">
+            <button
+              disabled={gameState.roundIsOver}
+              className={`quiz-answer ${gameState.roundIsOver ? "incorrect" : ""}`}
+              onClick={(e) => checkAnswer(e, gameState.questionIndex)}
+              value={currentQuestion.incorrectAnswers[0]}
+            >
+              {currentQuestion.incorrectAnswers[0]}
+            </button>
+            <button
+              disabled={gameState.roundIsOver}
+              className={`quiz-answer ${gameState.roundIsOver ? "correct" : ""}`}
+              onClick={(e) => checkAnswer(e, gameState.questionIndex)}
+              value={currentQuestion.correctAnswer}
+            >
+              {currentQuestion.correctAnswer}
+            </button>
+          </div>
+        )}
       </div>
     );      
-  }
+};
+
 
 
  const resetGame = () => {

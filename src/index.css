@@ -191,7 +191,19 @@ button {
 .checkpoint, .welcome {
   text-align: center;
 }
+.quiz-content-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.answers-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
 
+}
 .login {
   display: flex;
   flex-direction: column;
