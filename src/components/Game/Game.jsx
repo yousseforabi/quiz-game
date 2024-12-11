@@ -8,6 +8,26 @@ import CoinflipLightbox from "./CoinflipLightbox";
 function Game() {
   const { user, logout, quizData,setQuizData,apiToken,setApiToken } = useContext(UserContext);
   
+const initialGameState = {
+  questionIndex:0,
+  gameIsActive:false,
+  isGameOver:false,
+  roundIsOver:false,
+  correctAnswers:0,
+  playerLives:5,
+  timer:10,
+  atCheckpoint:false,
+  fiftyFiftyActive:false,
+  googleTimeoutActive:false,
+  googleTimer:45,
+  pointsMultiplier:1,
+  hotStreak:0,
+  doublePointsIndices:[],
+  luckOfTheDrawIndex:null,
+  coinFlipsAvailable:1,
+  activeCoinFlip:false,
+}
+
   const [gameState,setGameState] = useState({
     questionIndex:0,
     gameIsActive:false,
@@ -304,20 +324,9 @@ function Game() {
 
 
  const resetGame = () => {
-  
-  setGameState((prevState) => {
-    return {
-      ...prevState,
-      playerLives:10,
-      correctAnswers:0,
-      timer:10,
-      gameIsActive:false,
-      isGameOver:false,
-      roundIsOver:false,
-      questionIndex:0,
-    }
-  })
-  setQuizData([])
+  setGameState(initialGameState);
+  setQuizData([]);
+  setFlipResult(null);
 
  }
   

@@ -14,7 +14,6 @@ function CoinflipLightbox(props){
 
     const handleFlip = () => {
         props.setIsFlipping(true);
-        props.setFlipResult(null)
         setTimeout(() => {
             const randomFlipResult = Math.random() < 0.5 ? "Heads" : "Tails";
             props.setFlipResult(randomFlipResult);
