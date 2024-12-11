@@ -39,7 +39,7 @@ function CoinflipLightbox(){
                 > <img className="skull-svg" src = {SkullSvg}></img>
                 </div>
             </div>
-            <h1 style={{color:"white"}}>{!isFlipping && (flipResult === "Heads" ? "You Survive" : " You lost ")}</h1>
+            <h1 style={{color:"white"}}>{flipResult && !isFlipping && (flipResult === "Heads" ? "You Survive" : " You lost ")}</h1>
         </div>
     )
 }
