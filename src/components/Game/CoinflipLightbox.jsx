@@ -40,6 +40,7 @@ function CoinflipLightbox(){
                 </div>
             </div>
             <h1 style={{color:"white"}}>{flipResult && !isFlipping && (flipResult === "Heads" ? "You Survive" : " You lost ")}</h1>
+            <h2>Test</h2>
         </div>
     )
 }
