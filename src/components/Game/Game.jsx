@@ -14,7 +14,7 @@ function Game() {
     isGameOver:false,
     roundIsOver:false,
     correctAnswers:0,
-    playerLives:100,
+    playerLives:5,
     timer:10,
     atCheckpoint:false,
     fiftyFiftyActive:false,
@@ -24,6 +24,8 @@ function Game() {
     hotStreak:0,
     doublePointsIndices:[],
     luckOfTheDrawIndex:null,
+    coinFlipsAvailable:1,
+    activeCoinFlip:false,
   })
   
   const [correctFirst,setCorrectFirst] = useState()
@@ -193,7 +195,8 @@ function Game() {
           ...prevState,
           roundIsOver:true,
           playerLives:newLivesRemaning,
-          isGameOver: newLivesRemaning === 0 ? true : prevState.isGameOver,
+          isGameOver: newLivesRemaning === 0 && prevState.coinFlipsAvailable === 0 ? true : prevState.isGameOver,
+          activeCoinFlip: newLivesRemaning === 0 && prevState.coinFlipsAvailable > 0 ? true : prevState.activeCoinFlip,
           hotStreak: 0
         };
       })
@@ -246,9 +249,6 @@ function Game() {
     )
     
   }
-
-
-  
 
   const fiftyFiftyRender = () => {
     const currentQuestion = quizData[gameState.questionIndex];
@@ -331,12 +331,14 @@ function Game() {
         </div>
       ):(
         <> 
-          <CoinflipLightbox 
+          {gameState.activeCoinFlip && gameState.activeCoinFlip > 0 && <CoinflipLightbox 
             isFlipping = {isFlipping} 
             setIsFlipping = {setIsFlipping} 
             flipResult = {flipResult}
             setFlipResult = {setFlipResult}
-          />
+            gameState = {gameState}
+            setGameState = {setGameState}
+          />}
           {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer} question ={quizData[gameState.questionIndex].question}/> : null}
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}</h2>

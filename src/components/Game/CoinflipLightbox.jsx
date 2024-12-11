@@ -18,11 +18,22 @@ function CoinflipLightbox(props){
         setTimeout(() => {
             const randomFlipResult = Math.random() < 0.5 ? "Heads" : "Tails";
             props.setFlipResult(randomFlipResult);
-        },1500)
+        
 
         setTimeout(() => {
           props.setIsFlipping(false);
-        },4000)
+        },2500)
+
+        setTimeout(() => {
+            props.setGameState((prevState) => ({
+                ...prevState,
+                coinFlipsAvailable:0,
+                activeCoinFlip:false,
+                playerLives: randomFlipResult === "Heads" ? prevState.playerLives + 1 : 0,
+                isGameOver: randomFlipResult === "Tails" ? true : prevState.isGameOver
+            }))
+        },4500)
+    },1500)
     }
 
 
