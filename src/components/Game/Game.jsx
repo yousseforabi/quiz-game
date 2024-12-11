@@ -40,11 +40,30 @@ function Game() {
     if(quizData.length <= 0)return;
     
     let fetchedQuestions = quizData.slice(gameState.questionIndex);
+
+    const randomChance = Math.random() * 100;
+    let numDoublePoints = 0;
+
+    if(randomChance < 20){
+      numDoublePoints = 0;
+    }else if (randomChance < 80){
+      numDoublePoints = 1;
+    }else{
+      numDoublePoints = 2;
+    }
     
-    let randomIndex = Math.floor(Math.random() * (fetchedQuestions.length) + gameState.questionIndex )
+    let doublePointsIndices = new Set();
+
+    while(doublePointsIndices.size < numDoublePoints){
+      const randomIndex = Math.floor(Math.random() * (fetchedQuestions.length) + gameState.questionIndex );
+      doublePointsIndices.add(randomIndex);
+    }
+
+
+    
     setGameState((prevState) => ({
       ...prevState,
-      doublePointsIndex:randomIndex,
+      doublePointsIndex:Array.from(doublePointsIndices),
       timesDataFetched: prevState.timesDataFetched === null ? 0 : prevState.timesDataFetched + 1
     }))
   },[quizData])
@@ -123,20 +142,18 @@ function Game() {
             }
           })
       }
-     
+     const isDoublePoints = prevState.doublePointsIndex.includes(nextIndex);
       return {
         ...prevState,
         timer:10,
         fiftyFiftyActive:false,
         questionIndex:prevState.questionIndex + 1,
-        pointsMultiplier: 
-        prevState.doublePointsIndex === nextIndex && prevState.hotStreak >= 3
-          ? 4
-          : prevState.doublePointsIndex === nextIndex
-          ? 2
-          : prevState.hotStreak >= 3
-          ? 2
-          : 1,
+        pointsMultiplier: isDoublePoints
+        ? (prevState.hotStreak >= 3 ? 4 : 2)
+        : prevState.hotStreak >= 3
+        ? 2
+        : 1,
+        
         // Test checkpoint might change later.
         playerLives:prevState.playerLives + (nextIndex % 10 === 0 ? 1 : 0)
       };
@@ -305,7 +322,7 @@ function Game() {
           {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer} question ={quizData[gameState.questionIndex].question}/> : null}
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}</h2>
-          <h2>{gameState.questionIndex === gameState.doublePointsIndex ? "DOUBLE POINTS ROUND" : null}</h2>
+          <h2>{gameState.doublePointsIndex.includes(gameState.questionIndex) ? "DOUBLE POINTS ROUND" : null}</h2>
           <h2>{gameState.hotStreak >= 3 ? "Hotstreak active": "Hotstreak not active"}</h2>
           {gameState.isGameOver && <h1>GAME IS OVER</h1>}
           <h2>Points:{gameState.correctAnswers}</h2>
