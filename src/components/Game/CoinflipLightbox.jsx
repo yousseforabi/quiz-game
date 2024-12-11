@@ -8,7 +8,7 @@ function CoinflipLightbox(){
     
     const [isFlipping,setIsFlipping] = useState(false);
     const [flipResult,setFlipResult] = useState(null);
-    const [userChoice,setUserChoice] = useState(null);
+    
     useEffect(() => {
     if(flipResult === null)return
     console.log(flipResult)
@@ -21,7 +21,7 @@ function CoinflipLightbox(){
         setTimeout(() => {
             const randomFlipResult = Math.random() < 0.5 ? "Heads" : "Tails";
             setFlipResult(randomFlipResult);
-        },3500)
+        },1500)
 
         setTimeout(() => {
           setIsFlipping(false);
@@ -31,7 +31,7 @@ function CoinflipLightbox(){
 
     return(
         <div className="light-box">
-            <div className={`coin ${isFlipping ? "flip" : ""}`}>
+            <div className={`coin ${isFlipping ? "flip" : ""}`} onClick={handleFlip}>
                 <div 
                 className={`coin-heads ${flipResult === null ? "front" : flipResult === "Heads" ? "front" : "back"}`}
                 ><img className="angel-svg" src={AngelSvg} ></img></div>
@@ -39,9 +39,7 @@ function CoinflipLightbox(){
                 > <img className="skull-svg" src = {SkullSvg}></img>
                 </div>
             </div>
-            <h1 style={{color:"white"}}>{flipResult && (userChoice === flipResult ?"You won" : "You lost")}</h1>
-        <button onClick={() => {handleFlip(), setUserChoice("Heads")}}>Heads</button>
-        <button onClick={() => {handleFlip(), setUserChoice("Tails")}}>Tails</button>
+            <h1 style={{color:"white"}}>{!isFlipping && (flipResult === "Heads" ? "You Survive" : " You lost ")}</h1>
         </div>
     )
 }
