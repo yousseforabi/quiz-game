@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { fetchApiData,fetchApiToken } from "./GameApi";
 import TimeoutLightbox from "./TimeoutLightbox";
+import CoinflipLightbox from "./CoinflipLightbox";
 
 
 function Game() {
@@ -327,6 +328,7 @@ function Game() {
         </div>
       ):(
         <> 
+          <CoinflipLightbox />
           {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer} question ={quizData[gameState.questionIndex].question}/> : null}
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}</h2>
