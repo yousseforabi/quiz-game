@@ -21,8 +21,8 @@ function Game() {
     googleTimer:45,
     pointsMultiplier:1,
     hotStreak:0,
-    doublePointsIndex:[],
-    timesDataFetched:null
+    doublePointsIndices:[],
+    luckOfTheDrawIndex:null,
   })
   
   const [correctFirst,setCorrectFirst] = useState()
@@ -33,7 +33,8 @@ function Game() {
   
   useEffect(() => {
     setCorrectFirst(Math.random() < 0.5);
-    console.log(gameState.doublePointsIndex)
+    
+    console.log(gameState.luckOfTheDrawIndex)
   },[gameState.questionIndex])
   
   useEffect(() => {
@@ -43,7 +44,8 @@ function Game() {
 
     const randomChance = Math.random() * 100;
     let numDoublePoints = 0;
-
+    let luckIndex = null;
+    
     if(randomChance < 20){
       numDoublePoints = 0;
     }else if (randomChance < 80){
@@ -52,19 +54,25 @@ function Game() {
       numDoublePoints = 2;
     }
     
-    let doublePointsIndices = new Set();
-
-    while(doublePointsIndices.size < numDoublePoints){
+    if(randomChance < 30){
       const randomIndex = Math.floor(Math.random() * (fetchedQuestions.length) + gameState.questionIndex );
-      doublePointsIndices.add(randomIndex);
+      luckIndex = randomIndex;
+    }
+
+
+    let tempDoublePointsIndices = new Set();
+
+    while(tempDoublePointsIndices.size < numDoublePoints){
+      const randomIndex = Math.floor(Math.random() * (fetchedQuestions.length) + gameState.questionIndex );
+      tempDoublePointsIndices.add(randomIndex);
     }
 
 
     
     setGameState((prevState) => ({
       ...prevState,
-      doublePointsIndex:Array.from(doublePointsIndices),
-      timesDataFetched: prevState.timesDataFetched === null ? 0 : prevState.timesDataFetched + 1
+      doublePointsIndices:Array.from(tempDoublePointsIndices),
+      luckOfTheDrawIndex: luckIndex
     }))
   },[quizData])
  
@@ -142,7 +150,7 @@ function Game() {
             }
           })
       }
-     const isDoublePoints = prevState.doublePointsIndex.includes(nextIndex);
+     const isDoublePoints = prevState.doublePointsIndices.includes(nextIndex);
       return {
         ...prevState,
         timer:10,
@@ -192,7 +200,7 @@ function Game() {
     if (!currentQuestion) return null; 
     if(gameState.fiftyFiftyActive){
       return fiftyFiftyRender()
-    }else if (gameState.questionIndex === 2){
+    }else if (gameState.luckOfTheDrawIndex === gameState.questionIndex){
       return correctOnlyRender()
     }else{
       return (
@@ -322,7 +330,7 @@ function Game() {
           {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer} question ={quizData[gameState.questionIndex].question}/> : null}
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}</h2>
-          <h2>{gameState.doublePointsIndex.includes(gameState.questionIndex) ? "DOUBLE POINTS ROUND" : null}</h2>
+          <h2>{gameState.doublePointsIndices.includes(gameState.questionIndex) ? "DOUBLE POINTS ROUND" : null}</h2>
           <h2>{gameState.hotStreak >= 3 ? "Hotstreak active": "Hotstreak not active"}</h2>
           {gameState.isGameOver && <h1>GAME IS OVER</h1>}
           <h2>Points:{gameState.correctAnswers}</h2>
