@@ -38,7 +38,7 @@ function CoinflipLightbox(props){
 
     return(
         <div className="light-box">
-            <div className={`coin ${props.isFlipping ? "flip" : ""}`} onClick={handleFlip}>
+            <div className={`coin ${props.flipResult !== null ? "disable-coin": ""} ${props.isFlipping ? "flip" : ""}`} onClick={handleFlip}>
                 <div 
                 className={`coin-heads ${props.flipResult === null ? "front" : props.flipResult === "Heads" ? "front" : "back"}`}
                 ><img className="angel-svg" src={AngelSvg} ></img></div>

@@ -59,8 +59,6 @@ const initialGameState = {
   
   useEffect(() => {
     setCorrectFirst(Math.random() < 0.5);
-    
-    console.log(gameState.luckOfTheDrawIndex)
   },[gameState.questionIndex])
   
   useEffect(() => {
@@ -85,7 +83,6 @@ const initialGameState = {
       luckIndex = randomIndex;
     }
 
-
     let tempDoublePointsIndices = new Set();
 
     while(tempDoublePointsIndices.size < numDoublePoints){
@@ -93,8 +90,6 @@ const initialGameState = {
       tempDoublePointsIndices.add(randomIndex);
     }
 
-
-    
     setGameState((prevState) => ({
       ...prevState,
       doublePointsIndices:Array.from(tempDoublePointsIndices),
@@ -123,9 +118,7 @@ const initialGameState = {
           ...prevState,
           googleTimer:prevState.googleTimer - 1
         }))
-      
     },1000)
-
 
     return () => clearTimeout(googleTimerTimeout)
   },[gameState.googleTimeoutActive,gameState.googleTimer])
@@ -187,13 +180,10 @@ const initialGameState = {
         : prevState.hotStreak >= 3
         ? 2
         : 1,
-        
         // Test checkpoint might change later.
         playerLives:prevState.playerLives + (nextIndex % 10 === 0 ? 1 : 0)
       };
     });
-    
-    
   }
 
   const checkAnswer = (e,index) => {

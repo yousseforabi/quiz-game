@@ -68,7 +68,9 @@
     animation: flip 4s ease-in-out infinite;
     pointer-events: none;
 }
-
+.disable-coin{
+    pointer-events: none;
+}
 
 .angel-svg,.skull-svg{
     width: 80px;
