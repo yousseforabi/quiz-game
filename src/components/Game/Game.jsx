@@ -27,6 +27,9 @@ function Game() {
   })
   
   const [correctFirst,setCorrectFirst] = useState()
+
+  const [isFlipping,setIsFlipping] = useState(false);
+  const [flipResult,setFlipResult] = useState(null);
   
   useEffect(() => {
     fetchApiToken(setApiToken)
@@ -328,7 +331,12 @@ function Game() {
         </div>
       ):(
         <> 
-          <CoinflipLightbox />
+          <CoinflipLightbox 
+            isFlipping = {isFlipping} 
+            setIsFlipping = {setIsFlipping} 
+            flipResult = {flipResult}
+            setFlipResult = {setFlipResult}
+          />
           {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer} question ={quizData[gameState.questionIndex].question}/> : null}
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}</h2>
