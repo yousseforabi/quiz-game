@@ -26,6 +26,7 @@ const initialGameState = {
   luckOfTheDrawIndex:null,
   coinFlipsAvailable:1,
   activeCoinFlip:false,
+  isShieldActive:false
 }
 
   const [gameState,setGameState] = useState({
@@ -46,6 +47,7 @@ const initialGameState = {
     luckOfTheDrawIndex:null,
     coinFlipsAvailable:1,
     activeCoinFlip:false,
+    isShieldActive:false
   })
   
   const [correctFirst,setCorrectFirst] = useState()
@@ -204,10 +206,11 @@ const initialGameState = {
         return {
           ...prevState,
           roundIsOver:true,
-          playerLives:newLivesRemaning,
+          playerLives:prevState.isShieldActive ? prevState.playerLives : newLivesRemaning,
           isGameOver: newLivesRemaning === 0 && prevState.coinFlipsAvailable === 0 ? true : prevState.isGameOver,
           activeCoinFlip: newLivesRemaning === 0 && prevState.coinFlipsAvailable > 0 ? true : prevState.activeCoinFlip,
-          hotStreak: 0
+          hotStreak: 0,
+          isShieldActive: prevState.isShieldActive ? false : prevState.isShieldActive
         };
       })
     }
@@ -311,8 +314,6 @@ const initialGameState = {
     );      
 };
 
-
-
  const resetGame = () => {
   setGameState(initialGameState);
   setQuizData([]);
@@ -339,6 +340,7 @@ const initialGameState = {
             setGameState = {setGameState}
           />}
           {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer} question ={quizData[gameState.questionIndex].question}/> : null}
+          {gameState.isShieldActive && <h2>Shield is Active</h2>}
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}</h2>
           <h2>{gameState.doublePointsIndices.includes(gameState.questionIndex) ? "DOUBLE POINTS ROUND" : null}</h2>
@@ -350,8 +352,10 @@ const initialGameState = {
           {gameState.isGameOver && <button className="play-again" onClick={resetGame}>Play again</button>}
           {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
           {gameState.roundIsOver && !gameState.isGameOver ? <button  className="next-question" onClick={() => {updateQuestionIndex(),setGameState((prevState) => ({...prevState,roundIsOver:false}))}}>Next question</button>:null}
-          <button onClick={() => setGameState((prevState) => ({ ...prevState, fiftyFiftyActive: true }))}>Activate fiftyFifty</button>
-          <button onClick={() => setGameState((prevState) => ({...prevState,googleTimeoutActive:true}))}>Activate google timeout</button>
+          <button className="start-quiz" onClick={() => setGameState((prevState) => ({ ...prevState, fiftyFiftyActive: true }))}>Activate fiftyFifty</button>
+          <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,googleTimeoutActive:true}))}>Activate google timeout</button>
+          <button className="start-quiz" onClick={updateQuestionIndex}>Activate skip Question</button>
+          <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,isShieldActive:true}))}>Active shield</button>
           <button className="logout" onClick={logout}>Logout</button>
         </>
       )
