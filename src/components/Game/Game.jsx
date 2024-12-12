@@ -50,6 +50,13 @@ const initialGameState = {
     isShieldActive:false
   })
   
+  const [powerUpStock,setPowerUpStock] = useState({
+    fiftyFiftyStock:1,
+    googleTimeoutStock:1,
+    skipQuestionStock:1,
+    shieldStock:1
+  })
+
   const [correctFirst,setCorrectFirst] = useState()
 
   const [isFlipping,setIsFlipping] = useState(false);
@@ -352,10 +359,35 @@ const initialGameState = {
           {gameState.isGameOver && <button className="play-again" onClick={resetGame}>Play again</button>}
           {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
           {gameState.roundIsOver && !gameState.isGameOver ? <button  className="next-question" onClick={() => {updateQuestionIndex(),setGameState((prevState) => ({...prevState,roundIsOver:false}))}}>Next question</button>:null}
-          <button className="start-quiz" onClick={() => setGameState((prevState) => ({ ...prevState, fiftyFiftyActive: true }))}>Activate fiftyFifty</button>
-          <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,googleTimeoutActive:true}))}>Activate google timeout</button>
-          <button className="start-quiz" onClick={updateQuestionIndex}>Activate skip Question</button>
-          <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,isShieldActive:true}))}>Active shield</button>
+          
+          <button className="start-quiz" disabled = {powerUpStock.fiftyFiftyStock <= 0}
+          onClick={() => 
+          {setGameState((prevState) => ({ ...prevState, fiftyFiftyActive: true }))
+           setPowerUpStock((prevState) => ({...prevState,fiftyFiftyStock:prevState.fiftyFiftyStock - 1}))
+          }}>50/50 : {powerUpStock.fiftyFiftyStock}
+          </button>
+
+          <button className="start-quiz" disabled = {powerUpStock.googleTimeoutStock <= 0}
+          onClick={() => 
+          {setGameState((prevState) => ({...prevState,googleTimeoutActive:true}))
+           setPowerUpStock((prevState) => ({...prevState,googleTimeoutStock:prevState.googleTimeoutStock - 1}))
+          }}>Google timeout : {powerUpStock.googleTimeoutStock}
+          </button>
+          
+          <button className="start-quiz" disabled = {powerUpStock.skipQuestionStock <= 0}
+          onClick={() => 
+          {updateQuestionIndex()
+           setPowerUpStock((prevState) => ({...prevState,skipQuestionStock:prevState.skipQuestionStock - 1}))
+          }}>Skip question : {powerUpStock.skipQuestionStock}
+          </button>
+          
+          <button className="start-quiz" disabled = {powerUpStock.shieldStock <= 0}
+          onClick={() => 
+          {setGameState((prevState) => ({...prevState,isShieldActive:true}))
+           setPowerUpStock((prevState) => ({...prevState,shieldStock:prevState.shieldStock - 1}))
+          }}>Shield : {powerUpStock.shieldStock}
+          </button>
+          
           <button className="logout" onClick={logout}>Logout</button>
         </>
       )
