@@ -63,6 +63,14 @@ const initialGameState = {
 
   const [isFlipping,setIsFlipping] = useState(false);
   const [flipResult,setFlipResult] = useState(null);
+
+
+  const renamePowerUps = {
+    fiftyFiftyStock:"50/50",
+    googleTimeoutStock:"Google Timeout",
+    skipQuestionStock:"Skip Question",
+    shieldStock: "Shield"
+  }
   
   useEffect(() => {
     fetchApiToken(setApiToken)
@@ -110,6 +118,17 @@ const initialGameState = {
  
   useEffect(() => {
     console.log(gameState.pointsMultiplier)
+    if(gameState.questionIndex === quizData.length -1){
+      fetchApiData(apiToken,setQuizData); 
+    }
+    if(gameState.questionIndex % 10 === 0 && gameState.questionIndex > 0){
+        console.log("checkpoint reached")
+        handleCheckpointReached()
+        setGameState((prevState) => ({
+          ...prevState,
+          atCheckpoint:true
+        }))
+    }
   },[gameState.questionIndex])
 
 
@@ -166,23 +185,13 @@ const initialGameState = {
   },[gameState.timer,gameState.gameIsActive,gameState.roundIsOver,gameState.atCheckpoint,gameState.googleTimeoutActive])
 
   const updateQuestionIndex = () => {
+    console.trace("updateQuestionIndex called");
     setGameState((prevState) => {
       const nextIndex = prevState.questionIndex + 1;
-      if(prevState.questionIndex === quizData.length -1){
-        fetchApiData(apiToken,setQuizData); 
-      }
-      if(nextIndex % 10 === 0){
-          console.log("checkpoint reached")
-          console.log(handleCheckpointReached())
-          setGameState((prevState) => {
-            return {
-              ...prevState,
-              atCheckpoint:true
-            }
-          })
-      }
+      
      const isDoublePoints = prevState.doublePointsIndices.includes(nextIndex);
-      return {
+      console.log("new index")
+     return {
         ...prevState,
         timer:10,
         fiftyFiftyActive:false,
@@ -355,7 +364,11 @@ const handleCheckpointReached = () => {
    })
 }
 
-
+const handleNextQuestion = () => {
+   updateQuestionIndex();
+   setGameState((prevState) => ({...prevState,roundIsOver:false}));
+}
+  
 
  const resetGame = () => {
   setGameState(initialGameState);
@@ -372,8 +385,7 @@ const handleCheckpointReached = () => {
             <h1>Checkpoint reached</h1>
             <ul>
               {checkpointInfo.map(([key,value], index) => {
-                return <li key={index}>{key} + {value}</li>
-                
+                return <li key={index}>{renamePowerUps[key]} + {value}</li>
               })}
             </ul>
             <button className="next-round" onClick={() => setGameState(prevState => ({ ...prevState, atCheckpoint: false }))}>Continue</button>
@@ -400,7 +412,7 @@ const handleCheckpointReached = () => {
           {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => {setGameState((prevState) => ({...prevState,gameIsActive:true})),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>}
           {gameState.isGameOver && <button className="play-again" onClick={resetGame}>Play again</button>}
           {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
-          {gameState.roundIsOver && !gameState.isGameOver ? <button  className="next-question" onClick={() => {updateQuestionIndex(),setGameState((prevState) => ({...prevState,roundIsOver:false}))}}>Next question</button>:null}
+          {gameState.roundIsOver && !gameState.isGameOver ? <button  className="next-question" onClick={handleNextQuestion} >Next question</button>:null}
           
           <button className="start-quiz" disabled = {powerUpStock.fiftyFiftyStock <= 0}
           onClick={() => 
