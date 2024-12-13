@@ -258,7 +258,7 @@ const initialGameState = {
           roundIsOver:true,
           playerLives:prevState.isShieldActive ? prevState.playerLives : newLivesRemaning,
           isGameOver: newLivesRemaning === 0 && prevState.coinFlipsAvailable === 0 ? true : prevState.isGameOver,
-          activeCoinFlip: newLivesRemaning === 0 && prevState.coinFlipsAvailable > 0 ? true : prevState.activeCoinFlip,
+          activeCoinFlip: newLivesRemaning === 0 && prevState.coinFlipsAvailable > 0 && !prevState.isShieldActive ? true : prevState.activeCoinFlip,
           hotStreak: 0,
           isShieldActive: prevState.isShieldActive ? false : prevState.isShieldActive
         };
@@ -431,7 +431,7 @@ const handleNextQuestion = () => {
         </div>
       ):(
         <> 
-          {gameState.activeCoinFlip && gameState.activeCoinFlip > 0 && <CoinflipLightbox 
+          {gameState.activeCoinFlip && gameState.coinFlipsAvailable > 0 &&  <CoinflipLightbox 
             isFlipping = {isFlipping} 
             setIsFlipping = {setIsFlipping} 
             flipResult = {flipResult}
