@@ -18,10 +18,21 @@ export const UserProvider = ({ children }) => {
   };
 
   const [quizData, setQuizData] = useState([]);
-  const [apiToken,setApiToken] = useState(null)
+  const [apiToken,setApiToken] = useState(null);
+  const [isFetching,setIsFetching] = useState(false);
 
   return (
-    <UserContext.Provider value={{ user, setUser: login, logout,quizData,setQuizData,apiToken,setApiToken }}>
+    <UserContext.Provider value={{ 
+      user, 
+      setUser: login, 
+      logout,
+      quizData,
+      setQuizData,
+      apiToken,
+      setApiToken,
+      isFetching,
+      setIsFetching
+      }}>
       {children}
     </UserContext.Provider>
   );

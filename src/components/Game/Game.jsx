@@ -6,7 +6,7 @@ import CoinflipLightbox from "./CoinflipLightbox";
 
 
 function Game() {
-  const { user, logout, quizData,setQuizData,apiToken,setApiToken } = useContext(UserContext);
+  const { user, logout, quizData,setQuizData,apiToken,setApiToken,isFetching,setIsFetching } = useContext(UserContext);
   
 const initialGameState = {
   questionIndex:0,
@@ -64,6 +64,7 @@ const initialGameState = {
   const [isFlipping,setIsFlipping] = useState(false);
   const [flipResult,setFlipResult] = useState(null);
 
+  const [tokenReady,setTokenReady] = useState(false);
 
   const renamePowerUps = {
     fiftyFiftyStock:"50/50",
@@ -73,9 +74,23 @@ const initialGameState = {
   }
   
   useEffect(() => {
-    fetchApiToken(setApiToken)
+   let isMounted = true;
+    const getToken = async () => {
+      if(isMounted){
+        const token = await fetchApiToken();
+        setApiToken(token);
+        setTokenReady(true);
+      }
+    }
+    getToken()
+    return () => {isMounted = false}
   },[])
-  
+
+  useEffect(() => {
+    if(!apiToken)return
+      fetchApiData(apiToken,setQuizData)
+  },[tokenReady])
+
   useEffect(() => {
     setCorrectFirst(Math.random() < 0.5);
   },[gameState.fiftyFiftyActive])
@@ -382,6 +397,7 @@ const handleNextQuestion = () => {
       gameState.questionIndex >= 10 && (gameState.questionIndex + 1)% 10 === 1 && gameState.atCheckpoint?(
         <div className="checkpoint">
             <h1>Checkpoint reached</h1>
+            <h2>Life gained + 1</h2>
             <h2>{checkpointInfo.length > 0 ? `Items gained`: "0 items gained"}</h2>
             <ul>
               {checkpointInfo.map(([key,value], index) => {
@@ -409,12 +425,12 @@ const handleNextQuestion = () => {
           {gameState.isGameOver && <h1>GAME IS OVER</h1>}
           <h2>Points:{gameState.correctAnswers}</h2>
           <h2>PLAYER LIVES :{gameState.playerLives}</h2>
-          {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => {setGameState((prevState) => ({...prevState,gameIsActive:true})),fetchApiData(apiToken,setQuizData)}}>Start Quiz</button>}
+          {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,gameIsActive:true}))}>Start Quiz</button>}
           {gameState.isGameOver && <button className="play-again" onClick={resetGame}>Play again</button>}
           {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
           {gameState.roundIsOver && !gameState.isGameOver ? <button  className="next-question" onClick={handleNextQuestion} >Next question</button>:null}
           
-          {gameState.gameIsActive &&
+          {gameState.gameIsActive && !gameState.isGameOver &&
             <div className="power-up-container">
             
               <button className="start-quiz" disabled = {powerUpStock.fiftyFiftyStock <= 0 || gameState.fiftyFiftyActive}
@@ -448,7 +464,7 @@ const handleNextQuestion = () => {
             </div>
           }
           
-          {!gameState.gameIsActive && <button className="logout" onClick={logout}>Logout</button>}
+          {(!gameState.gameIsActive || gameState.isGameOver) && <button className="logout" onClick={logout}>Logout</button>}
         </>
       )
       )

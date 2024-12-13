@@ -1,15 +1,11 @@
 // src/components/Game/GameAPI.js
+
 import axios from 'axios';
 import he from "he"
-import { data } from 'react-router-dom';
 
 
 
-  
  export const fetchApiData = (apiToken,setQuizData) => {
-  
-  
-    
     axios.get(`https://opentdb.com/api.php?amount=10&token=${apiToken}&type=multiple`).then((res) => {
       
      
@@ -35,10 +31,17 @@ import { data } from 'react-router-dom';
      })
   }
 
- export const fetchApiToken = (setApiToken) => {
-    axios.get("https://opentdb.com/api_token.php?command=request").then((res) => {
-        setApiToken(res.data.token)
-    })
+ export const fetchApiToken = async () => {
+    try{
+     const res = await axios.get("https://opentdb.com/api_token.php?command=request");
+        return res.data.token;
+    
+    } catch(error){
+      console.error("Error fetching token",error);
+      return
+    }
+    
+    
   }
 
 
