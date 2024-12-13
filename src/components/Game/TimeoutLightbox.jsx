@@ -29,6 +29,7 @@ function TimeoutLightbox(props){
                 <button title="Copy to clipboard" className="clipboard-button" onClick={handleCopy}> <FontAwesomeIcon className="copy-icon" icon={faCopy}/> </button>
                 <h2 className={`copy-feedback ${copied ? "show" : ""}`}>Copied</h2>
             </div>
+            <a className="chatgpt-link" href="https://chatgpt.com/" target="_blank">https://chatgpt.com/</a>
             <button onClick={resumeGame}>Ready to answer</button>
         </div>
     )

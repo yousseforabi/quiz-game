@@ -6,7 +6,7 @@ import CoinflipLightbox from "./CoinflipLightbox";
 
 
 function Game() {
-  const { user, logout, quizData,setQuizData,apiToken,setApiToken,isFetching,setIsFetching } = useContext(UserContext);
+  const { user, logout, quizData,setQuizData,apiToken,setApiToken} = useContext(UserContext);
   
 const initialGameState = {
   questionIndex:0,
@@ -419,7 +419,7 @@ const handleNextQuestion = () => {
           {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer} question ={quizData[gameState.questionIndex].question}/> : null}
           {gameState.isShieldActive && <h2>Shield is Active</h2>}
           <h2>Round {gameState.questionIndex + 1}</h2>
-          <h2>{gameState.timer}</h2>
+          <h2>{gameState.timer}s</h2>
           <h2>{gameState.doublePointsIndices.includes(gameState.questionIndex) ? "DOUBLE POINTS ROUND" : null}</h2>
           <h2>{gameState.hotStreak >= 3 ? "Hotstreak active": "Hotstreak not active"}</h2>
           {gameState.isGameOver && <h1>GAME IS OVER</h1>}
