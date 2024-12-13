@@ -35,7 +35,7 @@ const initialGameState = {
     isGameOver:false,
     roundIsOver:false,
     correctAnswers:0,
-    playerLives:5,
+    playerLives:55,
     timer:10,
     atCheckpoint:false,
     fiftyFiftyActive:false,
@@ -57,7 +57,9 @@ const initialGameState = {
     shieldStock:1
   })
 
-  const [correctFirst,setCorrectFirst] = useState()
+  const [checkpointInfo,setCheckpointInfo] = useState([]);
+
+  const [correctFirst,setCorrectFirst] = useState();
 
   const [isFlipping,setIsFlipping] = useState(false);
   const [flipResult,setFlipResult] = useState(null);
@@ -68,7 +70,7 @@ const initialGameState = {
   
   useEffect(() => {
     setCorrectFirst(Math.random() < 0.5);
-  },[gameState.questionIndex])
+  },[gameState.fiftyFiftyActive])
   
   useEffect(() => {
     if(quizData.length <= 0)return;
@@ -171,6 +173,7 @@ const initialGameState = {
       }
       if(nextIndex % 10 === 0){
           console.log("checkpoint reached")
+          console.log(handleCheckpointReached())
           setGameState((prevState) => {
             return {
               ...prevState,
@@ -321,6 +324,39 @@ const initialGameState = {
     );      
 };
 
+const handleCheckpointReached = () => {
+    
+  const powerUps = ["fiftyFiftyStock","googleTimeoutStock","skipQuestionStock","shieldStock"]
+
+  const itemsPool = [1, 1, 1, 1, 2, 2, 2, 3, 3, 4, 0];
+
+  const amountOfItems = itemsPool[Math.floor(Math.random() * itemsPool.length)]
+
+  let newItems = {}
+
+    for(let i = 0; i < amountOfItems; i++){
+      const randomItem = powerUps[Math.floor(Math.random() * powerUps.length)]
+      
+      if(newItems[randomItem]){
+        newItems[randomItem] += 1;
+      }else{
+        newItems[randomItem] = 1
+      }
+    }
+
+    setCheckpointInfo(Object.entries(newItems))
+
+   setPowerUpStock((prevState) => {
+      const updatedStock = {...prevState};
+      for(const [key,value] of Object.entries(newItems)){
+        updatedStock[key] = prevState[key] + value
+      }
+      return updatedStock
+   })
+}
+
+
+
  const resetGame = () => {
   setGameState(initialGameState);
   setQuizData([]);
@@ -334,6 +370,12 @@ const initialGameState = {
       gameState.questionIndex >= 10 && (gameState.questionIndex + 1)% 10 === 1 && gameState.atCheckpoint?(
         <div className="checkpoint">
             <h1>Checkpoint reached</h1>
+            <ul>
+              {checkpointInfo.map(([key,value], index) => {
+                return <li key={index}>{key} + {value}</li>
+                
+              })}
+            </ul>
             <button className="next-round" onClick={() => setGameState(prevState => ({ ...prevState, atCheckpoint: false }))}>Continue</button>
         </div>
       ):(
