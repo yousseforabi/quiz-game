@@ -66,6 +66,8 @@ const initialGameState = {
 
   const [tokenReady,setTokenReady] = useState(false);
 
+  const [userPlayedAgain,setUserPlayedAgain] = useState(false);
+
   const renamePowerUps = {
     fiftyFiftyStock:"50/50",
     googleTimeoutStock:"ChatGPT Timeout",
@@ -87,9 +89,24 @@ const initialGameState = {
   },[])
 
   useEffect(() => {
-    if(!apiToken)return
+    if(!apiToken)return;
+    
+    if(quizData.length === 0 && !userPlayedAgain){
       fetchApiData(apiToken,setQuizData)
-  },[tokenReady])
+      return;
+    }
+
+    if(userPlayedAgain){
+      fetchApiData(apiToken,setQuizData)
+      setTimeout(() => {
+        setUserPlayedAgain(false)
+      },1000)
+      
+      return;
+    }
+      
+    
+  },[tokenReady,userPlayedAgain])
 
   useEffect(() => {
     setCorrectFirst(Math.random() < 0.5);
@@ -388,9 +405,15 @@ const handleNextQuestion = () => {
   setGameState(initialGameState);
   setQuizData([]);
   setFlipResult(null);
-
+  setUserPlayedAgain(true);
+  setPowerUpStock(({
+    fiftyFiftyStock:1,
+    googleTimeoutStock:1,
+    skipQuestionStock:1,
+    shieldStock:1
+  }))
  }
-  
+  console.log(userPlayedAgain)
   return (
     <div className="game-container">
    { (user && user.loggedIn) ? (
