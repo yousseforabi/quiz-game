@@ -203,18 +203,22 @@ const initialGameState = {
 
     if(gameState.timer === 0 && !gameState.roundIsOver){
       clearTimeout(timerTimeout)
-      setGameState((prevState) => ({
-        ...prevState,
-        roundIsOver: true,
-        playerLives: prevState.playerLives - 1,
-        isGameOver: prevState.playerLives -1 === 0 ? true:prevState.isGameOver,
-        hotStreak:0
-      }))
-      return;
+      setGameState((prevState) => {
+        const newLivesRemaning = prevState.playerLives - 1;
+        return {
+          ...prevState,
+          roundIsOver:true,
+          playerLives:prevState.isShieldActive ? prevState.playerLives : newLivesRemaning,
+          isGameOver: newLivesRemaning === 0 && prevState.coinFlipsAvailable === 0 && !prevState.isShieldActive ? true : prevState.isGameOver,
+          activeCoinFlip: newLivesRemaning === 0 && prevState.coinFlipsAvailable > 0 && !prevState.isShieldActive ? true : prevState.activeCoinFlip,
+          hotStreak: 0,
+          isShieldActive: prevState.isShieldActive ? false : prevState.isShieldActive
+        };
+      })
     }
 
     return () => clearTimeout(timerTimeout)
-  },[gameState.timer,gameState.gameIsActive,gameState.roundIsOver,gameState.atCheckpoint,gameState.googleTimeoutActive])
+  },[gameState.timer,gameState.gameIsActive,gameState.roundIsOver,gameState.atCheckpoint,gameState.googleTimeoutActive,gameState.activeCoinFlip])
 
   const updateQuestionIndex = () => {
     
