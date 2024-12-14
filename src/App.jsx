@@ -10,7 +10,7 @@ function HomePage() {
   const { user } = useContext(UserContext);
 
   return (
-    <div className="home-background">
+    <div className="home-background" >
     <h1 className="start">
       Welcome {user ? user.username : "to the Game!"}
     </h1>
@@ -20,7 +20,7 @@ function HomePage() {
 
 function App() {
   return (
-    <UserProvider>
+    <UserProvider >
       <Router>
         <nav>
           <Link to="/">Home</Link> {" "} <Link to="/login">Login</Link> {" "}

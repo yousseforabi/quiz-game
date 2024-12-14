@@ -43,9 +43,10 @@ button {
   font-size: 80px;
 }
 .start{
-  color: #487add;
+  color: #0d3d9c;
   text-align: center;
   font-size: 80px;
+  margin: 0px auto;
 }
 /* About Page Styling */
 
