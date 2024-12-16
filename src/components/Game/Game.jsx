@@ -15,7 +15,7 @@ const initialGameState = {
   roundIsOver:false,
   correctAnswers:0,
   playerLives:5,
-  timer:15,
+  timer:20,
   atCheckpoint:false,
   fiftyFiftyActive:false,
   googleTimeoutActive:false,
@@ -36,7 +36,7 @@ const initialGameState = {
     roundIsOver:false,
     correctAnswers:0,
     playerLives:5,
-    timer:15,
+    timer:20,
     atCheckpoint:false,
     fiftyFiftyActive:false,
     googleTimeoutActive:false,
@@ -234,7 +234,7 @@ const generateRandomSeeds = () => {
      
      return {
         ...prevState,
-        timer:15,
+        timer:20,
         fiftyFiftyActive:false,
         questionIndex:prevState.questionIndex + 1,
         pointsMultiplier: isDoublePoints
