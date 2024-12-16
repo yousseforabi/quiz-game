@@ -10,11 +10,30 @@ function HomePage() {
   const { user } = useContext(UserContext);
 
   return (
-    <div className="home-background" >
-    <h1 className="start">
-      Welcome {user ? user.username : "to the Game!"}
-    </h1>
-  </div>
+    <div className="home-container">
+      {user ? (
+        // Content when the user is logged in
+        <>
+          <h1>Welcome to the AnswerMe Quiz!</h1>
+          <p>Time to get a new high score, <strong>{user.username}</strong>!</p>
+          <Link to="/game">
+            <button className="btn-play">Play Quiz</button>
+          </Link>
+        </>
+      ) : (
+        // Content when the user is not logged in
+        <>
+          <h1>Welcome to the AnswerMe Quiz!</h1>
+          <p>
+            Create an account to join the fun 
+            with exciting quizzes!
+          </p>
+          <Link to="/register">
+            <button className="btn-register">Register an Account</button>
+          </Link>
+        </>
+      )}
+    </div>
   );
 }
 
@@ -39,5 +58,6 @@ function App() {
     </UserProvider>
   );
 }
+
 
 export default App;
