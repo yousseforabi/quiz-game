@@ -443,7 +443,7 @@ const handleNextQuestion = () => {
             gameState = {gameState}
             setGameState = {setGameState}
           />}
-          {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer} question ={quizData[gameState.questionIndex].question}/> : null}
+          {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer}answers = {quizData[gameState.questionIndex].answers} question ={quizData[gameState.questionIndex].question}/> : null}
           {gameState.isShieldActive && <h2>Shield is Active</h2>}
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}s</h2>

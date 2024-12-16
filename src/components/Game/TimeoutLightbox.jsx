@@ -9,7 +9,13 @@ function TimeoutLightbox(props){
     const [copied,setCopied] = useState(false);
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(props.question).then(() => {
+        let copyText ="Give me the correct answer." + "\n" + props.question + "\n"
+
+        for(let i = 0; i < props.answers.length; i++){
+            copyText += props.answers[i] + (i === props.answers.length - 1 ? " ": ", ")
+        }
+
+        navigator.clipboard.writeText(copyText).then(() => {
             setCopied(true);
             setTimeout(() => setCopied(false),1500);
         })
