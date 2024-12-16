@@ -3,6 +3,12 @@ import { UserContext } from "../../contexts/UserContext";
 import { fetchApiData,fetchApiToken } from "./GameApi";
 import TimeoutLightbox from "./TimeoutLightbox";
 import CoinflipLightbox from "./CoinflipLightbox";
+import "./powerUp-buttons.css";
+
+import fiftyFiftySvg from "./fiftyFifty.svg";
+import chatGptSvg from "./chatgpt.svg";
+import skipSvg from "./skip-question.svg";
+import shieldSvg from "./shield.svg";
 
 
 function Game() {
@@ -466,32 +472,32 @@ const handleNextQuestion = () => {
           {gameState.gameIsActive && !gameState.isGameOver &&
             <div className="power-up-container">
             
-              <button className="start-quiz" disabled = {powerUpStock.fiftyFiftyStock <= 0 || gameState.fiftyFiftyActive}
+              <button className="power-up-button" disabled = {powerUpStock.fiftyFiftyStock <= 0 || gameState.fiftyFiftyActive}
               onClick={() => 
               {setGameState((prevState) => ({ ...prevState, fiftyFiftyActive: true }))
               setPowerUpStock((prevState) => ({...prevState,fiftyFiftyStock:prevState.fiftyFiftyStock - 1}))
-              }}>50/50 : {powerUpStock.fiftyFiftyStock}
+              }}> <img className="power-up-image" src={fiftyFiftySvg}></img> 
               </button>
-
-              <button className="start-quiz" disabled = {powerUpStock.googleTimeoutStock <= 0 }
+              
+              <button className="power-up-button" disabled = {powerUpStock.googleTimeoutStock <= 0 }
               onClick={() => 
               {setGameState((prevState) => ({...prevState,googleTimeoutActive:true}))
               setPowerUpStock((prevState) => ({...prevState,googleTimeoutStock:prevState.googleTimeoutStock - 1}))
-              }}>ChatGPT Timeout : {powerUpStock.googleTimeoutStock}
+              }}> <img className="power-up-image" src={chatGptSvg}></img>
               </button>
               
-              <button className="start-quiz" disabled = {powerUpStock.skipQuestionStock <= 0}
+              <button className="power-up-button" disabled = {powerUpStock.skipQuestionStock <= 0}
               onClick={() => 
               {updateQuestionIndex()
               setPowerUpStock((prevState) => ({...prevState,skipQuestionStock:prevState.skipQuestionStock - 1}))
-              }}>Skip Question : {powerUpStock.skipQuestionStock}
+              }}> <img className="power-up-image" src={skipSvg}></img>
               </button>
               
-              <button className="start-quiz" disabled = {powerUpStock.shieldStock <= 0 || gameState.isShieldActive}
+              <button className="power-up-button" disabled = {powerUpStock.shieldStock <= 0 || gameState.isShieldActive}
               onClick={() => 
               {setGameState((prevState) => ({...prevState,isShieldActive:true}))
               setPowerUpStock((prevState) => ({...prevState,shieldStock:prevState.shieldStock - 1}))
-              }}>Shield : {powerUpStock.shieldStock}
+              }}> <img className="power-up-image" src={shieldSvg}></img>
               </button>
          
             </div>
