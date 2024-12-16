@@ -150,7 +150,7 @@ const initialGameState = {
  
   useEffect(() => {
     console.log(gameState.pointsMultiplier)
-    if(gameState.questionIndex === quizData.length -1){
+    if(gameState.questionIndex === quizData.length - 3){
       fetchApiData(apiToken,setQuizData); 
     }
     if(gameState.questionIndex % 10 === 0 && gameState.questionIndex > 0){
