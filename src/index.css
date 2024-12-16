@@ -215,6 +215,7 @@ button {
   width: 300px;
   margin: auto;
   margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 .login h2 {
@@ -307,5 +308,30 @@ button:active {
 
 .btn-register:hover {
   background-color: #c0392b;
+}
+/* footer */
+.footer {
+  background-color: #b8c7cb;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+.footer a {
+  color: #487add;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
 }
 
