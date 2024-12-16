@@ -46,9 +46,9 @@ button {
   cursor: pointer;
 }
 .welcome{
-  color: #487add;
+  color: #b70f0f;
   text-align: center;
-  font-size: 80px;
+  font-size: 70px;
 }
 .start{
   color: #0d3d9c;
@@ -311,7 +311,7 @@ button:active {
 }
 /* footer */
 .footer {
-  background-color: #b8c7cb;
+  background-color:#487add;
   color: white;
   text-align: center;
   padding: 20px 0;
@@ -326,7 +326,7 @@ button:active {
 }
 
 .footer a {
-  color: #487add;
+  color: #ffffff;
   text-decoration: none;
   margin: 0 5px;
 }
