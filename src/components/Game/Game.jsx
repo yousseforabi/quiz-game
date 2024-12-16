@@ -112,40 +112,46 @@ const initialGameState = {
     setCorrectFirst(Math.random() < 0.5);
   },[gameState.fiftyFiftyActive])
   
+
+const generateRandomSeeds = () => {
+  let fetchedQuestions = quizData.slice(gameState.questionIndex);
+
+  const randomChance = Math.random() * 100;
+  let numDoublePoints = 0;
+  let luckIndex = null;
+  
+  if(randomChance < 20){
+    numDoublePoints = 0;
+  }else if (randomChance < 60){
+    numDoublePoints = 1;
+  }else{
+    numDoublePoints = 2;
+  }
+  
+  if(randomChance < 30){
+    const randomIndex = Math.floor(Math.random() * (fetchedQuestions.length) + gameState.questionIndex );
+    luckIndex = randomIndex;
+  }
+
+  let tempDoublePointsIndices = new Set();
+
+  while(tempDoublePointsIndices.size < numDoublePoints){
+    const randomIndex = Math.floor(Math.random() * (fetchedQuestions.length) + gameState.questionIndex );
+    tempDoublePointsIndices.add(randomIndex);
+  }
+
+  setGameState((prevState) => ({
+    ...prevState,
+    doublePointsIndices:Array.from(tempDoublePointsIndices),
+    luckOfTheDrawIndex: luckIndex
+  }))
+}
+
   useEffect(() => {
     if(quizData.length <= 0)return;
     
-    let fetchedQuestions = quizData.slice(gameState.questionIndex);
-
-    const randomChance = Math.random() * 100;
-    let numDoublePoints = 0;
-    let luckIndex = null;
-    
-    if(randomChance < 20){
-      numDoublePoints = 0;
-    }else if (randomChance < 80){
-      numDoublePoints = 1;
-    }else{
-      numDoublePoints = 2;
-    }
-    
-    if(randomChance < 30){
-      const randomIndex = Math.floor(Math.random() * (fetchedQuestions.length) + gameState.questionIndex );
-      luckIndex = randomIndex;
-    }
-
-    let tempDoublePointsIndices = new Set();
-
-    while(tempDoublePointsIndices.size < numDoublePoints){
-      const randomIndex = Math.floor(Math.random() * (fetchedQuestions.length) + gameState.questionIndex );
-      tempDoublePointsIndices.add(randomIndex);
-    }
-
-    setGameState((prevState) => ({
-      ...prevState,
-      doublePointsIndices:Array.from(tempDoublePointsIndices),
-      luckOfTheDrawIndex: luckIndex
-    }))
+    generateRandomSeeds()
+   
   },[quizData])
  
   useEffect(() => {
