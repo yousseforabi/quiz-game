@@ -472,7 +472,7 @@ const handleNextQuestion = () => {
           {gameState.gameIsActive && !gameState.isGameOver &&
             <div className="power-up-container">
             
-              <button className="power-up-button" disabled = {powerUpStock.fiftyFiftyStock <= 0 || gameState.fiftyFiftyActive}
+              <button className="power-up-button" disabled = {powerUpStock.fiftyFiftyStock <= 0 || gameState.fiftyFiftyActive || gameState.roundIsOver}
               onClick={() => 
               {setGameState((prevState) => ({ ...prevState, fiftyFiftyActive: true }))
               setPowerUpStock((prevState) => ({...prevState,fiftyFiftyStock:prevState.fiftyFiftyStock - 1}))
@@ -481,7 +481,7 @@ const handleNextQuestion = () => {
               <span className={`power-up-stock ${powerUpStock.fiftyFiftyStock > 0 ? "have-stock" : "no-stock"}`}>{powerUpStock.fiftyFiftyStock}</span>
               </button>
               
-              <button className="power-up-button" disabled = {powerUpStock.googleTimeoutStock <= 0 }
+              <button className="power-up-button" disabled = {powerUpStock.googleTimeoutStock <= 0 || gameState.roundIsOver }
               onClick={() => 
               {setGameState((prevState) => ({...prevState,googleTimeoutActive:true}))
               setPowerUpStock((prevState) => ({...prevState,googleTimeoutStock:prevState.googleTimeoutStock - 1}))
@@ -490,7 +490,7 @@ const handleNextQuestion = () => {
                <span className={`power-up-stock ${powerUpStock.googleTimeoutStock > 0 ? "have-stock" : "no-stock"}`} >{powerUpStock.googleTimeoutStock}</span>
               </button>
               
-              <button className="power-up-button" disabled = {powerUpStock.skipQuestionStock <= 0}
+              <button className="power-up-button" disabled = {powerUpStock.skipQuestionStock <= 0 || gameState.roundIsOver}
               onClick={() => 
               {updateQuestionIndex()
               setPowerUpStock((prevState) => ({...prevState,skipQuestionStock:prevState.skipQuestionStock - 1}))
@@ -499,7 +499,7 @@ const handleNextQuestion = () => {
               <span  className={`power-up-stock ${powerUpStock.skipQuestionStock > 0 ? "have-stock" : "no-stock"}`}>{powerUpStock.skipQuestionStock}</span>
               </button>
               
-              <button className="power-up-button" disabled = {powerUpStock.shieldStock <= 0 || gameState.isShieldActive}
+              <button className="power-up-button" disabled = {powerUpStock.shieldStock <= 0 || gameState.isShieldActive ||gameState.roundIsOver}
               onClick={() => 
               {setGameState((prevState) => ({...prevState,isShieldActive:true}))
               setPowerUpStock((prevState) => ({...prevState,shieldStock:prevState.shieldStock - 1}))
