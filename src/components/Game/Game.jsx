@@ -4,6 +4,7 @@ import { fetchApiData,fetchApiToken } from "./GameApi";
 import TimeoutLightbox from "./TimeoutLightbox";
 import CoinflipLightbox from "./CoinflipLightbox";
 import "./powerUp-buttons.css";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 import fiftyFiftySvg from "./fiftyFifty.svg";
 import chatGptSvg from "./chatgpt.svg";
@@ -457,6 +458,12 @@ const handleNextQuestion = () => {
           />}
           {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer}answers = {quizData[gameState.questionIndex].answers} question ={quizData[gameState.questionIndex].question}/> : null}
           {gameState.isShieldActive && <h2>Shield is Active</h2>}
+          <DotLottieReact 
+            src= "https://lottie.host/9dfccc48-7538-47e8-a86d-47ee219be9d1/aFET9NPLzR.lottie"
+            loop 
+            autoplay 
+            style = {{width:"100px", height:"50px"}}
+          />
           <h2>Round {gameState.questionIndex + 1}</h2>
           <h2>{gameState.timer}s</h2>
           <h2>{gameState.doublePointsIndices.includes(gameState.questionIndex) ? "DOUBLE POINTS ROUND" : null}</h2>
