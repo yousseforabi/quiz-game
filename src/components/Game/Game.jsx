@@ -5,11 +5,12 @@ import TimeoutLightbox from "./TimeoutLightbox";
 import CoinflipLightbox from "./CoinflipLightbox";
 import "./powerUp-buttons.css";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-
+import { CSSTransition } from "react-transition-group";
 import fiftyFiftySvg from "./fiftyFifty.svg";
 import chatGptSvg from "./chatgpt.svg";
 import skipSvg from "./skip-question.svg";
 import shieldSvg from "./shield.svg";
+import { use } from "react";
 
 
 function Game() {
@@ -42,7 +43,7 @@ const initialGameState = {
     isGameOver:false,
     roundIsOver:false,
     correctAnswers:0,
-    playerLives:5,
+    playerLives:2,
     timer:20,
     atCheckpoint:false,
     fiftyFiftyActive:false,
@@ -74,6 +75,8 @@ const initialGameState = {
   const [tokenReady,setTokenReady] = useState(false);
 
   const [userPlayedAgain,setUserPlayedAgain] = useState(false);
+
+  
 
   const renamePowerUps = {
     fiftyFiftyStock:"50/50",
@@ -119,6 +122,8 @@ const initialGameState = {
     setCorrectFirst(Math.random() < 0.5);
   },[gameState.fiftyFiftyActive])
   
+
+
 
 const generateRandomSeeds = () => {
   let fetchedQuestions = quizData.slice(gameState.questionIndex);
@@ -430,7 +435,8 @@ const handleNextQuestion = () => {
     shieldStock:1
   }))
  }
-  console.log(userPlayedAgain)
+ 
+  
   return (
     <div className="game-container">
    { (user && user.loggedIn) ? (
@@ -448,14 +454,24 @@ const handleNextQuestion = () => {
         </div>
       ):(
         <> 
-          {gameState.activeCoinFlip && gameState.coinFlipsAvailable > 0 &&  <CoinflipLightbox 
-            isFlipping = {isFlipping} 
-            setIsFlipping = {setIsFlipping} 
-            flipResult = {flipResult}
-            setFlipResult = {setFlipResult}
-            gameState = {gameState}
-            setGameState = {setGameState}
-          />}
+        
+            <CSSTransition
+              in={gameState.activeCoinFlip}
+              timeout={1200}
+              classNames="lightbox-anim"
+              unmountOnExit
+            >
+              <CoinflipLightbox
+                isFlipping={isFlipping}
+                setIsFlipping={setIsFlipping}
+                flipResult={flipResult}
+                setFlipResult={setFlipResult}
+                gameState={gameState}
+                setGameState={setGameState}
+              />
+            </CSSTransition>
+          
+
           {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer}answers = {quizData[gameState.questionIndex].answers} question ={quizData[gameState.questionIndex].question}/> : null}
           {gameState.isShieldActive && <h2>Shield is Active</h2>}
           <DotLottieReact 
