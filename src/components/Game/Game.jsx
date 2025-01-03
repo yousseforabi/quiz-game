@@ -435,7 +435,10 @@ const handleNextQuestion = () => {
     shieldStock:1
   }))
  }
- 
+ if(quizData.length > 0 ){
+  console.log(quizData[gameState.questionIndex].correctAnswer)
+ }
+
   
   return (
     <div className="game-container">
@@ -474,18 +477,21 @@ const handleNextQuestion = () => {
 
           {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer}answers = {quizData[gameState.questionIndex].answers} question ={quizData[gameState.questionIndex].question}/> : null}
           {gameState.isShieldActive && <h2>Shield is Active</h2>}
-          <DotLottieReact 
+          
+          <h2>Round {gameState.questionIndex + 1}</h2>
+          <h2>{gameState.timer}s</h2>
+          <h2>{gameState.doublePointsIndices.includes(gameState.questionIndex) ? "DOUBLE POINTS ROUND" : null}</h2>
+          {gameState.isGameOver && <h1>GAME IS OVER</h1>}
+          <div>
+            {gameState.hotStreak >= 3 ? <DotLottieReact 
             src= "https://lottie.host/9dfccc48-7538-47e8-a86d-47ee219be9d1/aFET9NPLzR.lottie"
             loop 
             autoplay 
             style = {{width:"100px", height:"50px"}}
-          />
-          <h2>Round {gameState.questionIndex + 1}</h2>
-          <h2>{gameState.timer}s</h2>
-          <h2>{gameState.doublePointsIndices.includes(gameState.questionIndex) ? "DOUBLE POINTS ROUND" : null}</h2>
-          <h2>{gameState.hotStreak >= 3 ? "Hotstreak active": "Hotstreak not active"}</h2>
-          {gameState.isGameOver && <h1>GAME IS OVER</h1>}
-          <h2>Points:{gameState.correctAnswers}</h2>
+          />:null}
+            <h2>Points:{gameState.correctAnswers}</h2>
+          </div>
+          
           <h2>PLAYER LIVES :{gameState.playerLives}</h2>
           {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,gameIsActive:true}))}>Start Quiz</button>}
           {gameState.isGameOver && <button className="play-again" onClick={resetGame}>Play again</button>}
