@@ -12,6 +12,7 @@
     border-radius: 50%;
     background-color: white;
     border:4px solid black;
+    transition: scale 0.2s ease-in-out;
 }
 
 
@@ -38,4 +39,8 @@
 }
 .no-stock{
     background-color: red;
+}
+
+.power-up-button:hover{
+    scale: 1.1;
 }
