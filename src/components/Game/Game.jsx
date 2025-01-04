@@ -460,7 +460,7 @@ const handleNextQuestion = () => {
             </ul>
             <button className="next-round" onClick={() => setGameState(prevState => ({ ...prevState, atCheckpoint: false }))}>Continue</button>
         </div>
-      ):(
+      ): gameState.gameIsActive ? (
         <> 
         
             <CSSTransition
@@ -546,6 +546,11 @@ const handleNextQuestion = () => {
           }
           
           {(!gameState.gameIsActive || gameState.isGameOver) && <button className="logout" onClick={logout}>Logout</button>}
+        </>
+      ):(
+        <>
+          <h1>hello</h1>
+          {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,gameIsActive:true}))}>Start Quiz</button>}
         </>
       )
       )
