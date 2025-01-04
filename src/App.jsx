@@ -5,16 +5,36 @@ import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Game from "./components/Game/Game";
 import About from "./components/Auth/About";
+import Footer from "./components/Footer";
 
 function HomePage() {
   const { user } = useContext(UserContext);
 
   return (
-    <div className="home-background">
-    <h1 className="start">
-      Welcome {user ? user.username : "to the Game!"}
-    </h1>
-  </div>
+    <div className="home-container">
+      {user ? (
+        // Content when the user is logged in
+        <>
+          <h1>Welcome to the AnswerMe Quiz!</h1>
+          <p>Time to get a new high score, <strong>{user.username}</strong>!</p>
+          <Link to="/game">
+            <button className="btn-play">Play Quiz</button>
+          </Link>
+        </>
+      ) : (
+        // Content when the user is not logged in
+        <>
+          <h1>Welcome to the AnswerMe Quiz!</h1>
+          <p>
+            Create an account to join the fun 
+            with exciting quizzes!
+          </p>
+          <Link to="/register">
+            <button className="btn-register">Register an Account</button>
+          </Link>
+        </>
+      )}
+    </div>
   );
 }
 
@@ -23,21 +43,24 @@ function App() {
     <UserProvider>
       <Router>
         <nav>
-          <Link to="/">Home</Link> {" "} <Link to="/login">Login</Link> {" "}
-          <Link to="/register">Register</Link> {" "}  <Link to="/game">Game</Link>  {" "}
+          <Link to="/">Home</Link> {" "} 
+          <Link to="/login">Login</Link> {" "} 
+          <Link to="/register">Register</Link> {" "}  
+          <Link to="/game">Game</Link>  {" "} 
           <Link to="/about">About</Link> 
         </nav>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/" element={<h1 className="start">Welcome to the Game!</h1>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/game" element={<Game />} />
           <Route path="/about" element={<About />} />
         </Routes>
+        <Footer path="/footer" /> 
       </Router>
     </UserProvider>
   );
 }
+
 
 export default App;
