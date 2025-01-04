@@ -10,7 +10,7 @@ import fiftyFiftySvg from "./fiftyFifty.svg";
 import chatGptSvg from "./chatgpt.svg";
 import skipSvg from "./skip-question.svg";
 import shieldSvg from "./shield.svg";
-import { use } from "react";
+
 
 
 function Game() {
@@ -43,7 +43,7 @@ const initialGameState = {
     isGameOver:false,
     roundIsOver:false,
     correctAnswers:0,
-    playerLives:2,
+    playerLives:50,
     timer:20,
     atCheckpoint:false,
     fiftyFiftyActive:false,
@@ -79,10 +79,10 @@ const initialGameState = {
   
 
   const renamePowerUps = {
-    fiftyFiftyStock:"50/50",
-    googleTimeoutStock:"ChatGPT Timeout",
-    skipQuestionStock:"Skip Question",
-    shieldStock: "Shield"
+    fiftyFiftyStock:fiftyFiftySvg,
+    googleTimeoutStock:chatGptSvg,
+    skipQuestionStock:skipSvg,
+    shieldStock: shieldSvg
   }
   
   useEffect(() => {
@@ -450,7 +450,12 @@ const handleNextQuestion = () => {
             <h2>{checkpointInfo.length > 0 ? `Items gained`: "0 items gained"}</h2>
             <ul>
               {checkpointInfo.map(([key,value], index) => {
-                return <li key={index}>{renamePowerUps[key]} + {value}</li>
+                return <div className="item-gained-container">
+                <h3 className="item-gained-value">{value}x</h3>
+                <li className="power-up-button" key={index}>
+                  <img className="power-up-image" src={renamePowerUps[key]}></img>
+                </li>
+                </div>
               })}
             </ul>
             <button className="next-round" onClick={() => setGameState(prevState => ({ ...prevState, atCheckpoint: false }))}>Continue</button>

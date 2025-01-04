@@ -258,5 +258,15 @@ button {
   align-items: center;
   gap: 20px;
   margin-top: 30px;
-  
+}
+.item-gained-container{
+  width: 100%;
+  max-width: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.item-gained-value{
+  font-size: 2rem;
+  margin-right: 1em;
 }
