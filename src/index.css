@@ -156,16 +156,29 @@ button {
 }
 
 .game-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows: repeat(6,1fr);
+  place-items:center;
+  min-height: 600px;
   padding: 20px;
 }
-
-.quiz-question h2 {
+.quiz-round{
   text-align: center;
+  grid-area: 2 / 2 / 1 / 3;
 }
-
+.quiz-question{
+  grid-area: 3 / 2 / 4 / 2;
+}
+.quiz-timer{
+  grid-area: 2 / 2 / 2 / 3;
+}
+.quiz-points{
+  grid-area: 1 / 1 / 1 / 2;
+}
+.quiz-lives{
+  grid-area: 1 / 3 / 1 / 4;
+}
 .quiz-answer {
   padding: 10px 20px;
   margin: 5px;
@@ -197,7 +210,9 @@ button {
   cursor: pointer;
   transition: transform 0.2s ease;
 }
-
+.next-question{
+  grid-area: 6 / 2 / 6 / 3;
+}
 .next-round:hover, .start-quiz:hover, .play-again:hover, .next-question:hover, .logout:hover {
   transform: scale(1.05);
 }
@@ -210,6 +225,7 @@ button {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  grid-area: 4 / 2 / 4 / 3;
 }
 .answers-container{
   display: flex;
@@ -353,7 +369,7 @@ button:active {
   justify-content: center;
   align-items: center;
   gap: 20px;
-  margin-top: 30px;
+  grid-area: 5 / 2 / 5 / 3;
 }
 .item-gained-container{
   width: 100%;

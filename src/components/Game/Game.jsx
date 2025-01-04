@@ -325,7 +325,6 @@ const generateRandomSeeds = () => {
     }
     return (
       <div className="quiz-content-container" key={gameState.questionIndex}>
-          <h2>{currentQuestion.question}</h2>
           <div className="answers-container">
             {correctButtonsArray}
           </div>
@@ -340,8 +339,6 @@ const generateRandomSeeds = () => {
 
     return (
       <div className="quiz-content-container">
-        <h2>{currentQuestion.question}</h2>
-        
         {correctFirst ? (
           <div className="answers-container">
             <button
@@ -482,22 +479,22 @@ const handleNextQuestion = () => {
           {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer}answers = {quizData[gameState.questionIndex].answers} question ={quizData[gameState.questionIndex].question}/> : null}
           {gameState.isShieldActive && <h2>Shield is Active</h2>}
           
-          <h2>Question {gameState.questionIndex + 1}</h2>
-          <h2>Time left: {gameState.timer}s</h2>
-          {quizData.length > 0 && <h2>{quizData[gameState.questionIndex].question}</h2>}
+          <h2 className="quiz-round">Question {gameState.questionIndex + 1}</h2>
+          <h2 className="quiz-timer">Time left: {gameState.timer}s</h2>
+          {quizData.length > 0 && <h2 className="quiz-question">{quizData[gameState.questionIndex].question}</h2>}
           {gameState.doublePointsIndices.includes(gameState.questionIndex) ? <h2>Double points round</h2> : null}
           {gameState.isGameOver && <h1>GAME IS OVER</h1>}
-          <div>
+          <div className="quiz-points">
             {gameState.hotStreak >= 3 ? <DotLottieReact 
             src= "https://lottie.host/9dfccc48-7538-47e8-a86d-47ee219be9d1/aFET9NPLzR.lottie"
             loop 
             autoplay 
             style = {{width:"100px", height:"50px"}}
           />:null}
-            <h2>Points:{gameState.correctAnswers}</h2>
+            <h2 >Points:{gameState.correctAnswers}</h2>
           </div>
           
-          <h2>PLAYER LIVES :{gameState.playerLives}</h2>
+          <h2 className="quiz-lives">PLAYER LIVES :{gameState.playerLives}</h2>
           {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,gameIsActive:true}))}>Start Quiz</button>}
           {gameState.isGameOver && <button className="play-again" onClick={resetGame}>Play again</button>}
           {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
