@@ -4,6 +4,8 @@ body {
   font-family: "Poppins", serif;
   font-weight: 100;
   font-style: normal;
+  position: relative;
+  min-height: 100vh;
   
 }
 .poppins-thin {
@@ -262,7 +264,7 @@ button {
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: 90vh;
+  min-height: 800px;
   padding: 20px;
   background-image: url('./assets/images/quizgame.jpg'); 
   background-size: cover;
@@ -326,7 +328,7 @@ button:active {
   color: white;
   text-align: center;
   padding: 20px 0;
-  position: relative;
+  position: absolute;
   bottom: 0;
   width: 100%;
 }

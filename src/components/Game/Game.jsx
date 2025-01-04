@@ -549,7 +549,7 @@ const handleNextQuestion = () => {
         </>
       ):(
         <>
-          <h1>hello</h1>
+          <h1>AnswerMe Quiz!</h1>
           {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,gameIsActive:true}))}>Start Quiz</button>}
         </>
       )
