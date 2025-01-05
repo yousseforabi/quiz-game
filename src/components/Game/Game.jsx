@@ -43,7 +43,7 @@ const initialGameState = {
     isGameOver:false,
     roundIsOver:false,
     correctAnswers:0,
-    playerLives:2,
+    playerLives:5,
     timer:20,
     atCheckpoint:false,
     fiftyFiftyActive:false,
@@ -433,6 +433,7 @@ const handleNextQuestion = () => {
  }
  if(quizData.length > 0 ){
   console.log(quizData[gameState.questionIndex].correctAnswer)
+
  }
 
   
@@ -444,7 +445,7 @@ const handleNextQuestion = () => {
             <h1>Checkpoint reached</h1>
             <h2>Life gained + 1</h2>
             <h2>{checkpointInfo.length > 0 ? `Items gained`: "0 items gained"}</h2>
-            <ul>
+            <ul className="item-gained-list">
               {checkpointInfo.map(([key,value], index) => {
                 return <div className="item-gained-container">
                 <h3 className="item-gained-value">{value}x</h3>
@@ -456,9 +457,9 @@ const handleNextQuestion = () => {
             </ul>
             <button className="next-round" onClick={() => setGameState(prevState => ({ ...prevState, atCheckpoint: false }))}>Continue</button>
         </div>
-      ): gameState.gameIsActive ? (
-        <> 
-        
+      ): !gameState.isGameOver && gameState.gameIsActive ? (
+        <div className="game-content-container"> 
+            
             <CSSTransition
               in={gameState.activeCoinFlip}
               timeout={1200}
@@ -496,7 +497,6 @@ const handleNextQuestion = () => {
           
           <h2 className="quiz-lives">PLAYER LIVES :{gameState.playerLives}</h2>
           {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,gameIsActive:true}))}>Start Quiz</button>}
-          {gameState.isGameOver && <button className="play-again" onClick={resetGame}>Play again</button>}
           {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
           {gameState.roundIsOver && !gameState.isGameOver ? <button  className="next-question" onClick={handleNextQuestion} >Next question</button>:null}
           
@@ -542,12 +542,20 @@ const handleNextQuestion = () => {
             </div>
           }
           
-          {(!gameState.gameIsActive || gameState.isGameOver) && <button className="logout" onClick={logout}>Logout</button>}
+          
+        </div>
+      ):gameState.gameIsActive && gameState.isGameOver ? (
+        <>
+          <h1>Game is over xd</h1>
+          <h2>You're Score : {gameState.correctAnswers}</h2>
+          <button className="play-again" onClick={resetGame}>Play again</button>
+          <button className="logout" onClick={logout}>Logout</button>
         </>
       ):(
         <>
           <h1>AnswerMe Quiz!</h1>
           {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,gameIsActive:true}))}>Start Quiz</button>}
+          <button className="logout" onClick={logout}>Logout</button>
         </>
       )
       )
