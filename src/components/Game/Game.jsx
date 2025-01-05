@@ -490,7 +490,7 @@ const handleNextQuestion = () => {
             src= "https://lottie.host/9dfccc48-7538-47e8-a86d-47ee219be9d1/aFET9NPLzR.lottie"
             loop 
             autoplay 
-            style = {{width:"100px", height:"50px"}}
+            style = {{width:"70px", height:"35px"}}
           />:null}
             <h2 >Points:{gameState.correctAnswers}</h2>
           </div>
