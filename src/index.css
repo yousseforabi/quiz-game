@@ -162,7 +162,6 @@ button {
   align-items: center;
   min-height: 600px;
   padding: 20px;
-
 }
 .game-content-container{
   display: grid;
@@ -173,6 +172,7 @@ button {
   width: 100%;
   max-width: 1400px;
   margin-bottom: 77px;
+  
 }
 .quiz-round{
   text-align: center;
