@@ -187,7 +187,14 @@ button {
 
 }
 .quiz-timer{
+  min-width: 50px;
+  text-align: center;
+}
+.quiz-timer-container{
   grid-area: 2 / 2 / 2 / 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .quiz-points{
   grid-area: 1 / 1 / 1 / 2;

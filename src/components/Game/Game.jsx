@@ -481,7 +481,10 @@ const handleNextQuestion = () => {
           {gameState.isShieldActive && <h2>Shield is Active</h2>}
           
           <h2 className="quiz-round">Question {gameState.questionIndex + 1}</h2>
-          <h2 className="quiz-timer">Time left: {gameState.timer === 0 ? gameState.timer:gameState.timer.toString().padStart(2,"0")}s</h2>
+          <div className="quiz-timer-container"> 
+            <h2>Time left: </h2>
+            <h2 className="quiz-timer">{gameState.timer === 0 ? gameState.timer:gameState.timer.toString().padStart(2,"0")}s</h2>
+          </div>
           {quizData.length > 0 && <h2 className="quiz-question">{quizData[gameState.questionIndex].question}</h2>}
           {gameState.doublePointsIndices.includes(gameState.questionIndex) ? <h2>Double points round</h2> : null}
           {gameState.isGameOver && <h1>GAME IS OVER</h1>}
