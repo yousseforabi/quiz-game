@@ -5,12 +5,12 @@ import TimeoutLightbox from "./TimeoutLightbox";
 import CoinflipLightbox from "./CoinflipLightbox";
 import "./powerUp-buttons.css";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-import { CSSTransition } from "react-transition-group";
+import { CSSTransition,TransitionGroup } from "react-transition-group";
 import fiftyFiftySvg from "./fiftyFifty.svg";
 import chatGptSvg from "./chatgpt.svg";
 import skipSvg from "./skip-question.svg";
 import shieldSvg from "./shield.svg";
-
+import heartSvg from "./heart-svg.svg";
 
 
 function Game() {
@@ -43,7 +43,7 @@ const initialGameState = {
     isGameOver:false,
     roundIsOver:false,
     correctAnswers:0,
-    playerLives:2,
+    playerLives:5,
     timer:20,
     atCheckpoint:false,
     fiftyFiftyActive:false,
@@ -431,6 +431,24 @@ const handleNextQuestion = () => {
     shieldStock:1
   }))
  }
+
+
+const renderHearts = () => {
+  const hearts = Array.from({ length: gameState.playerLives }, (_, i) => (
+    <CSSTransition
+        key={i} 
+        timeout={500} 
+        classNames="heart-fade" 
+        unmountOnExit 
+      >
+        <img src={heartSvg} className="heart-image"></img>
+      </CSSTransition>
+  ));
+  return hearts;
+  
+}
+
+
  if(quizData.length > 0 ){
   console.log(quizData[gameState.questionIndex].correctAnswer)
 
@@ -497,8 +515,13 @@ const handleNextQuestion = () => {
           />:null}
             <h2 >Points:{gameState.correctAnswers}</h2>
           </div>
+          <div className="quiz-lives-container">
+          <h2 className="quiz-lives">Life:</h2>
+          <TransitionGroup className="hearts-container">
+            {renderHearts()}
+          </TransitionGroup>
+          </div>
           
-          <h2 className="quiz-lives">Life:{gameState.playerLives}</h2>
           {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,gameIsActive:true}))}>Start Quiz</button>}
           {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
           {gameState.roundIsOver && !gameState.isGameOver ? <button  className="next-question" onClick={handleNextQuestion} >Next question</button>:null}
@@ -556,7 +579,7 @@ const handleNextQuestion = () => {
         </>
       ):(
         <>
-          <h1>AnswerMe Quiz!</h1>
+          <h1 className="game-start-header">AnswerMe Quiz!</h1>
           {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,gameIsActive:true}))}>Start Quiz</button>}
           <button className="logout" onClick={logout}>Logout</button>
         </>

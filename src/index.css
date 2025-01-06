@@ -162,7 +162,7 @@ button {
   align-items: center;
   padding: 20px;
   min-height: 80vh;
-  background-image: linear-gradient(to right, #3961B0, #2c4a79);
+  background-image: linear-gradient(to right, #3961B0, #3961B0);
   
 }
 .game-content-container{
@@ -180,6 +180,8 @@ button {
   text-align: center;
   grid-area: 2 / 2 / 1 / 3;
   color: white;
+  width: 164px;
+  text-align: start;
 }
 .quiz-question{
   grid-area: 3 / 1 / 4 / 4;
@@ -193,6 +195,9 @@ button {
 .quiz-timer{
   min-width: 50px;
   text-align: center;
+  background-color: black;
+  padding: 3px 10px;
+  border-radius: 5px;
 }
 .quiz-timer-container{
   grid-area: 2 / 2 / 2 / 3;
@@ -200,6 +205,7 @@ button {
   justify-content: center;
   align-items: center;
   color: white;
+  gap: 10px;
 }
 .quiz-points{
   grid-area: 1 / 1 / 1 / 2;
@@ -212,7 +218,6 @@ button {
   margin: 0;
 }
 .quiz-lives{
-  grid-area: 1 / 3 / 1 / 4;
   color: white;
 }
 .quiz-answer {
@@ -224,7 +229,6 @@ button {
   transition: background-color 0.3s ease-in-out;
   width: 100%;
   min-height: 50px;
-  
   font-size: 1.2rem;
 }
 
@@ -279,9 +283,8 @@ button {
   place-items:center; 
   grid-auto-rows: minmax(50px,auto);
   align-items: stretch;
-  
-  
 }
+
 .login {
   display: flex;
   flex-direction: column;
@@ -436,4 +439,37 @@ button:active {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+.game-start-header{
+  color: white;
+}
+
+.heart-image{
+  width: 30px;
+  height: 30px;
+}
+.quiz-lives-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-area: 1 / 3 / 1 / 4;
+  gap: 10px;
+  width: 100%;
+  max-width: 250px;
+}
+.hearts-container{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 4px;
+  min-width: 170px;
+}
+.heart-fade-exit {
+  opacity: 1;
+}
+
+.heart-fade-exit-active {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 500ms ease-out, transform 500ms ease-out;
 }
