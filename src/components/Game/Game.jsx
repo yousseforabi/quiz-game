@@ -43,7 +43,7 @@ const initialGameState = {
     isGameOver:false,
     roundIsOver:false,
     correctAnswers:0,
-    playerLives:50,
+    playerLives:2,
     timer:20,
     atCheckpoint:false,
     fiftyFiftyActive:false,
@@ -498,7 +498,7 @@ const handleNextQuestion = () => {
             <h2 >Points:{gameState.correctAnswers}</h2>
           </div>
           
-          <h2 className="quiz-lives">PLAYER LIVES :{gameState.playerLives}</h2>
+          <h2 className="quiz-lives">Life:{gameState.playerLives}</h2>
           {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,gameIsActive:true}))}>Start Quiz</button>}
           {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
           {gameState.roundIsOver && !gameState.isGameOver ? <button  className="next-question" onClick={handleNextQuestion} >Next question</button>:null}
