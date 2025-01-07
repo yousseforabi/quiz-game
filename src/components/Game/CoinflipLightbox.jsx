@@ -38,6 +38,14 @@ function CoinflipLightbox(props){
 
     return(
         <div className="light-box">
+           <h1 className="coin-flavor-text">
+                {props.flipResult && !props.isFlipping
+                    ? props.flipResult === "Heads"
+                    ? "You live to see another question!"
+                    : "The coin wasn’t in your favor."
+                    : "Game over... or is it? Flip the coin to find out."
+                }
+            </h1>
             <div className={`coin ${props.flipResult !== null ? "disable-coin": ""} ${props.isFlipping ? "flip" : ""}`} onClick={handleFlip}>
                 <div 
                 className={`coin-heads ${props.flipResult === null ? "front" : props.flipResult === "Heads" ? "front" : "back"}`}
@@ -46,7 +54,7 @@ function CoinflipLightbox(props){
                 > <img className="skull-svg" src = {SkullSvg}></img>
                 </div>
             </div>
-            <h1 style={{color:"white"}}>{props.flipResult && !props.isFlipping && (props.flipResult === "Heads" ? "You Survive" : " You lost ")}</h1>
+            
         </div>
     )
 }

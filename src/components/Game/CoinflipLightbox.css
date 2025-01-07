@@ -6,7 +6,7 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     flex-direction: column;
     z-index: 1000;
@@ -119,3 +119,14 @@
     opacity: 0;
     transition: transform 500ms ease, opacity 300ms ease;
   }
+  .coin-flavor-text{
+    color: white;
+    width: 100%;
+    max-width:800px;
+    min-height: 180px;
+    text-align: center;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    font-size: 4.1rem;
+  }
+  

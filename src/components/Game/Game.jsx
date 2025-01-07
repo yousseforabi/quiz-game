@@ -43,7 +43,7 @@ const initialGameState = {
     isGameOver:false,
     roundIsOver:false,
     correctAnswers:0,
-    playerLives:10,
+    playerLives:2,
     timer:20,
     atCheckpoint:false,
     fiftyFiftyActive:false,
@@ -460,9 +460,13 @@ const renderHearts = () => {
    { (user && user.loggedIn) ? (
       gameState.questionIndex >= 10 && (gameState.questionIndex + 1)% 10 === 1 && gameState.atCheckpoint?(
         <div className="checkpoint">
-            <h1>Checkpoint reached</h1>
-            <h2>Life gained + 1</h2>
-            <h2>{checkpointInfo.length > 0 ? `Items gained`: "0 items gained"}</h2>
+            <h1 className="checkpoint-header" >Milestone reached!</h1>
+            <div className="life-gained-container">
+              <h2 className="checkpoint-subheader">Life gained:</h2>
+              <img className="heart-image" src={heartSvg}></img>
+            </div>
+            
+            <h2 className="checkpoint-subheader">{checkpointInfo.length > 0 ? `Items gained:`: "0 items gained"}</h2>
             <ul className="item-gained-list">
               {checkpointInfo.map(([key,value], index) => {
                 return <div className="item-gained-container">
