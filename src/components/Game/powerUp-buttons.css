@@ -45,3 +45,6 @@
     scale: 1.1;
     background-color: white;
 }
+.power-up-button:disabled{
+    pointer-events: none;
+}

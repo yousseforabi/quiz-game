@@ -467,7 +467,7 @@ const renderHearts = () => {
               {checkpointInfo.map(([key,value], index) => {
                 return <div className="item-gained-container">
                 <h3 className="item-gained-value">{value}x</h3>
-                <li className="power-up-button" key={index}>
+                <li className="power-up-item" key={index}>
                   <img className="power-up-image" src={renamePowerUps[key]}></img>
                 </li>
                 </div>
