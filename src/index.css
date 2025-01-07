@@ -181,7 +181,6 @@ button {
   color: white;
   width: 164px;
   text-align: start;
-  text-shadow: 2px 2px 4px #000000;
 }
 .quiz-question{
   grid-area: 3 / 1 / 4 / 4;
@@ -190,8 +189,6 @@ button {
   font-size: 1.5rem;
   margin: 0;
   color: white;
-  text-shadow: 2px 2px 4px #000000;
-
 }
 .quiz-timer{
   min-width: 50px;
@@ -199,7 +196,6 @@ button {
   background-color: black;
   padding: 3px 10px;
   border-radius: 5px;
-  
 }
 .quiz-timer-container{
   grid-area: 2 / 2 / 2 / 3;
@@ -208,7 +204,7 @@ button {
   align-items: center;
   color: white;
   gap: 10px;
-  text-shadow: 2px 2px 4px #000000;
+  
 }
 .quiz-points{
   grid-area: 1 / 1 / 1 / 2;
@@ -216,15 +212,13 @@ button {
   justify-content: center;
   align-items: center;
   color: white;
-  text-shadow: 2px 2px 4px #000000;
+  
 }
 .quiz-points > h2{
   margin: 0;
-  
 }
 .quiz-lives{
   color: white;
-  text-shadow: 2px 2px 4px #000000;
 }
 .quiz-answer {
   padding: 15px 20px;
@@ -238,7 +232,7 @@ button {
   font-size: 1.2rem;
   border: 3px solid #F9F5EC;
   color: #F9F5EC;
-  text-shadow: 2px 2px 4px #000000;
+  text-shadow: 1px 1px 2px #000000;
 }
 
 .quiz-answer:hover {
@@ -259,7 +253,7 @@ button {
   pointer-events: none;
 }
 .next-round, .start-quiz, .play-again, .next-question, .logout {
-  padding: 15px 20px;
+  padding: 15px 30px;
   margin-top: 10px;
   background-color: #1E3A5F;
   color: white;
@@ -268,7 +262,7 @@ button {
   cursor: pointer;
   transition: transform 0.2s ease;
   font-size: 1.3rem;
-  border: 2px solid white;
+  border: 3px solid white;
 }
 .next-question{
   grid-area: 6 / 2 / 6 / 3;
@@ -276,7 +270,7 @@ button {
 }
 .play-again,.logout,.start-quiz{
   width: 100%;
-  max-width: 150px;
+  max-width: 180px;
   min-height: 30px;
 }
 .next-round:hover, .start-quiz:hover, .play-again:hover, .next-question:hover, .logout:hover {
@@ -532,4 +526,7 @@ button:active {
 }
 .game-over-score-display{
   color: white;
+}
+.points-value{
+  margin-left:0.2em;
 }

@@ -140,7 +140,7 @@ const generateRandomSeeds = () => {
     numDoublePoints = 2;
   }
   
-  if(randomChance < 30){
+  if(randomChance < 99){
     const randomIndex = Math.floor(Math.random() * (fetchedQuestions.length) + gameState.questionIndex );
     luckIndex = randomIndex;
   }
@@ -517,7 +517,7 @@ const renderHearts = () => {
             autoplay 
             style = {{width:"70px", height:"35px"}}
           />:null}
-            <h2 >Points:{gameState.correctAnswers}</h2>
+            <h2 >Points:<span className="points-value">{gameState.correctAnswers}</span></h2>
           </div>
           <div className="quiz-lives-container">
           <h2 className="quiz-lives">Life:</h2>
