@@ -65,6 +65,8 @@ const initialGameState = {
     shieldStock:1
   })
 
+  const [gameTimer,setGameTimer] = useState(20);
+
   const [checkpointInfo,setCheckpointInfo] = useState([]);
 
   const [correctFirst,setCorrectFirst] = useState();
@@ -76,7 +78,7 @@ const initialGameState = {
 
   const [userPlayedAgain,setUserPlayedAgain] = useState(false);
 
-  
+  const [showDp,setShowDp] = useState(false);
 
   const renamePowerUps = {
     fiftyFiftyStock:fiftyFiftySvg,
@@ -85,6 +87,15 @@ const initialGameState = {
     shieldStock: shieldSvg
   }
   
+  useEffect(() => {
+    if(gameState.doublePointsIndices.includes(gameState.questionIndex)){
+      
+      setShowDp(true);
+    }
+   
+    console.log(gameState.doublePointsIndices.includes(gameState.questionIndex))
+  },[gameState])
+
   useEffect(() => {
    let isMounted = true;
     const getToken = async () => {
@@ -449,10 +460,7 @@ const renderHearts = () => {
 }
 
 
- if(quizData.length > 0 ){
-  console.log(quizData[gameState.questionIndex].correctAnswer)
-
- }
+ 
 
   
   return (
@@ -508,7 +516,18 @@ const renderHearts = () => {
             <h2 className="quiz-timer">{gameState.timer === 0 ? gameState.timer:gameState.timer.toString().padStart(2,"0")}s</h2>
           </div>
           {quizData.length > 0 && <h2 className="quiz-question">{quizData[gameState.questionIndex].question}</h2>}
-          {gameState.doublePointsIndices.includes(gameState.questionIndex) ? <h2>Double points round</h2> : null}
+         
+         <CSSTransition
+              in={showDp}
+              timeout={3000}
+              classNames="double-points-anim"
+             
+         >
+            <div className="double-points-container">
+                <h3>Double points round</h3>
+                <h3>🥳</h3>
+            </div>
+          </CSSTransition>
           {gameState.isGameOver && <h1>GAME IS OVER</h1>}
           <div className="quiz-points">
             {gameState.hotStreak >= 3 ? <DotLottieReact 
