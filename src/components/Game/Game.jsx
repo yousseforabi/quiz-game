@@ -43,7 +43,7 @@ const initialGameState = {
     isGameOver:false,
     roundIsOver:false,
     correctAnswers:0,
-    playerLives:2,
+    playerLives:10,
     timer:20,
     atCheckpoint:false,
     fiftyFiftyActive:false,
@@ -576,8 +576,8 @@ const renderHearts = () => {
         </div>
       ):gameState.gameIsActive && gameState.isGameOver ? (
         <>
-          <h1>Game over</h1>
-          <h2>You're Score : {gameState.correctAnswers}</h2>
+          <h1 className="game-over-header">Game over</h1>
+          <h2 className="game-over-score-display">You're Score : {gameState.correctAnswers}</h2>
           <button className="play-again" onClick={resetGame} >Play again</button>
           <button className="logout" onClick={logout}>Logout</button>
         </>
