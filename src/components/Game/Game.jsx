@@ -86,6 +86,9 @@ const initialGameState = {
     shieldStock: shieldSvg
   }
   
+  useEffect(() => {
+   console.log(localStorage.getItem("currentUser"))
+  },[gameTimer])
   
   
   useEffect(() => {

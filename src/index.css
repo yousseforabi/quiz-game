@@ -218,6 +218,7 @@ button {
 }
 .quiz-lives{
   color: white;
+  margin: 0;
 }
 .quiz-answer {
   padding: 15px 20px;
@@ -481,10 +482,11 @@ button:active {
 .hearts-container{
   display: flex;
   justify-content: start;
-  align-items: end;
-  flex-wrap: wrap;
-  gap: 4px;
+  align-items: center;
+ 
   min-width: 170px;
+  min-height: 40px;
+  gap: 4px;
 }
 .heart-fade-exit {
   opacity: 1;

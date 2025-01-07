@@ -15,7 +15,7 @@ const Login = () => {
     );
 
     if (user) {
-      setUser({ username, loggedIn: true });
+      setUser({ username, loggedIn: true, highScore:0});
       alert("Login successful!");
     } else {
       alert("Invalid username or password.");
