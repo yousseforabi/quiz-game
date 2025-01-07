@@ -443,6 +443,18 @@ const renderHearts = () => {
         <img src={heartSvg} className="heart-image"></img>
       </CSSTransition>
   ));
+    if(gameState.isShieldActive){
+     
+      hearts.push(
+         <CSSTransition
+        timeout={500} 
+        classNames="heart-fade" 
+        unmountOnExit 
+      >
+        <img className="heart-image" src={shieldSvg}></img>
+      </CSSTransition>
+      )
+    }
   return hearts;
   
 }
@@ -496,7 +508,7 @@ const renderHearts = () => {
           
 
           {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer}answers = {quizData[gameState.questionIndex].answers} question ={quizData[gameState.questionIndex].question}/> : null}
-          {gameState.isShieldActive && <h2>Shield is Active</h2>}
+          
           
           <h2 className="quiz-round">Question {gameState.questionIndex + 1}</h2>
           <div className="quiz-timer-container"> 
