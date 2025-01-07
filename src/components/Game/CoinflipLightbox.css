@@ -6,7 +6,7 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
     z-index: 1000;
@@ -22,6 +22,7 @@
     position: relative;
     transition: transform 1s ease-in-out,scale 0.2s ease-in-out; 
     cursor: pointer;
+    margin-bottom: 5em;
 }
 .coin:hover{
   scale: 1.05;
@@ -135,8 +136,8 @@
     max-width:800px;
     min-height: 180px;
     text-align: center;
-    margin-top: 2em;
-    margin-bottom: 1em;
+    margin-top: 0em;
+    margin-bottom:0.6em;
     font-size: 4.1rem;
   }
   

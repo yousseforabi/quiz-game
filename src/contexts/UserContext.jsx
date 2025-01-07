@@ -21,7 +21,7 @@ export const UserProvider = ({ children }) => {
   const [apiToken,setApiToken] = useState(null);
   
   return (
-    <UserContext.Provider value={{ user, setUser: login, logout,quizData,setQuizData,apiToken,setApiToken }}>
+    <UserContext.Provider value={{ user, setUser: login, logout,quizData,setQuizData,apiToken,setApiToken}}>
       {children}
     </UserContext.Provider>
   );

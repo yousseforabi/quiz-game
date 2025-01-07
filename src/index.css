@@ -159,7 +159,6 @@ button {
   flex-direction: column;
   justify-content:center;
   align-items: center;
-  padding: 20px;
   min-height: 80vh;
   background-image: linear-gradient(to right, #3961B0, #3961B0);
   
@@ -533,8 +532,10 @@ button:active {
 .double-points-container{
   position: absolute;
   background-color: green;
-  bottom: 0;
-  left: 5%;
+  top: -150px;
+  left: 50%;
+  padding: 5px 10px;
+  transform: translateX(-50%);
   width: 250px;
   height: 100px;
   border-radius: 30px;
@@ -543,8 +544,8 @@ button:active {
   align-items: center;
   border: 8px solid green;
   flex-direction: column;
-  transition: bottom 0.5s ease-out, opacity 0.5s ease-out;
-  opacity: 0;
+  transition: top 0.5s ease-out, opacity 0.5s ease-out;
+  opacity: 1;
 }
 .double-points-container > h3{
   color: white;
@@ -553,7 +554,7 @@ button:active {
 }
 
 .dp-in{
-  bottom: 100px; 
+  top:0; 
   opacity: 1;
   
 }

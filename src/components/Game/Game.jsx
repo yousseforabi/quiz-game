@@ -23,7 +23,6 @@ const initialGameState = {
   roundIsOver:false,
   correctAnswers:0,
   playerLives:5,
-  timer:20,
   atCheckpoint:false,
   fiftyFiftyActive:false,
   googleTimeoutActive:false,
@@ -78,7 +77,7 @@ const initialGameState = {
 
   const [userPlayedAgain,setUserPlayedAgain] = useState(false);
 
-  const [showDp,setShowDp] = useState(false);
+  
 
   const renamePowerUps = {
     fiftyFiftyStock:fiftyFiftySvg,
@@ -87,16 +86,8 @@ const initialGameState = {
     shieldStock: shieldSvg
   }
   
-  useEffect(() => {
-    if (gameState.doublePointsIndices.includes(gameState.questionIndex)) {
-      setShowDp(true);  // Show the animation when it's a double points round
-  } else {
-      setShowDp(false); // Hide the animation once it's no longer a double points round
-  }
-   
-    console.log(gameState.doublePointsIndices.includes(gameState.questionIndex))
-  },[gameState.questionIndex,gameState.doublePointsIndices])
-
+  
+  
   useEffect(() => {
    let isMounted = true;
     const getToken = async () => {
@@ -516,7 +507,7 @@ const renderHearts = () => {
          
          
             <div className={(`double-points-container ${gameState.doublePointsIndices.includes(gameState.questionIndex) ? "dp-in":""}`)}>
-                <h3>Double points round</h3>
+                <h3>Double points round!</h3>
                 <h3>🥳</h3>
             </div>
          
@@ -537,7 +528,17 @@ const renderHearts = () => {
           </TransitionGroup>
           </div>
           
-          {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,gameIsActive:true}))}>Start Quiz</button>}
+          {!gameState.gameIsActive && (
+            <button
+              className="start-quiz"
+              onClick={() => {
+                setGameState((prevState) => ({ ...prevState, gameIsActive: true }));
+                
+              }}
+            >
+              Start Quiz
+            </button>
+          )}
           {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
           {gameState.roundIsOver && !gameState.isGameOver ? <button  className="next-question" onClick={handleNextQuestion} >Next question</button>:null}
           
