@@ -11,11 +11,12 @@ import chatGptSvg from "./chatgpt.svg";
 import skipSvg from "./skip-question.svg";
 import shieldSvg from "./shield.svg";
 import heartSvg from "./heart-svg.svg";
-
+import Confetti from "react-confetti";
+import { useWindowSize } from "react-use";
 
 function Game() {
   const { user, logout, quizData,setQuizData,apiToken,setApiToken} = useContext(UserContext);
-  
+  const {width,height} = useWindowSize();
 const initialGameState = {
   questionIndex:0,
   gameIsActive:false,
@@ -77,7 +78,7 @@ const initialGameState = {
 
   const [userPlayedAgain,setUserPlayedAgain] = useState(false);
 
-  
+  let currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const renamePowerUps = {
     fiftyFiftyStock:fiftyFiftySvg,
@@ -90,7 +91,19 @@ const initialGameState = {
    console.log(localStorage.getItem("currentUser"))
   },[gameTimer])
   
-  
+  useEffect(() => {
+    
+    if(!gameState.isGameOver)return;
+    
+      if(gameState.correctAnswers > currentUser.highScore){
+        currentUser.highScore = gameState.correctAnswers;
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      }
+    
+    
+
+  },[gameState.isGameOver])
+
   useEffect(() => {
    let isMounted = true;
     const getToken = async () => {
@@ -463,7 +476,7 @@ const renderHearts = () => {
 }
 
 
- 
+
 
   
   return (
@@ -603,8 +616,15 @@ const renderHearts = () => {
         </div>
       ):gameState.gameIsActive && gameState.isGameOver ? (
         <>
+          {gameState.correctAnswers > currentUser.highScore && 
+          <Confetti 
+          width={width} 
+          height={height}
+          numberOfPieces={150}
+          />
+          }
           <h1 className="game-over-header">Game over</h1>
-          <h2 className="game-over-score-display">You're Score : {gameState.correctAnswers}</h2>
+          <h2 className="game-over-score-display">{gameState.correctAnswers > currentUser.highScore ? "Nice new highscore:":"You're score:"} {gameState.correctAnswers}</h2>
           <button className="play-again" onClick={resetGame} >Play again</button>
           <button className="logout" onClick={logout}>Logout</button>
         </>
