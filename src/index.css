@@ -460,7 +460,8 @@ button:active {
 .hearts-container{
   display: flex;
   justify-content: start;
-  align-items: center;
+  align-items: end;
+  flex-wrap: wrap;
   gap: 4px;
   min-width: 170px;
 }
