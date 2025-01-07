@@ -88,13 +88,14 @@ const initialGameState = {
   }
   
   useEffect(() => {
-    if(gameState.doublePointsIndices.includes(gameState.questionIndex)){
-      
-      setShowDp(true);
-    }
+    if (gameState.doublePointsIndices.includes(gameState.questionIndex)) {
+      setShowDp(true);  // Show the animation when it's a double points round
+  } else {
+      setShowDp(false); // Hide the animation once it's no longer a double points round
+  }
    
     console.log(gameState.doublePointsIndices.includes(gameState.questionIndex))
-  },[gameState])
+  },[gameState.questionIndex,gameState.doublePointsIndices])
 
   useEffect(() => {
    let isMounted = true;
@@ -223,14 +224,11 @@ const generateRandomSeeds = () => {
        clearTimeout(timerTimeout)
       }
       else{
-        setGameState((prevState) => ({
-          ...prevState,
-          timer:prevState.timer - 1
-        }))
+        setGameTimer((prevState) => prevState - 1);
       }
     },1000)
-
-    if(gameState.timer === 0 && !gameState.roundIsOver){
+    console.log(gameTimer)
+    if(gameTimer === 0 && !gameState.roundIsOver){
       clearTimeout(timerTimeout)
       setGameState((prevState) => {
         const newLivesRemaning = prevState.playerLives - 1;
@@ -247,17 +245,16 @@ const generateRandomSeeds = () => {
     }
 
     return () => clearTimeout(timerTimeout)
-  },[gameState.timer,gameState.gameIsActive,gameState.roundIsOver,gameState.atCheckpoint,gameState.googleTimeoutActive,gameState.activeCoinFlip])
+  },[gameTimer,gameState])
 
   const updateQuestionIndex = () => {
-    
+    setGameTimer(20);
     setGameState((prevState) => {
       const nextIndex = prevState.questionIndex + 1;
       const isDoublePoints = prevState.doublePointsIndices.includes(nextIndex);
      
      return {
         ...prevState,
-        timer:20,
         fiftyFiftyActive:false,
         questionIndex:prevState.questionIndex + 1,
         pointsMultiplier: isDoublePoints
@@ -513,21 +510,16 @@ const renderHearts = () => {
           <h2 className="quiz-round">Question {gameState.questionIndex + 1}</h2>
           <div className="quiz-timer-container"> 
             <h2>Time left: </h2>
-            <h2 className="quiz-timer">{gameState.timer === 0 ? gameState.timer:gameState.timer.toString().padStart(2,"0")}s</h2>
+            <h2 className="quiz-timer">{gameTimer === 0 ? gameTimer:gameTimer.toString().padStart(2,"0")}s</h2>
           </div>
           {quizData.length > 0 && <h2 className="quiz-question">{quizData[gameState.questionIndex].question}</h2>}
          
-         <CSSTransition
-              in={showDp}
-              timeout={3000}
-              classNames="double-points-anim"
-             
-         >
-            <div className="double-points-container">
+         
+            <div className={(`double-points-container ${gameState.doublePointsIndices.includes(gameState.questionIndex) ? "dp-in":""}`)}>
                 <h3>Double points round</h3>
                 <h3>🥳</h3>
             </div>
-          </CSSTransition>
+         
           {gameState.isGameOver && <h1>GAME IS OVER</h1>}
           <div className="quiz-points">
             {gameState.hotStreak >= 3 ? <DotLottieReact 
