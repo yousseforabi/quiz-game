@@ -544,14 +544,12 @@ const renderHearts = () => {
             
             <h2 className="quiz-round">Question {gameState.questionIndex + 1}</h2>
 
-
             <div className="quiz-lives-container">
               <h2 className="quiz-lives">Life:</h2>
               <TransitionGroup className="hearts-container">
                 {renderHearts()}
               </TransitionGroup>
             </div>
-            
           </div>
           
           <div className="quiz-timer-container"> 
@@ -608,7 +606,7 @@ const renderHearts = () => {
               </button>
             </div>
           }
-          {gameState.roundIsOver && !gameState.isGameOver ? <button  className="next-question" onClick={handleNextQuestion} >Next question</button>:null}
+         <button  className={`next-question ${gameState.roundIsOver ? "show-next":"hide-next"}`} onClick={handleNextQuestion} >Next question</button>
           
         </div>
       ):gameState.gameIsActive && gameState.isGameOver ? (
