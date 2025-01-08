@@ -530,8 +530,30 @@ const renderHearts = () => {
 
           {gameState.googleTimeoutActive ? <TimeoutLightbox setGameState = {setGameState} timer = {gameState.googleTimer}answers = {quizData[gameState.questionIndex].answers} question ={quizData[gameState.questionIndex].question}/> : null}
           
+          <div className="top-game-content">
+            
+          <div className="quiz-points">
+            {gameState.hotStreak >= 3 ? <DotLottieReact 
+            src= "https://lottie.host/9dfccc48-7538-47e8-a86d-47ee219be9d1/aFET9NPLzR.lottie"
+            loop 
+            autoplay 
+            style = {{width:"70px", height:"35px"}}
+          />:null}
+            <h2 >Points:<span className="points-value">{gameState.correctAnswers}</span></h2>
+          </div>
+            
+            <h2 className="quiz-round">Question {gameState.questionIndex + 1}</h2>
+
+
+            <div className="quiz-lives-container">
+              <h2 className="quiz-lives">Life:</h2>
+              <TransitionGroup className="hearts-container">
+                {renderHearts()}
+              </TransitionGroup>
+            </div>
+            
+          </div>
           
-          <h2 className="quiz-round">Question {gameState.questionIndex + 1}</h2>
           <div className="quiz-timer-container"> 
             <h2>Time left: </h2>
             <h2 className="quiz-timer">{gameTimer === 0 ? gameTimer:gameTimer.toString().padStart(2,"0")}s</h2>
@@ -544,36 +566,7 @@ const renderHearts = () => {
                 <h3>🥳</h3>
             </div>
          
-          {gameState.isGameOver && <h1>GAME IS OVER</h1>}
-          <div className="quiz-points">
-            {gameState.hotStreak >= 3 ? <DotLottieReact 
-            src= "https://lottie.host/9dfccc48-7538-47e8-a86d-47ee219be9d1/aFET9NPLzR.lottie"
-            loop 
-            autoplay 
-            style = {{width:"70px", height:"35px"}}
-          />:null}
-            <h2 >Points:<span className="points-value">{gameState.correctAnswers}</span></h2>
-          </div>
-          <div className="quiz-lives-container">
-          <h2 className="quiz-lives">Life:</h2>
-          <TransitionGroup className="hearts-container">
-            {renderHearts()}
-          </TransitionGroup>
-          </div>
-          
-          {!gameState.gameIsActive && (
-            <button
-              className="start-quiz"
-              onClick={() => {
-                setGameState((prevState) => ({ ...prevState, gameIsActive: true }));
-               
-              }}
-            >
-              Start Quiz
-            </button>
-          )}
           {gameState.gameIsActive && !gameState.isGameOver ? renderQuizElements(): null}
-          {gameState.roundIsOver && !gameState.isGameOver ? <button  className="next-question" onClick={handleNextQuestion} >Next question</button>:null}
           
           {gameState.gameIsActive && !gameState.isGameOver &&
             <div className="power-up-container">
@@ -613,10 +606,9 @@ const renderHearts = () => {
               <img className="power-up-image" src={shieldSvg}></img>
               <span className={`power-up-stock ${powerUpStock.shieldStock > 0 ? "have-stock" : "no-stock"}`}  >{powerUpStock.shieldStock}</span>
               </button>
-         
             </div>
           }
-          
+          {gameState.roundIsOver && !gameState.isGameOver ? <button  className="next-question" onClick={handleNextQuestion} >Next question</button>:null}
           
         </div>
       ):gameState.gameIsActive && gameState.isGameOver ? (
