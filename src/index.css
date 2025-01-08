@@ -326,7 +326,7 @@ button:active {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   padding: 1rem;
 }
 .game-home-page-container{
@@ -337,9 +337,11 @@ button:active {
   min-height: 400px;
 }
 .quiz-round{
-  text-align: center;
-  flex: 1;
+  text-align:center;
   color: white;
+  font-size: 2.6rem;
+  margin: 0;
+  margin-top: 1em;
 }
 .quiz-question{
   max-width: 800px;

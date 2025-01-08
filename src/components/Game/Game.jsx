@@ -542,7 +542,7 @@ const renderHearts = () => {
             <h2 >Points:<span className="points-value">{gameState.correctAnswers}</span></h2>
           </div>
             
-            <h2 className="quiz-round">Question {gameState.questionIndex + 1}</h2>
+            
 
             <div className="quiz-lives-container">
               <h2 className="quiz-lives">Life:</h2>
@@ -551,11 +551,12 @@ const renderHearts = () => {
               </TransitionGroup>
             </div>
           </div>
-          
+          <h2 className="quiz-round">Question {gameState.questionIndex + 1}</h2>
           <div className="quiz-timer-container"> 
             <h2>Time left: </h2>
             <h2 className="quiz-timer">{gameTimer === 0 ? gameTimer:gameTimer.toString().padStart(2,"0")}s</h2>
           </div>
+          
           {quizData.length > 0 && <h2 className="quiz-question">{quizData[gameState.questionIndex].question}</h2>}
          
          
