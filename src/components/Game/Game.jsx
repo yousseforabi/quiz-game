@@ -546,7 +546,7 @@ const renderHearts = () => {
 
             <div className="quiz-lives-container">
               <h2 className="quiz-lives">Life:</h2>
-              <TransitionGroup className="hearts-container">
+              <TransitionGroup className={`hearts-container ${gameState.playerLives <= 5 ? "lock-width":null}`}>
                 {renderHearts()}
               </TransitionGroup>
             </div>

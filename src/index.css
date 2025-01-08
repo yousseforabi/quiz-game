@@ -154,13 +154,6 @@ button {
   }
 }
 
-
-.logout{
-  background-color: #C62828;
-}
-.logout:hover{
-  background-color: red;
-}
 .next-round:hover, .start-quiz:hover, .play-again:hover, .next-question:hover, .logout:hover {
   transform: scale(1.05);
 }
@@ -168,9 +161,6 @@ button {
 .checkpoint, .welcome {
   text-align: center;
 }
-
-
-
 
 .login {
   display: flex;
@@ -404,10 +394,11 @@ button:active {
   align-items: center;
   min-height: 40px;
   flex-wrap: wrap;
-  width: 100%;
-  max-width: 370px;
   gap: 4px;
-  
+  max-width: 195px;
+}
+.lock-width{
+  min-width: 166px;
 }
 .quiz-answer {
   padding: 15px 20px;
@@ -514,10 +505,10 @@ button:active {
 .double-points-container{
   position: absolute;
   background-color: green;
-  top: -150px;
-  left: 50%;
+  top: 50%;
+  left: -300px;
   padding: 5px 10px;
-  transform: translateX(-50%);
+  transform: translateY(-50%);
   width: 250px;
   height: 100px;
   border-radius: 30px;
@@ -526,7 +517,7 @@ button:active {
   align-items: center;
   border: 8px solid green;
   flex-direction: column;
-  transition: top 0.5s ease-out, opacity 0.5s ease-out;
+  transition: left 0.4s ease-out, opacity 0.4s ease-out;
   opacity: 1;
 }
 .double-points-container > h3{
@@ -536,7 +527,7 @@ button:active {
 }
 
 .dp-in{
-  top:0; 
+  left: 0; 
   opacity: 1;
   
 }
@@ -615,5 +606,10 @@ button:active {
 .game-start-header{
   color: white;
 }
-
+.logout{
+  background-color: #C62828;
+}
+.logout:hover{
+  background-color: red;
+}
 /* Game start content */
