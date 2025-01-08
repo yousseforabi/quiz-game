@@ -90,7 +90,7 @@ const initialGameState = {
   useEffect(() => {
    console.log(localStorage.getItem("currentUser"))
   },[gameTimer])
-  
+  console.log(localStorage)
   useEffect(() => {
     
     if(!gameState.isGameOver)return;
