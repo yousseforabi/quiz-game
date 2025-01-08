@@ -266,12 +266,17 @@ button {
 }
 .next-question{
   grid-area: 6 / 2 / 6 / 3;
-  
 }
 .play-again,.logout,.start-quiz{
   width: 100%;
   max-width: 180px;
   min-height: 30px;
+}
+.logout{
+  background-color: #C62828;
+}
+.logout:hover{
+  background-color: red;
 }
 .next-round:hover, .start-quiz:hover, .play-again:hover, .next-question:hover, .logout:hover {
   transform: scale(1.05);

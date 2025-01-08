@@ -43,7 +43,7 @@ const initialGameState = {
     isGameOver:false,
     roundIsOver:false,
     correctAnswers:0,
-    playerLives:10,
+    playerLives:2,
     timer:20,
     atCheckpoint:false,
     fiftyFiftyActive:false,
