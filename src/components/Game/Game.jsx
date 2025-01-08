@@ -485,7 +485,7 @@ const renderHearts = () => {
 
   
   return (
-    <div className={`game-container ${gameState.gameIsActive && !gameState.isGameOver ? "game-active" :null}`}>
+    <div className={`game-container ${gameState.gameIsActive && !gameState.isGameOver ? "game-active" :""}`}>
    { (user && user.loggedIn) ? (
       gameState.questionIndex >= 10 && (gameState.questionIndex + 1)% 10 === 1 && gameState.atCheckpoint?(
         <div className="checkpoint">
@@ -542,7 +542,7 @@ const renderHearts = () => {
             <h2 >Points:<span className="points-value">{gameState.correctAnswers}</span></h2>
           </div>
             
-            
+          <h2 className="quiz-round">Question {gameState.questionIndex + 1}</h2>
 
             <div className="quiz-lives-container">
               <h2 className="quiz-lives">Life:</h2>
@@ -551,7 +551,7 @@ const renderHearts = () => {
               </TransitionGroup>
             </div>
           </div>
-          <h2 className="quiz-round">Question {gameState.questionIndex + 1}</h2>
+          
           <div className="quiz-timer-container"> 
             <h2>Time left: </h2>
             <h2 className="quiz-timer">{gameTimer === 0 ? gameTimer:gameTimer.toString().padStart(2,"0")}s</h2>
@@ -611,7 +611,7 @@ const renderHearts = () => {
           
         </div>
       ):gameState.gameIsActive && gameState.isGameOver ? (
-        <>
+        <div className="game-over-container">
           {gameState.correctAnswers > currentUser.highScore && 
           <Confetti 
           width={width} 
@@ -623,7 +623,7 @@ const renderHearts = () => {
           <h2 className="game-over-score-display">{gameState.correctAnswers > currentUser.highScore ? "Nice new highscore:":"You're score:"} {gameState.correctAnswers}</h2>
           <button className="play-again" onClick={resetGame} >Play again</button>
           <button className="logout" onClick={logout}>Logout</button>
-        </>
+        </div>
       ):(
         <div className="game-home-page-container">
           <h1 className="game-start-header">AnswerMe Quiz!</h1>

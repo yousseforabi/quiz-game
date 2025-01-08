@@ -296,9 +296,7 @@ button:active {
 
 
 
-@media(max-width:1280px){
-  
-}
+
 
 /* Game content */
 
@@ -327,7 +325,7 @@ button:active {
   justify-content: space-between;
   width: 100%;
   max-width: 1400px;
-  padding: 1rem;
+  padding: 1rem 0 ;
 }
 .game-home-page-container{
   display: flex;
@@ -342,7 +340,6 @@ button:active {
   font-size: 2.6rem;
   margin: 0;
   margin-top: 1em;
-  
 }
 .quiz-question{
   max-width: 800px;
@@ -495,9 +492,16 @@ button:active {
   transform: scale(0.8);
   transition: opacity 500ms ease-out, transform 500ms ease-out;
 }
-
+.game-over-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  min-height: 400px;
+}
 .game-over-header{
   color: white;
+  margin: 0;
 }
 .game-over-score-display{
   color: white;
@@ -616,3 +620,42 @@ button:active {
   background-color: red;
 }
 /* Game start content */
+
+
+@media(max-width:1280px){
+  .quiz-round{
+    margin-top: 0;
+  }
+  .quiz-question{
+    padding: 0;
+    margin-bottom: 0.5em;
+  }
+  .quiz-content-container{
+    padding: 0;
+  }
+  .quiz-timer-container{
+    padding: 0;
+  }
+  .next-question{
+    margin: 1em 0;
+    
+  }
+  .answers-container{
+    gap: 5px 20px;
+  }
+  .quiz-answer{
+    padding: 10px 15px;
+  }
+  .top-game-content{
+    padding: 0.5em 0 0 0;
+  }
+  .game-content-container{
+    min-height: auto;
+  }
+  .checkpoint{
+    min-height: auto;
+  }
+  .game-container{
+    justify-content: start;
+  }
+}
