@@ -88,9 +88,14 @@ const initialGameState = {
   }
   
   useEffect(() => {
-   console.log(localStorage.getItem("currentUser"))
-  },[gameTimer])
-  console.log(localStorage)
+    if(gameState.isGameOver){
+      showLayoutAgain()
+    }
+  },[gameState.isGameOver])
+
+
+
+ 
   useEffect(() => {
     
     if(!gameState.isGameOver)return;
@@ -480,7 +485,7 @@ const renderHearts = () => {
 
   
   return (
-    <div className="game-container">
+    <div className={`game-container ${gameState.gameIsActive && !gameState.isGameOver ? "game-active" :null}`}>
    { (user && user.loggedIn) ? (
       gameState.questionIndex >= 10 && (gameState.questionIndex + 1)% 10 === 1 && gameState.atCheckpoint?(
         <div className="checkpoint">

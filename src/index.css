@@ -162,6 +162,9 @@ button {
   min-height: 80vh;
   background-image: linear-gradient(to right, #3961B0, #3961B0);
 }
+.game-active{
+  min-height: 100vh;
+}
 .game-content-container{
   display: grid;
   grid-template-columns:repeat(3,1fr);
