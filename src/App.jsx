@@ -8,7 +8,7 @@ import About from "./components/Auth/About";
 import Footer from "./components/Footer";
 
 function HomePage() {
-  const { user } = useContext(UserContext);
+  const { user,} = useContext(UserContext);
 
   return (
     <div className="home-container">
@@ -38,29 +38,39 @@ function HomePage() {
   );
 }
 
+function AppLayout() {
+  const { showLayout } = useContext(UserContext);
+
+  return (
+    <>
+      {showLayout && (
+        <nav>
+          <Link to="/">Home</Link> {" "}
+          <Link to="/login">Login</Link> {" "}
+          <Link to="/register">Register</Link> {" "}
+          <Link to="/game">Game</Link> {" "}
+          <Link to="/about">About</Link>
+        </nav>
+      )}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/game" element={<Game />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+      {showLayout && <Footer />}
+    </>
+  );
+}
+
 function App() {
   return (
     <UserProvider>
       <Router>
-        <nav>
-          <Link to="/">Home</Link> {" "} 
-          <Link to="/login">Login</Link> {" "} 
-          <Link to="/register">Register</Link> {" "}  
-          <Link to="/game">Game</Link>  {" "} 
-          <Link to="/about">About</Link> 
-        </nav>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/game" element={<Game />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-        <Footer path="/footer" /> 
+        <AppLayout />
       </Router>
     </UserProvider>
   );
 }
-
-
 export default App;

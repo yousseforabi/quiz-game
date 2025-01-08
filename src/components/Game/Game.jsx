@@ -15,7 +15,7 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
 
 function Game() {
-  const { user, logout, quizData,setQuizData,apiToken,setApiToken} = useContext(UserContext);
+  const { user, logout, quizData,setQuizData,apiToken,setApiToken,hideLayout,showLayoutAgain} = useContext(UserContext);
   const {width,height} = useWindowSize();
 const initialGameState = {
   questionIndex:0,
@@ -561,7 +561,7 @@ const renderHearts = () => {
               className="start-quiz"
               onClick={() => {
                 setGameState((prevState) => ({ ...prevState, gameIsActive: true }));
-                
+               
               }}
             >
               Start Quiz
@@ -631,7 +631,14 @@ const renderHearts = () => {
       ):(
         <div className="game-home-page-container">
           <h1 className="game-start-header">AnswerMe Quiz!</h1>
-          {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,gameIsActive:true}))}>Start Quiz</button>}
+          {!gameState.gameIsActive && 
+          <button className="start-quiz" 
+          onClick={() => {
+          setGameState((prevState) => ({...prevState,gameIsActive:true}))
+          hideLayout();
+          }}>
+          Start Quiz
+          </button>}
           <button className="logout" onClick={logout}>Logout</button>
         </div>
       )

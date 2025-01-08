@@ -159,9 +159,8 @@ button {
   flex-direction: column;
   justify-content:center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 80vh;
   background-image: linear-gradient(to right, #3961B0, #3961B0);
-  
 }
 .game-content-container{
   display: grid;
