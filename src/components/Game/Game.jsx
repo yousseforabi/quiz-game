@@ -43,7 +43,7 @@ const initialGameState = {
     isGameOver:false,
     roundIsOver:false,
     correctAnswers:0,
-    playerLives:2,
+    playerLives:10,
     timer:20,
     atCheckpoint:false,
     fiftyFiftyActive:false,
@@ -629,11 +629,11 @@ const renderHearts = () => {
           <button className="logout" onClick={logout}>Logout</button>
         </>
       ):(
-        <>
+        <div className="game-home-page-container">
           <h1 className="game-start-header">AnswerMe Quiz!</h1>
           {!gameState.gameIsActive &&  <button className="start-quiz" onClick={() => setGameState((prevState) => ({...prevState,gameIsActive:true}))}>Start Quiz</button>}
           <button className="logout" onClick={logout}>Logout</button>
-        </>
+        </div>
       )
       )
        : (

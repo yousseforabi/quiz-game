@@ -159,7 +159,7 @@ button {
   flex-direction: column;
   justify-content:center;
   align-items: center;
-  min-height: 80vh;
+  min-height: 100vh;
   background-image: linear-gradient(to right, #3961B0, #3961B0);
   
 }
@@ -172,7 +172,13 @@ button {
   width: 100%;
   max-width: 1400px;
   margin-bottom: 77px;
-  
+}
+.game-home-page-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  min-height: 400px;
 }
 .quiz-round{
   text-align: center;
@@ -422,8 +428,8 @@ button:active {
   color: white;
   text-align: center;
   padding: 20px 0;
-  position: absolute;
   bottom: 0;
+  position: absolute;
   width: 100%;
 }
 
@@ -567,3 +573,6 @@ button:active {
   
 }
 
+@media(max-width:1280px){
+  
+}
