@@ -634,7 +634,7 @@ console.log(currentUser)
             <h2 className="new-high-score">👑 New high score!</h2>
             <h2 className="game-over-final-score">Final score: {gameState.correctAnswers}</h2>
           </div> : 
-          <h2 className="game-over-final-score">Final score: ({gameState.correctAnswers})</h2>}
+          <h2 className="game-over-final-score">Final score: {gameState.correctAnswers}</h2>}
           <button className="play-again" onClick={resetGame} >Main menu</button>
           <button className="logout" onClick={logout}>Logout</button>
         </div>
