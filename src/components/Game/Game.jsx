@@ -629,7 +629,12 @@ console.log(currentUser)
           />
           }
           <h1 className="game-over-header">Game over</h1>
-          <h2 className="game-over-score-display">{beatHighScore ? "New high score achived:":"Final score:"} {gameState.correctAnswers}</h2>
+          {beatHighScore ? 
+          <div className="high-score-container">
+            <h2 className="new-high-score">👑 New high score!</h2>
+            <h2 className="game-over-final-score">Final score: {gameState.correctAnswers}</h2>
+          </div> : 
+          <h2 className="game-over-final-score">Final score: ({gameState.correctAnswers})</h2>}
           <button className="play-again" onClick={resetGame} >Main menu</button>
           <button className="logout" onClick={logout}>Logout</button>
         </div>

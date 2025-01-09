@@ -552,17 +552,21 @@ button:active {
   width: 30px;
   height: 30px;
 }
-.player-highscore{
-  color: white;
-  font-size: 1.6rem;
+.high-score-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.new-high-score{
+  font-size: 1.8rem;
   margin: 0;
-  margin-bottom: 1em;
+  color: white;
 }
-.highscore-value{
-  margin-left: 0.5em;
-}
-.crown-emoji{
-  margin-right: 0.5em;
+.game-over-final-score{
+  margin: 0.5em 0;
+  font-size: 1.8rem;
+  color: white;
 }
 /* Game content */
 
@@ -638,6 +642,18 @@ button:active {
 }
 .logout:hover{
   background-color: red;
+}
+.crown-emoji{
+ margin-right: 0.2em;
+}
+.player-highscore{
+  color: white;
+  font-size: 1.8rem;
+  margin: 0;
+  margin-bottom: 1em;
+}
+.highscore-value{
+  margin-left: 0.3em;
 }
 /* Game start content */
 
