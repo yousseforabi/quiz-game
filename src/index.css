@@ -678,4 +678,17 @@ button:active {
   .game-container{
     justify-content: start;
   }
+  .checkpoint-subheader{
+    margin: 0;
+    margin-right: 0.5em;
+  }
+  .life-gained-container{
+    margin-bottom: 0.5em;
+  }
+  .checkpoint-header{
+    margin-bottom: 0;
+  }
+  .checkpoint-button{
+    margin-top: 0;
+  }
 }

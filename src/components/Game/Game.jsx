@@ -489,8 +489,7 @@ const renderHearts = () => {
 }
 
 console.log(currentUser)
-
-         
+ 
   
   return (
     <div className={`game-container ${gameState.gameIsActive && !gameState.isGameOver ? "game-active" :""}`}>
@@ -505,7 +504,7 @@ console.log(currentUser)
               <img className="heart-image checkpoint-heart" src={heartSvg}></img>
             </div>
             
-            <h2 className="checkpoint-subheader">{checkpointInfo.length > 0 ? `Items gained:`: "0 items gained"}</h2>
+            <h2 className="checkpoint-subheader">{checkpointInfo.length > 0 ? `Items gained:`: "Items gained: 0"}</h2>
             <ul className="item-gained-list">
               {checkpointInfo.map(([key,value], index) => {
                 return <div className="item-gained-container">
