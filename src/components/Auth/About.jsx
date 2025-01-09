@@ -11,9 +11,9 @@ function About() {
     },
     {
       name: "Jacob Reevcrona",
-      role: "Designer",
+      role: "Game Logic & API Integration",
       description:
-        "Joab is a creative designer who brings our ideas to life with stunning visuals.",
+        "I worked on the game page, including the game logic, API integration, and visual design.",
     },
     {
       name: "Merve Erez",
