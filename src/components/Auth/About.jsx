@@ -13,7 +13,7 @@ function About() {
       name: "Jacob Reevcrona",
       role: "Game Logic & API Integration",
       description:
-        "I worked on the game page, including the game logic, API integration, and visual design.",
+        "Jacob worked on the game page, including the game logic, API integration, and visual design.",
     },
     {
       name: "Merve Erez",
