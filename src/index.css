@@ -209,7 +209,7 @@ button {
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: 800px;
+  min-height: 100vh;
   padding: 20px;
   background-image: url('./assets/images/quizgame.jpg'); 
   background-size: cover;
