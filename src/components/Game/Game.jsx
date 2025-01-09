@@ -628,13 +628,14 @@ console.log(currentUser)
           />
           }
           <h1 className="game-over-header">Game over</h1>
-          <h2 className="game-over-score-display">{beatHighScore ? "Nice new highscore:":"You're score:"} {gameState.correctAnswers}</h2>
+          <h2 className="game-over-score-display">{beatHighScore ? "New high score achived:":"Final score:"} {gameState.correctAnswers}</h2>
           <button className="play-again" onClick={resetGame} >Play again</button>
           <button className="logout" onClick={logout}>Logout</button>
         </div>
       ):(
         <div className="game-home-page-container">
           <h1 className="game-start-header">AnswerMe Quiz!</h1>
+          {currentUser.highScore > 0 && <h3 className="player-highscore"><span className="crown-emoji">👑</span>High score:<span className="highscore-value">{currentUser.highScore}</span></h3>}
           {!gameState.gameIsActive && 
           <button className="start-quiz" 
           onClick={() => {

@@ -570,6 +570,18 @@ button:active {
   width: 30px;
   height: 30px;
 }
+.player-highscore{
+  color: white;
+  font-size: 1.6rem;
+  margin: 0;
+  margin-bottom: 1em;
+}
+.highscore-value{
+  margin-left: 0.5em;
+}
+.crown-emoji{
+  margin-right: 0.5em;
+}
 /* Game content */
 
 
