@@ -199,12 +199,12 @@ const generateRandomSeeds = () => {
   },[quizData])
  
   useEffect(() => {
-    console.log(gameState.pointsMultiplier)
+    
     if(gameState.questionIndex === quizData.length - 3){
       fetchApiData(apiToken,setQuizData); 
     }
     if(gameState.questionIndex % 10 === 0 && gameState.questionIndex > 0){
-        console.log("checkpoint reached")
+       
         handleCheckpointReached()
         setGameState((prevState) => ({
           ...prevState,
@@ -247,7 +247,7 @@ const generateRandomSeeds = () => {
         setGameTimer((prevState) => prevState - 1);
       }
     },1000)
-    console.log(gameTimer)
+    
     if(gameTimer === 0 && !gameState.roundIsOver){
       clearTimeout(timerTimeout)
       setGameState((prevState) => {
@@ -292,7 +292,7 @@ const generateRandomSeeds = () => {
     const {value} = e.target;
 
     if(value === quizData[index].correctAnswer){
-        console.log("correct answer")
+        
         setGameState((prevState) => ({
           ...prevState,
           correctAnswers: prevState.correctAnswers + 1 * gameState.pointsMultiplier ,
@@ -300,7 +300,7 @@ const generateRandomSeeds = () => {
           hotStreak: prevState.hotStreak + 1
         }))
     }else{
-      console.log("Wrong answer")
+      
       setGameState((prevState) => {
         const newLivesRemaning = prevState.playerLives - 1;
         return {
@@ -488,7 +488,7 @@ const renderHearts = () => {
   
 }
 
-console.log(currentUser)
+
  
   
   return (
@@ -507,9 +507,9 @@ console.log(currentUser)
             <h2 className="checkpoint-subheader">{checkpointInfo.length > 0 ? `Items gained:`: "Items gained: 0"}</h2>
             <ul className="item-gained-list">
               {checkpointInfo.map(([key,value], index) => {
-                return <div className="item-gained-container">
+                return <div key={index} className="item-gained-container">
                 <h3 className="item-gained-value">{value}x</h3>
-                <li className="power-up-item" key={index}>
+                <li className="power-up-item">
                   <img className="power-up-image" src={renamePowerUps[key]}></img>
                 </li>
                 </div>

@@ -9,7 +9,7 @@ import he from "he"
     axios.get(`https://opentdb.com/api.php?amount=10&token=${apiToken}&type=multiple`).then((res) => {
       
      
-      console.log(res.data)
+      
       const dataResponse = res.data.results;
 
       setQuizData((prevState) => [

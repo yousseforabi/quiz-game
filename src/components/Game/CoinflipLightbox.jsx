@@ -8,7 +8,7 @@ function CoinflipLightbox(props){
     
     useEffect(() => {
     if(props.flipResult === null)return
-    console.log(props.flipResult)
+    
 
     },[props.flipResult])
 
