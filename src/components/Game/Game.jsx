@@ -13,7 +13,7 @@ import shieldSvg from "./shield.svg";
 import heartSvg from "./heart-svg.svg";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
-
+//Code sucks hf reading lol
 function Game() {
   const { user, logout, quizData,setQuizData,apiToken,setApiToken,hideLayout,showLayoutAgain} = useContext(UserContext);
   const {width,height} = useWindowSize();
