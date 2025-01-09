@@ -283,7 +283,7 @@ const generateRandomSeeds = () => {
         ? 2
         : 1,
         // Test checkpoint might change later.
-        playerLives:prevState.playerLives + (nextIndex % 10 === 0 ? 1 : 0)
+        playerLives:prevState.playerLives + (nextIndex % 10 === 0 ? 3 : 0)
       };
     });
   }
@@ -501,6 +501,8 @@ console.log(currentUser)
             <div className="life-gained-container">
               <h2 className="checkpoint-subheader">Life gained:</h2>
               <img className="heart-image" src={heartSvg}></img>
+              <img className="heart-image" src={heartSvg}></img>
+              <img className="heart-image" src={heartSvg}></img>
             </div>
             
             <h2 className="checkpoint-subheader">{checkpointInfo.length > 0 ? `Items gained:`: "0 items gained"}</h2>
@@ -629,7 +631,7 @@ console.log(currentUser)
           }
           <h1 className="game-over-header">Game over</h1>
           <h2 className="game-over-score-display">{beatHighScore ? "New high score achived:":"Final score:"} {gameState.correctAnswers}</h2>
-          <button className="play-again" onClick={resetGame} >Play again</button>
+          <button className="play-again" onClick={resetGame} >Main menu</button>
           <button className="logout" onClick={logout}>Logout</button>
         </div>
       ):(
