@@ -490,7 +490,7 @@ const renderHearts = () => {
 
 console.log(currentUser)
 
-
+         
   
   return (
     <div className={`game-container ${gameState.gameIsActive && !gameState.isGameOver ? "game-active" :""}`}>
@@ -500,9 +500,9 @@ console.log(currentUser)
             <h1 className="checkpoint-header" >Milestone reached!</h1>
             <div className="life-gained-container">
               <h2 className="checkpoint-subheader">Life gained:</h2>
-              <img className="heart-image" src={heartSvg}></img>
-              <img className="heart-image" src={heartSvg}></img>
-              <img className="heart-image" src={heartSvg}></img>
+              <img className="heart-image checkpoint-heart" src={heartSvg}></img>
+              <img className="heart-image checkpoint-heart" src={heartSvg}></img>
+              <img className="heart-image checkpoint-heart" src={heartSvg}></img>
             </div>
             
             <h2 className="checkpoint-subheader">{checkpointInfo.length > 0 ? `Items gained:`: "0 items gained"}</h2>
@@ -516,7 +516,7 @@ console.log(currentUser)
                 </div>
               })}
             </ul>
-            <button className="next-round" onClick={() => setGameState(prevState => ({ ...prevState, atCheckpoint: false }))}>Continue</button>
+            <button className="next-round checkpoint-button" onClick={() => setGameState(prevState => ({ ...prevState, atCheckpoint: false }))}>Continue</button>
         </div>
       ): !gameState.isGameOver && gameState.gameIsActive ? (
         <div className="game-content-container"> 
