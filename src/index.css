@@ -650,7 +650,7 @@ button:active {
   color: white;
   font-size: 1.8rem;
   margin: 0;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 .highscore-value{
   margin-left: 0.3em;
@@ -706,5 +706,46 @@ button:active {
   }
   .checkpoint-button{
     margin-top: 0;
+  }
+}
+@media(max-width:820px){
+  .top-game-content{
+    flex-direction: column;
+  }
+  .quiz-round{
+    font-size: 2rem;
+  }
+  .heart-image{
+    width: 15px;
+    height: 15px;
+  }
+}
+@media (max-width:717px) {
+  
+  .answers-container{
+    padding: 0 0.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .quiz-answer{
+    max-width: 50%;
+  }
+}
+@media (max-width:675px) {
+    .quiz-question{
+      padding: 0 0.5em;
+    }
+}
+@media(max-width:512px){
+.quiz-question{
+  font-size: 1.2rem;
+  max-width: 500px;
+}
+}
+@media (max-width:442px) {
+  .game-start-header{
+    font-size: 2.7rem;
   }
 }

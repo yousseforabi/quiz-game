@@ -48,3 +48,17 @@
 .power-up-button:disabled{
     pointer-events: none;
 }
+@media(max-width:346px){
+    .power-up-button{
+        width: 45px;
+        height: 45px;
+    }
+    .power-up-image{
+        width: 30px;
+        height: 30px;
+    }
+    .power-up-stock{
+        width: 25px;
+        height: 25px;
+    }
+  }
