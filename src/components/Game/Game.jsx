@@ -78,7 +78,12 @@ const initialGameState = {
 
   const [userPlayedAgain,setUserPlayedAgain] = useState(false);
 
+  const [showConfetti,setShowConfetti] = useState(false);
+
+
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const [beatHighScore,setBeatHighScore] = useState(false);
 
   const renamePowerUps = {
     fiftyFiftyStock:fiftyFiftySvg,
@@ -98,15 +103,18 @@ const initialGameState = {
  
   useEffect(() => {
     
-    if(!gameState.isGameOver)return;
+    if(!gameState.isGameOver){
+      setShowConfetti(false);
+      setBeatHighScore(false);
+      return;
+    }
     
       if(gameState.correctAnswers > currentUser.highScore){
         currentUser.highScore = gameState.correctAnswers;
         localStorage.setItem("currentUser", JSON.stringify(currentUser));
+        setShowConfetti(true);
+        setBeatHighScore(true);
       }
-    
-    
-
   },[gameState.isGameOver])
 
   useEffect(() => {
@@ -480,7 +488,7 @@ const renderHearts = () => {
   
 }
 
-
+console.log(currentUser)
 
 
   
@@ -612,7 +620,7 @@ const renderHearts = () => {
         </div>
       ):gameState.gameIsActive && gameState.isGameOver ? (
         <div className="game-over-container">
-          {gameState.correctAnswers > currentUser.highScore && 
+          {showConfetti && 
           <Confetti 
           width={width} 
           height={height}
@@ -620,7 +628,7 @@ const renderHearts = () => {
           />
           }
           <h1 className="game-over-header">Game over</h1>
-          <h2 className="game-over-score-display">{gameState.correctAnswers > currentUser.highScore ? "Nice new highscore:":"You're score:"} {gameState.correctAnswers}</h2>
+          <h2 className="game-over-score-display">{beatHighScore ? "Nice new highscore:":"You're score:"} {gameState.correctAnswers}</h2>
           <button className="play-again" onClick={resetGame} >Play again</button>
           <button className="logout" onClick={logout}>Logout</button>
         </div>
